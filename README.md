@@ -1,3 +1,5 @@
+This is a fork of https://github.com/Stuk/eslint-plugin-header intended to make the plugin work with ESLint v9
+
 eslint-plugin-header
 ====================
 

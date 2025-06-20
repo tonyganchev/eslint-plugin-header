@@ -1,6 +1,6 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.1.2",
+  "version": "3.1.3",
   "description": "ESLint plugin to ensure that files begin with given comment",
   "main": "index.js",
   "scripts": {

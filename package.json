@@ -1,7 +1,7 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
   "version": "3.1.3",
-  "description": "ESLint plugin to ensure that files begin with given comment",
+  "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
   "scripts": {
     "test": "npm run lint && npm run unit",
@@ -9,8 +9,11 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "eslint": "^7.7.0",
-    "mocha": "^8.1.1"
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.32.0",
+    "eslint": "^9.32.0",
+    "eslint-plugin-jsdoc": "^52.0.4",
+    "mocha": "^11.7.1"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"

@@ -1,3 +1,11 @@
+# 3.1.3
+
+* Detailed ESLint 9 validation schema.
+
+# 3.1.2
+
+* Support ESLint 9.
+
 # 3.1.1
 
 * Fix detecting header below shebang comment with Windows EOL (#30)

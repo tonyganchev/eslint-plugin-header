@@ -1,6 +1,6 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.1.3",
+  "version": "3.1.4",
   "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
   "scripts": {

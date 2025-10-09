@@ -24,6 +24,7 @@
 
 "use strict";
 
+const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
 const os = td.replace("os");
@@ -158,7 +159,7 @@ describe("unix", () => {
                 ], 0]
             }
         ],
-        invalid: [
+        invalid: generateInvalidTestCaseNames([
             {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
@@ -363,7 +364,7 @@ describe("unix", () => {
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             }
-        ]
+        ])
     });
 });
 describe("windows", () => {
@@ -491,7 +492,7 @@ describe("windows", () => {
                 ], 0]
             }
         ],
-        invalid: [
+        invalid: generateInvalidTestCaseNames([
             {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
@@ -695,7 +696,7 @@ describe("windows", () => {
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
             }
-        ]
+        ])
     });
 });
 

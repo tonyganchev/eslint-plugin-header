@@ -3,6 +3,10 @@
   "version": "3.1.4",
   "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
+  "files": [
+    "/lib/**/*.js",
+    "!/lib/rules/test-utils.js"
+  ],
   "scripts": {
     "test": "npm run lint && npm run unit",
     "unit": "nyc --reporter=html --reporter=text --reporter=text-summary mocha tests/lib/**/*.js",

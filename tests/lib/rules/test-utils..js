@@ -102,7 +102,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", ["Copyright 2025", "My Company"], { lineEndings: "unix" }]
             },
-            "incorrect header - [ unix ] - someCode();"
+            "incorrect header - [ unix line ] - someCode();"
         ],
         [
             {
@@ -112,7 +112,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", "Copyright 2025 My Company", 10]
             },
-            "missing header - [ 10 ] - someCode();"
+            "missing header - [ 10 line ] - someCode();"
         ],
         [
             {
@@ -122,7 +122,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", "Copyright 2025 My Company", 10, { lineEndings: "windows" }]
             },
-            "missing header - [ 10 windows ] - someCode();"
+            "missing header - [ 10 windows line ] - someCode();"
         ],
     ];
     for (const [testCaseDef, expectedName] of testCases) {

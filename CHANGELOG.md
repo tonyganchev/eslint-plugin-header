@@ -1,3 +1,6 @@
+# 3.1.6
+
+* fix: header is added immediately after shebang - fixes [#14](https://github.com/tonyganchev/eslint-plugin-header/issues/14) by [@tonyganchev](https://github.com/tonyganchev) in [#17](https://github.com/tonyganchev/eslint-plugin-header/pull/7)
 # 3.1.5
 
 * fix: proper empty lines on Windows by [@tonyganchev](https://github.com/tonyganchev) in [#7](https://github.com/tonyganchev/eslint-plugin-header/pull/7)

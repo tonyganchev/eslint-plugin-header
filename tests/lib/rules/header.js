@@ -348,7 +348,6 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                name: "Missing empty line after header / windows",
                 code: "//Copyright 2020\r\n//My Company\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
                 options: ["line", ["Copyright 2020", "My Company"], 2, { lineEndings: "windows"}],
                 errors: [
@@ -363,7 +362,55 @@ describe("unix", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
-            }
+            },
+            {
+                code: "#!/usr/bin/env node\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\n\n\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n// Copyright\n\n\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\n\n// My Company\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n// Copyright\n\n// My Company\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\n\n/* Copyright */\nconsole.log(1);",
+                options: ["block", " Copyright "],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n/* Copyright */\n\n/* Copyright */\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\n/* My Company */\nconsole.log(1);",
+                options: ["block", " Copyright "],
+                errors: [
+                    {message: "incorrect header"},
+                ],
+                output: "#!/usr/bin/env node\n/* Copyright */\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\n/* Copyright */\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "header should be a line comment"},
+                ],
+                output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
+            },
         ])
     });
 });
@@ -695,7 +742,23 @@ describe("windows", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
-            }
+            },
+            {
+                code: "#!/usr/bin/env node\r\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\r\n// Copyright\r\nconsole.log(1);",
+            },
+            {
+                code: "#!/usr/bin/env node\r\n\r\n\r\nconsole.log(1);",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\n\r\nconsole.log(1);",
+            },
         ])
     });
 });

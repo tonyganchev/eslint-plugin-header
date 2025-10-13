@@ -44,8 +44,4 @@ describe("comment parser", function() {
         var result = commentParser("// pass1\n// pass2\n  ");
         assert.deepEqual(result, ["line", [" pass1", " pass2"]]);
     });
-
-    it("fails", () => {
-        assert.fail();
-    });
 });

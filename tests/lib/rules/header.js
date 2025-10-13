@@ -411,6 +411,22 @@ describe("unix", () => {
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
             },
+            {
+                code: "#!/usr/bin/env node",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n// Copyright\n",
+            },
+            {
+                code: "#!/usr/bin/env node",
+                options: ["block", " Copyright "],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\n/* Copyright */\n",
+            }
         ])
     });
 });
@@ -759,6 +775,22 @@ describe("windows", () => {
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\n\r\nconsole.log(1);",
             },
+            {
+                code: "#!/usr/bin/env node",
+                options: ["line", " Copyright"],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\r\n// Copyright\r\n",
+            },
+            {
+                code: "#!/usr/bin/env node",
+                options: ["block", " Copyright "],
+                errors: [
+                    {message: "missing header"},
+                ],
+                output: "#!/usr/bin/env node\r\n/* Copyright */\r\n",
+            }
         ])
     });
 });

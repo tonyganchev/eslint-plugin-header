@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "test": "npm run lint && npm run unit",
-    "unit": "nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 --no-clean mocha tests/lib/**/*.js",
+    "unit": "nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 --clean=false mocha tests/lib/**/*.js",
     "lint": "eslint ."
   },
   "devDependencies": {

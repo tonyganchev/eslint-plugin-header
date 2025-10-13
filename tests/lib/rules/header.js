@@ -157,7 +157,12 @@ describe("unix", () => {
                     " * Copyright",
                     " "
                 ], 0]
-            }
+            },
+            {
+                // TODD: should fail during validation.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);",
+                options: ["block", "Copyright 2020, My Company", 1, {}],
+            },
         ],
         invalid: generateInvalidTestCaseNames([
             {
@@ -183,6 +188,13 @@ describe("unix", () => {
                     {message: "missing header"}
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2014, My Company\nconsole.log(1);",
+                options: ["block", [{ pattern: "Copyright 2015" }, "My Company"]],
+                errors: [
+                    {message: "header should be a block comment"}
+                ],
             },
             {
                 code: "//Copyright 2014, My Company\nconsole.log(1);",
@@ -248,6 +260,20 @@ describe("unix", () => {
                     {message: "incorrect header"}
                 ],
                 output: "//Copyright 2015\n//My Company\nconsole.log(1)"
+            },
+            {
+                code: "//Copyright 2014\n//My Company\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
+                code: "//Copyright 2014\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
             },
             {
                 code: "//Copyright 2015",
@@ -332,12 +358,27 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);"
             },
             {
+                code: "//Copyright 2020\n//My Company\nconsole.log(1);",
+                options: ["line", [{pattern: "Copyright 2020"}, "My Company"], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
                 code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
                 options: ["block", "Copyright 2020, My Company", 2],
                 errors: [
                     {message: "no newline after header"}
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
+            },
+            {
+                // TODO: this should be fixable since the pattern is correct and only the new lines differ.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                options: ["block", [{pattern: "Copyright 2020, My Company"}], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -362,6 +403,15 @@ describe("unix", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
+            },
+            {
+                // TODO: this should not be right, documenting status quo
+                code: "\n\n\n\n\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\n//My Company\n\n\n\n\n\n\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
@@ -553,7 +603,12 @@ describe("windows", () => {
                     " * Copyright",
                     " "
                 ], 0]
-            }
+            },
+            {
+                // TODD: should fail during validation.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);",
+                options: ["block", "Copyright 2020, My Company", 1, {}],
+            },
         ],
         invalid: generateInvalidTestCaseNames([
             {
@@ -579,6 +634,13 @@ describe("windows", () => {
                     {message: "missing header"}
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2014, My Company\r\nconsole.log(1);",
+                options: ["block", [{ pattern: "Copyright 2015" }, "My Company"]],
+                errors: [
+                    {message: "header should be a block comment"}
+                ],
             },
             {
                 code: "//Copyright 2014, My Company\r\nconsole.log(1);",
@@ -644,6 +706,20 @@ describe("windows", () => {
                     {message: "incorrect header"}
                 ],
                 output: "//Copyright 2015\r\n//My Company\r\nconsole.log(1)"
+            },
+            {
+                code: "//Copyright 2014\r\n//My Company\r\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
+                code: "//Copyright 2014\r\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
             },
             {
                 code: "//Copyright 2015",
@@ -728,6 +804,13 @@ describe("windows", () => {
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);"
             },
             {
+                code: "//Copyright 2020\n//My Company\nconsole.log(1);",
+                options: ["line", [{pattern: "Copyright 2020"}, "My Company"], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
                 code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
                 options: ["block", "Copyright 2020, My Company", 2],
                 errors: [
@@ -744,6 +827,14 @@ describe("windows", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
+                // TODO: this should be fixable since the pattern is correct and only the new lines differ.
+                code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
+                options: ["block", [{pattern: "Copyright 2020, My Company"}], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
                 code: "//Copyright 2020\r\n//My Company\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
                 options: ["line", ["Copyright 2020", "My Company"], 2, { lineEndings: "windows"}],
                 errors: [
@@ -758,6 +849,14 @@ describe("windows", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
+            },
+            {
+                code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\r\nconsole.log(1);",

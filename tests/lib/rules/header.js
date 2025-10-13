@@ -34,7 +34,7 @@ const { RuleTester } = require("eslint");
 
 const ruleTester = new RuleTester();
 
-xdescribe("unix", () => {
+describe("unix", () => {
     beforeEach(() => {
         os.EOL = "\n";
     });

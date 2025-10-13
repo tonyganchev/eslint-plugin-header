@@ -480,7 +480,7 @@ xdescribe("unix", () => {
         ])
     });
 });
-xdescribe("windows", () => {
+describe("windows", () => {
     beforeEach(() => {
         os.EOL = "\r\n";
     });

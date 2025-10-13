@@ -30,7 +30,7 @@ const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils"
 /**
  * @typedef {import('eslint').RuleTester.InvalidTestCase} InvalidTestCase
  */
-xdescribe("generateInvalidTestCaseNames", () => {
+describe("generateInvalidTestCaseNames", () => {
     it("when empty test case list is passed an empty test list is returned", () => {
         assert.deepEqual(generateInvalidTestCaseNames([]), []);
     });

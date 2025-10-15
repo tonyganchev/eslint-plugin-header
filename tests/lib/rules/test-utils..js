@@ -67,12 +67,22 @@ describe("generateInvalidTestCaseNames", () => {
         ],
         [
             {
-                code: "someCode();\nsomeOtherCode();\r\nevenMore(code);\nitIsNotFunny()\npleaseStopIt();\r\niAmSerious();",
+                code: "someCode();\n"
+                    + "someOtherCode();\r\n"
+                    + "evenMore(code);\n"
+                    + "itIsNotFunny()\n"
+                    + "pleaseStopIt();\r\n"
+                    + "iAmSerious();",
                 errors: [
                     { message: "incorrect header" }
                 ],
             },
-            "incorrect header - [ ] - someCode();\\nsomeOtherCode();\\r\\nevenMore(code);\\nitIsNotFunny()\\npleaseStopIt();\\r\\niAmSerious();"
+            "incorrect header - [ ] - someCode();\\n"
+                + "someOtherCode();\\r\\n"
+                + "evenMore(code);\\n"
+                + "itIsNotFunny()\\n"
+                + "pleaseStopIt();\\r\\n"
+                + "iAmSerious();"
         ],
         [
             {

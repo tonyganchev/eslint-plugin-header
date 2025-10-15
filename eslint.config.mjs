@@ -147,6 +147,10 @@ const jsRules = {
         "stylistic/indent": [2, 4, {
             SwitchCase: 1,
         }],
+        "stylistic/max-len": [2, {
+            code: 120,
+            comments: 80
+        }],
         "stylistic/no-floating-decimal": 2,
         "stylistic/no-mixed-spaces-and-tabs": [2, false],
         "stylistic/no-multi-spaces": 2,

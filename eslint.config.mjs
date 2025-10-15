@@ -1,11 +1,12 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import jsdoc from "eslint-plugin-jsdoc";
-import header from "./index.js"
+import n from "eslint-plugin-n";
+import globals from "globals";
+import header from "./index.js";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -20,14 +21,14 @@ const jsRules = {
         ...compat.extends("eslint:recommended"),
     ],
     plugins: {
-        header
+        header,
+        n
     },
     rules: {
         "brace-style": [2, "1tbs"],
         camelcase: [2, {
             properties: "never",
         }],
-        "callback-return": [2, ["cb", "callback", "next"]],
         "comma-spacing": 2,
         "comma-style": [2, "last"],
         "consistent-return": 2,
@@ -41,7 +42,6 @@ const jsRules = {
         "func-style": [2, "declaration"],
         "global-strict": [0, "always"],
         "guard-for-in": 2,
-        "handle-callback-err": [2, "err"],
         indent: [2, 4, {
             SwitchCase: 1,
         }],
@@ -72,7 +72,6 @@ const jsRules = {
         "no-labels": 2,
         "no-lone-blocks": 2,
         "no-loop-func": 2,
-        "no-mixed-requires": 2,
         "no-mixed-spaces-and-tabs": [2, false],
         "no-multi-spaces": 2,
         "no-multi-str": 2,
@@ -85,8 +84,6 @@ const jsRules = {
         "no-new-wrappers": 2,
         "no-octal": 2,
         "no-octal-escape": 2,
-        "no-path-concat": 2,
-        "no-process-exit": 2,
         "no-proto": 2,
         "no-redeclare": 2,
         "no-return-assign": 2,
@@ -161,7 +158,13 @@ const jsRules = {
                 " "
             ],
             2
-        ]
+        ],
+
+        "n/callback-return": [2, ["cb", "callback", "next"]],
+        "n/handle-callback-err": [2, "err"],
+        "n/no-mixed-requires": 2,
+        "n/no-path-concat": 2,
+        "n/no-process-exit": 2,
     }
 };
 

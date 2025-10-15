@@ -17,6 +17,7 @@
     "@eslint/js": "^9.32.0",
     "eslint": "^9.37.0",
     "eslint-plugin-jsdoc": "^61.1.1",
+    "eslint-plugin-n": "^17.23.1",
     "mocha": "^11.7.4",
     "nyc": "^17.1.0",
     "testdouble": "^3.20.2"

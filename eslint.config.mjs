@@ -141,6 +141,7 @@ const jsRules = {
         "no-mixed-requires": 2,
         "no-new-require": 2,
         "no-path-concat": 2,
+        "no-var": 2,
         "global-strict": [0, "always"],
         "handle-callback-err": [2, "err"],
 

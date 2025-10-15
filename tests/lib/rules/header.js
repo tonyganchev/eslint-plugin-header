@@ -45,6 +45,15 @@ describe("unix", () => {
                 options: ["block", "Copyright 2015, My Company"]
             },
             {
+                code: "/*Copyright 2015, My Company*/\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: ["Copyright 2015, My Company"]
+                    }
+                }]
+            },
+            {
                 code: "//Copyright 2015, My Company\nconsole.log(1);",
                 options: ["line", "Copyright 2015, My Company"]
             },

@@ -134,6 +134,88 @@ describe("generateInvalidTestCaseNames", () => {
             },
             "missing header - [ 10 windows line ] - someCode();"
         ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "incorrect header" }
+                ],
+                options: [{
+                    header: {
+                        file: "foo"
+                    }
+                }]
+            },
+            "incorrect header - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "incorrect header" }
+                ],
+                options: [{
+                    header: {
+                        file: "header.js",
+                    },
+                    lineEndings: "windows"
+                }]
+            },
+            "incorrect header - [ windows ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "incorrect header" }
+                ],
+                options: [{
+                    header: {
+                        commentType: "line",
+                        line: ["Copyright 2025", "My Company"],
+                    },
+                    lineEndings: "unix"
+                }]
+            },
+            "incorrect header - [ unix line ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "missing header" }
+                ],
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2025 My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 10
+                    }
+                }]
+            },
+            "missing header - [ 10 line ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "missing header" }
+                ],
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2025 My Company"]
+                    },
+                    lineEndings: "windows",
+                    trailingEmptyLines: {
+                        minimum: 10
+                    }
+                }]
+            },
+            "missing header - [ 10 windows line ] - someCode();"
+        ],
     ];
     for (const [testCaseDef, expectedName] of testCases) {
         it(expectedName + " is the name for " + JSON.stringify(testCaseDef), () => {

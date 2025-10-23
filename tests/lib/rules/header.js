@@ -67,6 +67,10 @@ describe("legacy config", () => {
             },
             {
                 code: "// Copyright (c) 2015\n// My Company\n",
+                options: ["line", { pattern: " Copyright \\(c\\) 2015\\n My Company" }]
+            },
+            {
+                code: "// Copyright (c) 2015\n// My Company\n",
                 options: ["line", [{ pattern: " Copyright \\(c\\) 2015" }, " My Company"]]
             },
             {

@@ -114,9 +114,12 @@ All of the following configurations will match the header:
     though the EOL in the header content was specified as `\n`.
 
     Also, notice how we have an empty space before each line. This is because
-    the plugin only strips the leading `//` characters from a line comment/
-    Similar for a block comment, only the opening `/*` and closing `*/` will be
-    preserved.
+    the plugin only strips the leading `//` characters from a line comment.
+    Similarly, for a block comment, only the opening `/*` and closing `*/` will 
+    be preserved with all new lines and whitespace preserved. Keep this in mind
+    as this can lead to poorly configured header matching rules that never
+    pass. In a future release error messages would be more detailed and show
+    exactly where header validation failed.
 
 * **Single regular expression**:
     ```json
@@ -136,53 +139,47 @@ All of the following configurations will match the header:
     `RegExp` objects, the backslashes need to be present in the string instead
     of disappear as escape characters.
 
-    For the comparable example using line comments we cannot use a single
-    expression as the second argument after the severity instead of a string or
-    an array. This is because the pattern will be matched against the first
-    single-line line comment and validation would fail. In general, using the
-    array form is preferable as it is easier to follow.
-
 * **Array of strings**:
-  ```json
-  {
-     ...
-     "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                "",
-                " * Copyright (c) 2015",
-                " * My Company",
-                " "
+    ```json
+    {
+        ...
+        "rules": {
+            "header/header": [
+                2,
+                "block",
+                [
+                    "",
+                    " * Copyright (c) 2015",
+                    " * My Company",
+                    " "
+                ]
             ]
-        ]
-     }
-  }
-  ```
+        }
+    }
+    ```
 * **Array of strings and/or patterns**:
-  ```json
-  {
-     ...
-     "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                "",
-                { "pattern": " \\* Copyright \\(c\\) 2015" },
-                " * My Company",
-                " "
+    ```json
+    {
+        ...
+        "rules": {
+            "header/header": [
+                2,
+                "block",
+                [
+                    "",
+                    { "pattern": " \\* Copyright \\(c\\) 2015" },
+                    " * My Company",
+                    " "
+                ]
             ]
-        ]
-     }
-  }
-  ```
+        }
+    }
+    ```
 
 Regular expressions allow for a number of improvements in the maintainability
 of the headers. Given the example above, what is clear is that new sources may
 have been created later than 2015 and a comment with a different year should be
-perfectly valid such as:
+perfectly valid, such as:
 
 ```js
 /*
@@ -191,8 +188,9 @@ perfectly valid such as:
  */
 ...
 ```
-Moreover, suppose legal expects that the year of first and last change be added
-except if all changes happen in the same year, we also need to support:
+Moreover, suppose your legal department expects that the year of first and last
+change be added except if all changes happen in the same year, we also need to
+support:
 ```js
 /*
  * Copyright 2017-2022

@@ -3,5 +3,6 @@ node_modules
 npm-debug.log
 yarn.lock
 /coverage
-.vscode/
+/.vscode/*
+!/.vscode/settings.json
 .nyc_output

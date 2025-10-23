@@ -1,19 +1,57 @@
-This is a fork of https://github.com/Stuk/eslint-plugin-header intended to make the plugin work with ESLint v9
+This is a fork of https://github.com/Stuk/eslint-plugin-header.
+
+It addresses the following issus:
+
+- Adds bugfixes where the original project has not been updated in the last
+  three years.
+- Adds support for ESLint 9 with a fully-validated configuration schema.
+- Addresses a number of bugs on Windows and adds significant amount of tests to
+  verify there are no future regressions.
+- Fixes issues with she-bangs and empty lines before the header. See PR history
+  for more details.
+- Provides the foundation to evolve the plugin to add more capabilities moving
+  forward. This would come at the expense of plugin compatibility and the
+  portability of fixes to the upstream repository.
 
 eslint-plugin-header
 ====================
 
 ESLint plugin to ensure that files begin with given comment.
 
-Often you will want to have a copyright notice at the top of every file. This ESLint plugin checks that the first comment in every file has the contents defined in the rule settings.
+Often you will want to have a copyright notice at the top of every file. This
+ESLint plugin checks that the first comment in every file has the contents
+defined in the rule settings.
 
 ## Usage
 
-This rule takes 1, 2 or 3 arguments with an optional settings object.
+This rule takes between 1 and 4 arguments after the rule validation severity.
 
-### 1 argument
+The configuration can take any of the following forms:
 
-In the 1 argument form the argument is the filename of a file that contains the comment(s) that should appear at the top of every file:
+* File-based Configuration
+  * `[<severity>, "<file>"]` - read the header template from a file.
+  * `[<severity>, "<file>", {<settings>}]` - read the header template from a
+    file with additional settings.
+* Inline Configuration
+  * `"<severity>", "<comment-type>", <header-contents>` - define the header
+    contents inline.
+  * `[<severity>, "<comment-type>", <header-contents>, {<settings>}]` - define
+    the header contents inline and pass additional settings.
+  * `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>]` -
+    define the header contents inline and an expected number of empty lines
+    after the header.
+  * `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>, {<settings>}]` -
+    define the header contents inline and an expected number of empty lines
+    after the header and pass additional settings.
+
+### File-based Configuration
+
+In this configuration mode, the first argument is a string pointing to a JS
+file containing the header contents. The rule would expect an exact match to be
+found in the source code.
+
+The second argument can be a settings object that will be covered later in this
+document.
 
 ```json
 {
@@ -33,26 +71,190 @@ config/header.js:
 // My company
 ```
 
-Due to limitations in eslint plugins, the file is read relative to the working directory that eslint is executed in. If you run eslint from elsewhere in your tree then the header file will not be found.
+Due to limitations in ESLint plugins, the file is read relative to the working
+directory that ESLint is executed in. If you run ESLint from elsewhere in your
+tree then the header file will not be found.
 
-### 2 arguments
+### Inline Configuration
 
-In the 2 argument form the first must be either `"block"` or `"line"` to indicate what style of comment should be used. The second is either a string (including newlines) of the comment, or an array of each line of the comment.
+The inline configuration expects at least two arguments to be given:
+- _comment-type_ which is either `"block"` or `"line"` to indicate what style
+  of comment should be used.
+- _header-contents_ which defines the lines of the header. It can be either a
+  single multiline string / regular expression with the full contents of the
+  header comment or an array with comment lines or regular expressions matching
+  each line.
+
+#### Header Contents Configuration
+
+Suppose we want our header to look like this:
+```js
+/*
+ * Copyright (c) 2015
+ * My Company
+ */
+...
+```
+
+All of the following configurations will match the header:
+* **Single string**:
+    ```json
+    {
+        ...
+        "rules": {
+            "header/header": [
+                2,
+                "block",
+                "\n * Copyright (c) 2015\n * My Company\n "
+            ]
+        }
+    }
+    ```
+    Note that the above would work for both Windows and POSIX systems even
+    though the EOL in the header content was specified as `\n`.
+
+    Also, notice how we have an empty space before each line. This is because
+    the plugin only strips the leading `//` characters from a line comment/
+    Similar for a block comment, only the opening `/*` and closing `*/` will be
+    preserved.
+
+* **Single regular expression**:
+    ```json
+    {
+        ...
+        "rules": {
+            "header/header": [
+                2,
+                "block",
+                { "pattern": "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n " }
+            ]
+        }
+    }
+    ```
+
+    Notice the double escaping of the braces. Since these pattern strings into
+    `RegExp` objects, the backslashes need to be present in the string instead
+    of disappear as escape characters.
+
+    For the comparable example using line comments we cannot use a single
+    expression as the second argument after the severity instead of a string or
+    an array. This is because the pattern will be matched against the first
+    single-line line comment and validation would fail. In general, using the
+    array form is preferable as it is easier to follow.
+
+* **Array of strings**:
+  ```json
+  {
+     ...
+     "rules": {
+        "header/header": [
+            2,
+            "block",
+            [
+                "",
+                " * Copyright (c) 2015",
+                " * My Company",
+                " "
+            ]
+        ]
+     }
+  }
+  ```
+* **Array of strings and/or patterns**:
+  ```json
+  {
+     ...
+     "rules": {
+        "header/header": [
+            2,
+            "block",
+            [
+                "",
+                { "pattern": " \\* Copyright \\(c\\) 2015" },
+                " * My Company",
+                " "
+            ]
+        ]
+     }
+  }
+  ```
+
+Regular expressions allow for a number of improvements in the maintainability
+of the headers. Given the example above, what is clear is that new sources may
+have been created later than 2015 and a comment with a different year should be
+perfectly valid such as:
+
+```js
+/*
+ * Copyright 2020
+ * My company
+ */
+...
+```
+Moreover, suppose legal expects that the year of first and last change be added
+except if all changes happen in the same year, we also need to support:
+```js
+/*
+ * Copyright 2017-2022
+ * My company
+ */
+...
+```
+We can use a regular expression to support all of these cases for your header:
 
 ```json
 {
-    "plugins": [
-        "header"
-    ],
+    ...
     "rules": {
-        "header/header": [2, "block", "Copyright 2015\nMy Company"]
+        "header/header": [
+            2,
+            "block",
+            [
+                "",
+                { "pattern": " \\* Copyright \\(c\\) (\\d{4}-)?\\d{4}" },
+                " * My Company",
+                " "
+            ]
+        ]
     }
 }
 ```
 
-### 3 arguments
+Note on auto-fixes i.e. `eslint --fix`: whenever strings are used to define the
+header - counting in file-based configuration - the same strings would be used
+to replace a header comment that did not pass validation. This is not possible
+with regular expressions. For regular expression pattern-objects, a second
+property `template` adds a replacement string. 
 
-The optional third argument which defaults to 1 specifies the number of newlines that are enforced after the header.
+```json
+{
+    ...
+    "rules": {
+        "header/header": [
+            2,
+            "line",
+            [
+                {
+                    "pattern": " Copyright \\(c\\) (\\d{4}-)?\\d{4}",
+                    "template": " Copyright 2025",
+                },
+                " My Company"
+            ]
+        ]
+    }
+}
+```
+There are a number of things to consider:
+- Templates need to be matched by the regular expression pattern or otherwise
+  an auto-fixed source would again fail linting. This needs to be validated
+  manually today as the plugin does not do it for you.
+- Templates are hardcoded strings therefore it may be better to hand-fix a bad
+  header in order not to lose the from- and to-years in the copyright notice.
+
+#### Trailing Empty Lines Configuration
+
+The third argument of the rule configuration which defaults to 1 specifies the
+number of newlines that are enforced after the header.
 
 Zero newlines:
 ```json
@@ -61,7 +263,15 @@ Zero newlines:
         "header"
     ],
     "rules": {
-        "header/header": [2, "block", [" Copyright now","My Company "], 0]
+        "header/header": [
+            2,
+            "block",
+            [
+                " Copyright now",
+                "My Company "
+            ],
+            0
+        ]
     }
 }
 ```
@@ -70,14 +280,22 @@ Zero newlines:
 My Company */ console.log(1)
 ```
 
-One newline (default)
+One newline (default):
 ```json
 {
     "plugins": [
         "header"
     ],
     "rules": {
-        "header/header": [2, "block", [" Copyright now","My Company "], 1]
+        "header/header": [
+            2,
+            "block",
+            [
+                " Copyright now",
+                "My Company "
+            ],
+            1
+        ]
     }
 }
 ```
@@ -87,14 +305,22 @@ My Company */
 console.log(1)
 ```
 
-two newlines
+Two newlines:
 ```json
 {
     "plugins": [
         "header"
     ],
     "rules": {
-        "header/header": [2, "block", [" Copyright now","My Company "], 2]
+        "header/header": [
+            2,
+            "block",
+            [
+                " Copyright now",
+                "My Company "
+            ],
+            2
+        ]
     }
 }
 ```
@@ -105,56 +331,27 @@ My Company */
 console.log(1)
 ```
 
-#### Regular expressions
+#### Line Endings
 
-Instead of a string to be checked for exact matching you can also supply a regular expression. Be aware that you have to escape backslashes:
-
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [2, "block", [
-            {"pattern": " Copyright \\d{4}"},
-            "My Company"
-        ]]
-    }
-}
-```
-
-This would match:
-
-```js
-/* Copyright 2808
-My Company*/
-```
-
-When you use a regular expression `pattern`, you can also provide a `template` property, to provide the comment value when using `eslint --fix`:
-
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [2, "block", [
-            {"pattern": " Copyright \\d{4}", "template": " Copyright 2019"}, 
-            "My Company"
-        ]]
-    }
-}
-```
-
-### Line Endings
-
-The rule works with both unix and windows line endings. For ESLint `--fix`, the rule will use the line ending format of the current operating system (via the node `os` package). This setting can be overwritten as follows:
+The rule works with both Unix/POSIX and Windows line endings. For ESLint
+`--fix`, the rule will use the line ending format of the current operating
+system (via Node's `os` package). This setting can be overwritten as follows:
 ```json
 "rules": {
-    "header/header": [2, "block", ["Copyright 2018", "My Company"], {"lineEndings": "windows"}]
+    "header/header": [
+        2,
+        "block",
+        [
+            "Copyright 2018",
+            "My Company"
+        ],
+        {
+            "lineEndings": "windows"
+        }
+    ]
 }
 ```
-Possible values are `unix` for `\n` and `windows` for `\r\n` line endings.
+Possible values are `"unix"` for `\n` and `"windows"` for `\r\n` line endings.
 
 ## Examples
 
@@ -191,7 +388,7 @@ console.log(1)
     " * Copyright 2015",
     " * My Company",
     " ************************"
-]
+]]
 ```
 
 ```js

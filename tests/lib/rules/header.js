@@ -41,6 +41,42 @@ describe("unix", () => {
     ruleTester.run("header", rule, {
         valid: [
             {
+                code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
+                options: ["block", "\n * Copyright (c) 2015\n * My Company\n "]
+            },
+            {
+                code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
+                options: ["block", ["", " * Copyright (c) 2015", " * My Company", " "]]
+            },
+            {
+                code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
+                options: ["block", { pattern: "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n " }]
+            },
+            {
+                code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
+                options: ["block", ["", { pattern: " \\* Copyright \\(c\\) 2015" }, " * My Company", " "]]
+            },
+            {
+                code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
+                options: ["block", ["", { pattern: " \\* Copyright \\(c\\) (\\d{4}-)?\\d{4}" }, " * My Company", " "]]
+            },
+            {
+                code: "// Copyright (c) 2015\n// My Company\n",
+                options: ["line", " Copyright (c) 2015\n My Company"]
+            },
+            {
+                code: "// Copyright (c) 2015\n// My Company\n",
+                options: ["line", [" Copyright (c) 2015", " My Company"]]
+            },
+            {
+                code: "// Copyright (c) 2015\n// My Company\n",
+                options: ["line", [{ pattern: " Copyright \\(c\\) 2015" }, " My Company"]]
+            },
+            {
+                code: "// Copyright (c) 2020\n// My Company\n",
+                options: ["line", [{ pattern: " Copyright \\(c\\) (\\d{4}-)?\\d{4}" }, " My Company"]],
+            },
+            {
                 code: "/*Copyright 2015, My Company*/\nconsole.log(1);",
                 options: ["block", "Copyright 2015, My Company"]
             },

@@ -1,6 +1,10 @@
+# 3.1.7
+
+* fix: add header to shebang-only file with no EOL by [@tonyganchev](https://github.com/tonyganchev) in [#20](https://github.com/tonyganchev/eslint-plugin-header/pull/20)
+
 # 3.1.6
 
-* fix: header is added immediately after shebang - fixes [#14](https://github.com/tonyganchev/eslint-plugin-header/issues/14) by [@tonyganchev](https://github.com/tonyganchev) in [#17](https://github.com/tonyganchev/eslint-plugin-header/pull/7)
+* fix: header is added immediately after shebang - fixes [#14](https://github.com/tonyganchev/eslint-plugin-header/issues/14) by [@tonyganchev](https://github.com/tonyganchev) in [#17](https://github.com/tonyganchev/eslint-plugin-header/pull/17)
 # 3.1.5
 
 * fix: proper empty lines on Windows by [@tonyganchev](https://github.com/tonyganchev) in [#7](https://github.com/tonyganchev/eslint-plugin-header/pull/7)

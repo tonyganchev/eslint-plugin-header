@@ -100,6 +100,7 @@ const jsRules = {
         "eslint-plugin/report-message-format": 2,
         "eslint-plugin/require-meta-docs-description": 2,
         "eslint-plugin/require-meta-docs-recommended": 2,
+        "eslint-plugin/require-meta-docs-url": 2,
 
         "n/callback-return": [2, ["cb", "callback", "next"]],
         "n/handle-callback-err": [2, "err"],

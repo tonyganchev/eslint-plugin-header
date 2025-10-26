@@ -98,6 +98,7 @@ const jsRules = {
         "eslint-plugin/prefer-placeholders": 2,
         "eslint-plugin/prefer-replace-text": 2,
         "eslint-plugin/report-message-format": 2,
+        "eslint-plugin/require-meta-docs-description": 2,
         "eslint-plugin/require-meta-docs-recommended": 2,
 
         "n/callback-return": [2, ["cb", "callback", "next"]],

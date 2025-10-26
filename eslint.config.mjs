@@ -93,8 +93,6 @@ const jsRules = {
         strict: [2, "global"],
         yoda: [2, "never"],
 
-        "eslint-plugin/prefer-message-ids": 1,
-
         "n/callback-return": [2, ["cb", "callback", "next"]],
         "n/handle-callback-err": [2, "err"],
         "n/no-mixed-requires": 2,

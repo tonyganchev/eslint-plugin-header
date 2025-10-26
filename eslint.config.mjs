@@ -4,6 +4,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import stylistic from "@stylistic/eslint-plugin"
 import { defineConfig } from "eslint/config";
+import eslintPlugin from "eslint-plugin-eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
 import n from "eslint-plugin-n";
 import globals from "globals";
@@ -22,6 +23,7 @@ const jsRules = {
         ...compat.extends("eslint:recommended"),
     ],
     plugins: {
+        "eslint-plugin": eslintPlugin,
         n,
         "@stylistic": stylistic,
         "@tony.ganchev": header
@@ -90,6 +92,9 @@ const jsRules = {
         radix: 2,
         strict: [2, "global"],
         yoda: [2, "never"],
+
+        "eslint-plugin/prefer-message-ids": 1,
+        "eslint-plugin/require-meta-default-options": 1,
 
         "n/callback-return": [2, ["cb", "callback", "next"]],
         "n/handle-callback-err": [2, "err"],
@@ -177,6 +182,7 @@ const jsRules = {
 
 export default defineConfig([
     jsdoc.configs["flat/recommended"],
+    eslintPlugin.configs.recommended,
     {
         files: ["lib/**/*.js"],
         languageOptions: {

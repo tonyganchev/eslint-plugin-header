@@ -94,7 +94,6 @@ const jsRules = {
         yoda: [2, "never"],
 
         "eslint-plugin/prefer-message-ids": 1,
-        "eslint-plugin/require-meta-default-options": 1,
 
         "n/callback-return": [2, ["cb", "callback", "next"]],
         "n/handle-callback-err": [2, "err"],

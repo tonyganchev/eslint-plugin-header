@@ -42,9 +42,9 @@ The configuration can take any of the following forms:
   - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>]` -
     define the header contents inline and an expected number of empty lines
     after the header.
-  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>, {<settings>}]` -
-    define the header contents inline and an expected number of empty lines
-    after the header and pass additional settings.
+  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>,
+    {<settings>}]` - define the header contents inline and an expected number of
+    empty lines after the header and pass additional settings.
 
 ### File-based Configuration
 
@@ -134,7 +134,10 @@ All of the following configurations will match the header:
             "header/header": [
                 2,
                 "block",
-                { "pattern": "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n " }
+                {
+                    "pattern":
+                        "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n "
+                }
             ]
         }
     }

@@ -93,6 +93,12 @@ const jsRules = {
         strict: [2, "global"],
         yoda: [2, "never"],
 
+        "eslint-plugin/meta-property-ordering": 2,
+        "eslint-plugin/no-property-in-node": 2,
+        "eslint-plugin/prefer-placeholders": 2,
+        "eslint-plugin/prefer-replace-text": 2,
+        "eslint-plugin/report-message-format": 2,
+
         "n/callback-return": [2, ["cb", "callback", "next"]],
         "n/handle-callback-err": [2, "err"],
         "n/no-mixed-requires": 2,

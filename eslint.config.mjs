@@ -22,9 +22,9 @@ const jsRules = {
         ...compat.extends("eslint:recommended"),
     ],
     plugins: {
-        header,
         n,
-        stylistic
+        "@stylistic": stylistic,
+        "@tony.ganchev": header
     },
     rules: {
         camelcase: [2, {
@@ -91,7 +91,55 @@ const jsRules = {
         strict: [2, "global"],
         yoda: [2, "never"],
 
-        "header/header": [
+        "n/callback-return": [2, ["cb", "callback", "next"]],
+        "n/handle-callback-err": [2, "err"],
+        "n/no-mixed-requires": 2,
+        "n/no-path-concat": 2,
+        "n/no-process-exit": 2,
+
+        "@stylistic/brace-style": [2, "1tbs"],
+        "@stylistic/comma-spacing": 2,
+        "@stylistic/comma-style": [2, "last"],
+        "@stylistic/eol-last": 2,
+        "@stylistic/function-call-spacing": 2,
+        "@stylistic/key-spacing": [2, {
+            beforeColon: false,
+            afterColon: true,
+        }],
+        "@stylistic/keyword-spacing": [2, {
+            after: true,
+        }],
+        "@stylistic/new-parens": 2,
+        "@stylistic/indent": [2, 4, {
+            SwitchCase: 1,
+        }],
+        "@stylistic/max-len": [2, {
+            code: 120,
+            comments: 80
+        }],
+        "@stylistic/no-floating-decimal": 2,
+        "@stylistic/no-mixed-spaces-and-tabs": [2, false],
+        "@stylistic/no-multi-spaces": 2,
+        "@stylistic/no-trailing-spaces": 2,
+        "@stylistic/quotes": [2, "double"],
+        "@stylistic/semi": 2,
+        "@stylistic/semi-spacing": [2, {
+            before: false,
+            after: true,
+        }],
+        "@stylistic/space-before-blocks": 2,
+        "@stylistic/space-before-function-paren": [2, "never"],
+        "@stylistic/space-infix-ops": 2,
+        "@stylistic/space-unary-ops": [2, {
+            words: true,
+            nonwords: false,
+        }],
+        "@stylistic/spaced-comment": [2, "always", {
+            exceptions: ["-"],
+        }],
+        "@stylistic/wrap-iife": 2,
+
+        "@tony.ganchev/header": [
             "error",
             "block",
             [
@@ -124,54 +172,6 @@ const jsRules = {
             ],
             2
         ],
-
-        "n/callback-return": [2, ["cb", "callback", "next"]],
-        "n/handle-callback-err": [2, "err"],
-        "n/no-mixed-requires": 2,
-        "n/no-path-concat": 2,
-        "n/no-process-exit": 2,
-
-        "stylistic/brace-style": [2, "1tbs"],
-        "stylistic/comma-spacing": 2,
-        "stylistic/comma-style": [2, "last"],
-        "stylistic/eol-last": 2,
-        "stylistic/function-call-spacing": 2,
-        "stylistic/key-spacing": [2, {
-            beforeColon: false,
-            afterColon: true,
-        }],
-        "stylistic/keyword-spacing": [2, {
-            after: true,
-        }],
-        "stylistic/new-parens": 2,
-        "stylistic/indent": [2, 4, {
-            SwitchCase: 1,
-        }],
-        "stylistic/max-len": [2, {
-            code: 120,
-            comments: 80
-        }],
-        "stylistic/no-floating-decimal": 2,
-        "stylistic/no-mixed-spaces-and-tabs": [2, false],
-        "stylistic/no-multi-spaces": 2,
-        "stylistic/no-trailing-spaces": 2,
-        "stylistic/quotes": [2, "double"],
-        "stylistic/semi": 2,
-        "stylistic/semi-spacing": [2, {
-            before: false,
-            after: true,
-        }],
-        "stylistic/space-before-blocks": 2,
-        "stylistic/space-before-function-paren": [2, "never"],
-        "stylistic/space-infix-ops": 2,
-        "stylistic/space-unary-ops": [2, {
-            words: true,
-            nonwords: false,
-        }],
-        "stylistic/spaced-comment": [2, "always", {
-            exceptions: ["-"],
-        }],
-        "stylistic/wrap-iife": 2,
     }
 };
 

@@ -1,3 +1,5 @@
+# MIT License
+
 Copyright (c) 2015-present Stuart Knightley, Tony Ganchev and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of

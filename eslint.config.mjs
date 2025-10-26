@@ -26,6 +26,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
+import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
 import { defineConfig } from "eslint/config";
 import eslintPlugin from "eslint-plugin-eslint-plugin";
@@ -249,4 +250,20 @@ export default defineConfig([
         },
         ...jsRules,
     },
+    {
+        files: ["**/*.md"],
+        plugins: {
+            markdown,
+        },
+        language: "markdown/commonmark",
+        extends: [
+            markdown.configs.processor,
+            markdown.configs.recommended
+        ],
+        rules: {
+            "markdown/no-bare-urls": "error",
+            "markdown/no-duplicate-headings": "error",
+            "markdown/no-html": "error"
+        }
+    }
 ]);

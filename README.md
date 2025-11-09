@@ -9,19 +9,18 @@ defined in the rule settings.
 
 ## Table of Contents
 
-1. [Table of Contents](#table-of-contents)
-2. [Scope and Acknowledgements](#scope-and-acknowledgements)
-3. [Usage](#usage)
+1. [Scope and Acknowledgements](#scope-and-acknowledgements)
+2. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
       2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
       3. [Line Endings](#line-endings)
-4. [Examples](#examples)
-5. [Versioning](#versioning)
+3. [Examples](#examples)
+4. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
-6. [What is Backward-compatibility?](#what-is-backward-compatibility)
-7. [License](#license)
+5. [What is Backward-compatibility?](#what-is-backward-compatibility)
+6. [License](#license)
 
 ## Scope and Acknowledgements
 

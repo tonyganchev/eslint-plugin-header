@@ -911,6 +911,22 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\n\n\n\n\n\nconsole.log(1);"
             },
             {
+                code: "//Copyright 2020 My Company\nconsole.log(1);",
+                options: ["line", "Copyright 2020 My Company", 3],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+                output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2020 My Company\nconsole.log(1);",
+                options: ["line", ["Copyright 2020 My Company"], 3],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+                output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
+            },
+            {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
                 options: [{
                     header: {
@@ -1799,6 +1815,22 @@ describe("windows", () => {
                     {message: "missing header"}
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2020 My Company\r\nconsole.log(1);",
+                options: ["line", "Copyright 2020 My Company", 3],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+                output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2020 My Company\r\nconsole.log(1);",
+                options: ["line", ["Copyright 2020 My Company"], 3],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+                output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\r\nconsole.log(1);",

@@ -7,6 +7,22 @@ Often you will want to have a copyright notice at the top of every file. This
 ESLint plugin checks that the first comment in every file has the contents
 defined in the rule settings.
 
+## Table of Contents
+
+1. [Table of Contents](#table-of-contents)
+2. [Scope and Acknowledgements](#scope-and-acknowledgements)
+3. [Usage](#usage)
+   1. [File-based Configuration](#file-based-configuration)
+   2. [Inline Configuration](#inline-configuration)
+      1. [Header Contents Configuration](#header-contents-configuration)
+      2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
+      3. [Line Endings](#line-endings)
+4. [Examples](#examples)
+5. [Versioning](#versioning)
+   1. [What is a Feature?](#what-is-a-feature)
+6. [What is Backward-compatibility?](#what-is-backward-compatibility)
+7. [License](#license)
+
 ## Scope and Acknowledgements
 
 This is a fork of <https://github.com/Stuk/eslint-plugin-header>.
@@ -396,7 +412,7 @@ console.log(1)
 console.log(1)
 ```
 
-### With more decoration
+With more decoration:
 
 ```json
 "header/header": [2, "block", [
@@ -414,6 +430,47 @@ console.log(1)
  *************************/
  console.log(1);
 ```
+
+## Versioning
+
+The project follows standard [NPM semantic versioning policy](
+https://docs.npmjs.com/about-semantic-versioning).
+
+The following guidelines apply:
+
+- **major versions** - new functionality that breaks compatibility.
+- **minor versions** - new features that do not break compatibility. For the
+  most part we would aim to continue releasing new versions in the 3.x product
+  line and have opt-in flags for changes in behavior of existign features.
+- **revisions** - bugfixes and minor non-feature improvements that do not break
+  compatibility.
+
+Two concepts are important when going over the above guidelines and we will go
+over them in the next sections.
+
+### What is a Feature?
+
+We keep the distinction between a feature and a non-feature improvement / bug
+fix as simple as possible:
+
+- If configuration changes, it's a **feature**.
+- If it doesn't, then you have two cases:
+  - If it changes behavior back to what is expected, it is a bug.
+  - If it changes the expected behavior, it is an improvement.
+
+## What is Backward-compatibility?
+
+Backward compatibility in the context of this plugin relates to how the plugin
+consistently passes or fails one and the same code in between upgrades to newer
+backward-compatible versions. This guarantees that plugin updates can be done
+without breaking CI/CD pipeline linting.
+
+Backward-compatibility does not cover the following functional aspects:
+
+- Rule violation messages are not kept stable between backward-compatible
+  versions. This allows us to improve error reporting in addition to bug fixes.
+- Auto-fix behavior is not stable between backward-compatible versions. As auto-
+  fixes are not part of CI/CD processes results of them may vary.
 
 ## License
 

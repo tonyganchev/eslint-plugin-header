@@ -19,8 +19,8 @@ defined in the rule settings.
 3. [Examples](#examples)
 4. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
-5. [What is Backward-compatibility?](#what-is-backward-compatibility)
-6. [License](#license)
+   2. [What is Backward-compatibility?](#what-is-backward-compatibility)
+5. [License](#license)
 
 ## Scope and Acknowledgements
 
@@ -460,7 +460,7 @@ fix as simple as possible:
   - If it changes behavior back to what is expected, it is a bug.
   - If it changes the expected behavior, it is an improvement.
 
-## What is Backward-compatibility?
+### What is Backward-compatibility?
 
 Backward compatibility in the context of this plugin relates to how the plugin
 consistently passes or fails one and the same code in between upgrades to newer

@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.1.9
+
+* fix: do not bypass empty lines validation for single-line line comment
+  headers - fixes
+  [#72](https://github.com/tonyganchev/eslint-plugin-header/issues/72) by
+  [@tonyganchev](https://github.com/tonyganchev) in
+  [#73](https://github.com/tonyganchev/eslint-plugin-header/pull/73)
+
 ## 3.1.8
 
 * fix: support matching multi-line line comments with a single pattern - fixes

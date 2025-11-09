@@ -445,7 +445,8 @@ The following guidelines apply:
   most part we would aim to continue releasing new versions in the 3.x product
   line and have opt-in flags for changes in behavior of existign features.
 - **revisions** - bugfixes and minor non-feature improvements that do not break
-  compatibility.
+  compatibility. Note that bug-fixes are allowed to break compatibility with
+  previous version if the older version regressed previous expected behavior.
 
 Two concepts are important when going over the above guidelines and we will go
 over them in the next sections.
@@ -473,6 +474,9 @@ Backward-compatibility does not cover the following functional aspects:
   versions. This allows us to improve error reporting in addition to bug fixes.
 - Auto-fix behavior is not stable between backward-compatible versions. As auto-
   fixes are not part of CI/CD processes results of them may vary.
+- Bugs to released functionality. Bugs are considered regression to expected
+  functionality regardless of whether they went into a release or not. We fix
+  bugs without maintaining bug-compatibility.
 
 ## License
 

@@ -12,7 +12,7 @@
    "markdown.extension.toc.orderedList": true,
    "markdown.extension.toc.omittedFromToc": {
       "README.md": [
-         "# Table of Contents"
+         "## Table of Contents"
       ]
    } 
 }

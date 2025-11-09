@@ -9,19 +9,18 @@ defined in the rule settings.
 
 ## Table of Contents
 
-1. [Table of Contents](#table-of-contents)
-2. [Scope and Acknowledgements](#scope-and-acknowledgements)
-3. [Usage](#usage)
+1. [Scope and Acknowledgements](#scope-and-acknowledgements)
+2. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
       2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
       3. [Line Endings](#line-endings)
-4. [Examples](#examples)
-5. [Versioning](#versioning)
+3. [Examples](#examples)
+4. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
-6. [What is Backward-compatibility?](#what-is-backward-compatibility)
-7. [License](#license)
+5. [What is Backward-compatibility?](#what-is-backward-compatibility)
+6. [License](#license)
 
 ## Scope and Acknowledgements
 
@@ -58,9 +57,9 @@ The configuration can take any of the following forms:
   - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>]` -
     define the header contents inline and an expected number of empty lines
     after the header.
-  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>, {<settings>}]` -
-    define the header contents inline and an expected number of empty lines
-    after the header and pass additional settings.
+  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>,
+    {<settings>}]` - define the header contents inline and an expected number of
+    empty lines after the header and pass additional settings.
 
 ### File-based Configuration
 
@@ -151,7 +150,10 @@ All of the following configurations will match the header:
             "header/header": [
                 2,
                 "block",
-                { "pattern": "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n " }
+                {
+                    "pattern":
+                        "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n "
+                }
             ]
         }
     }
@@ -433,7 +435,8 @@ With more decoration:
 
 ## Versioning
 
-The project follows standard [NPM semantic versioning policy](https://docs.npmjs.com/about-semantic-versioning).
+The project follows standard [NPM semantic versioning policy](
+https://docs.npmjs.com/about-semantic-versioning).
 
 The following guidelines apply:
 

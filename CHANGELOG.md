@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.10
+
+* fix: address all autofix cases where too many new lines get created - fixes
+  [#76](https://github.com/tonyganchev/eslint-plugin-header/issues/76) by
+  [@tonyganchev](https://github.com/tonyganchev) in
+  [#78](https://github.com/tonyganchev/eslint-plugin-header/pull/78)
+
 ## 3.1.9
 
 * fix: do not bypass empty lines validation for single-line line comment

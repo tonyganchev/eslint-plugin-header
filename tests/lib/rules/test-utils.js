@@ -45,7 +45,7 @@ describe("generateInvalidTestCaseNames", () => {
                     { message: "incorrect header" }
                 ],
             },
-            "incorrect header - [ ] - someCode();"
+            "1: incorrect header - [ ] - someCode();"
         ],
         [
             {
@@ -54,7 +54,7 @@ describe("generateInvalidTestCaseNames", () => {
                     { message: "incorrect header" }
                 ],
             },
-            "incorrect header - [ ] - someCode();\\nsomeOtherCode();"
+            "1: incorrect header - [ ] - someCode();\\nsomeOtherCode();"
         ],
         [
             {
@@ -63,7 +63,7 @@ describe("generateInvalidTestCaseNames", () => {
                     { message: "incorrect header" }
                 ],
             },
-            "incorrect header - [ ] - someCode();\\r\\nsomeOtherCode();"
+            "1: incorrect header - [ ] - someCode();\\r\\nsomeOtherCode();"
         ],
         [
             {
@@ -77,7 +77,7 @@ describe("generateInvalidTestCaseNames", () => {
                     { message: "incorrect header" }
                 ],
             },
-            "incorrect header - [ ] - someCode();\\n"
+            "1: incorrect header - [ ] - someCode();\\n"
                 + "someOtherCode();\\r\\n"
                 + "evenMore(code);\\n"
                 + "itIsNotFunny()\\n"
@@ -92,7 +92,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["foo"]
             },
-            "incorrect header - [ ] - someCode();"
+            "1: incorrect header - [ ] - someCode();"
         ],
         [
             {
@@ -102,7 +102,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["header.js", { lineEndings: "windows" }]
             },
-            "incorrect header - [ windows ] - someCode();"
+            "1: incorrect header - [ windows ] - someCode();"
         ],
         [
             {
@@ -112,7 +112,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", ["Copyright 2025", "My Company"], { lineEndings: "unix" }]
             },
-            "incorrect header - [ unix line ] - someCode();"
+            "1: incorrect header - [ unix line ] - someCode();"
         ],
         [
             {
@@ -122,7 +122,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", "Copyright 2025 My Company", 10]
             },
-            "missing header - [ 10 line ] - someCode();"
+            "1: missing header - [ 10 line ] - someCode();"
         ],
         [
             {
@@ -132,7 +132,7 @@ describe("generateInvalidTestCaseNames", () => {
                 ],
                 options: ["line", "Copyright 2025 My Company", 10, { lineEndings: "windows" }]
             },
-            "missing header - [ 10 windows line ] - someCode();"
+            "1: missing header - [ 10 windows line ] - someCode();"
         ],
     ];
     for (const [testCaseDef, expectedName] of testCases) {
@@ -141,4 +141,23 @@ describe("generateInvalidTestCaseNames", () => {
             assert.equal(modifiedTestCase.name, expectedName);
         });
     }
+    it("test case names are properly incremented", () => {
+        const invalidTestCases = [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: "incorrect header" }
+                ],
+            },
+            {
+                code: "someOtherCode();",
+                errors: [
+                    { message: "incorrect header" }
+                ],
+            },
+        ];
+        const modifiedTestCases = generateInvalidTestCaseNames(invalidTestCases);
+        assert.equal(modifiedTestCases[0].name, "1: incorrect header - [ ] - someCode();");
+        assert.equal(modifiedTestCases[1].name, "2: incorrect header - [ ] - someOtherCode();");
+    });
 });

@@ -1,11 +1,39 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
+/*
+ * MIT License
+ *
+ * Copyright (c) 2025-present Tony Ganchev and contributors
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the “Software”), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
+import js from "@eslint/js";
+import markdown from "@eslint/markdown";
+import stylistic from "@stylistic/eslint-plugin";
+import { defineConfig } from "eslint/config";
+import eslintPlugin from "eslint-plugin-eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
-import header from "./index.js"
+import n from "eslint-plugin-n";
+import globals from "globals";
+import header from "./index.js";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -18,170 +46,189 @@ const compat = new FlatCompat({
 const jsRules = {
     extends: [
         ...compat.extends("eslint:recommended"),
+        eslintPlugin.configs.recommended,
+        jsdoc.configs["flat/recommended"],
     ],
     plugins: {
-        header
+        "eslint-plugin": eslintPlugin,
+        n,
+        "@stylistic": stylistic,
+        "@tony.ganchev": header
     },
     rules: {
-        indent: [2, 4, {
-            SwitchCase: 1,
-        }],
-
-        "brace-style": [2, "1tbs"],
-
-        camelcase: [2, {
+        camelcase: ["error", {
             properties: "never",
         }],
-
-        "callback-return": [2, ["cb", "callback", "next"]],
-        "comma-spacing": 2,
-        "comma-style": [2, "last"],
-        "consistent-return": 2,
-        curly: [2, "all"],
-        "default-case": 2,
-
-        "dot-notation": [2, {
+        "consistent-return": "error",
+        curly: ["error", "all"],
+        "default-case": "error",
+        "dot-notation": ["error", {
             allowKeywords: true,
         }],
-
-        "eol-last": 2,
-        eqeqeq: 2,
-        "func-style": [2, "declaration"],
-        "guard-for-in": 2,
-
-        "key-spacing": [2, {
-            beforeColon: false,
-            afterColon: true,
-        }],
-
-        "new-cap": 2,
-        "new-parens": 2,
-        "no-alert": 2,
-        "no-array-constructor": 2,
-        "no-caller": 2,
-        "no-console": 0,
-        "no-delete-var": 2,
-        "no-eval": 2,
-        "no-extend-native": 2,
-        "no-extra-bind": 2,
-        "no-fallthrough": 2,
-        "no-floating-decimal": 2,
-        "no-implied-eval": 2,
-        "no-invalid-this": 2,
-        "no-iterator": 2,
-        "no-label-var": 2,
-        "no-labels": 2,
-        "no-lone-blocks": 2,
-        "no-loop-func": 2,
-        "no-mixed-spaces-and-tabs": [2, false],
-        "no-multi-spaces": 2,
-        "no-multi-str": 2,
-        "no-native-reassign": 2,
-        "no-nested-ternary": 2,
-        "no-new": 2,
-        "no-new-func": 2,
-        "no-new-object": 2,
-        "no-new-wrappers": 2,
-        "no-octal": 2,
-        "no-octal-escape": 2,
-        "no-process-exit": 2,
-        "no-proto": 2,
-        "no-redeclare": 2,
-        "no-return-assign": 2,
-        "no-script-url": 2,
-        "no-sequences": 2,
-        "no-shadow": 2,
-        "no-shadow-restricted-names": 2,
-        "no-spaced-func": 2,
-        "no-trailing-spaces": 2,
-        "no-undef": 2,
-        "no-undef-init": 2,
-        "no-undefined": 2,
-        "no-underscore-dangle": 2,
-        "no-unused-expressions": 2,
-
-        "no-unused-vars": [2, {
+        eqeqeq: "error",
+        "func-style": ["error", "declaration"],
+        "global-strict": ["off", "always"],
+        "guard-for-in": "error",
+        "new-cap": "error",
+        "no-alert": "error",
+        "no-array-constructor": "error",
+        "no-caller": "error",
+        "no-console": "off",
+        "no-delete-var": "error",
+        "no-eval": "error",
+        "no-extend-native": "error",
+        "no-extra-bind": "error",
+        "no-fallthrough": "error",
+        "no-implied-eval": "error",
+        "no-invalid-this": "error",
+        "no-iterator": "error",
+        "no-label-var": "error",
+        "no-labels": "error",
+        "no-lone-blocks": "error",
+        "no-loop-func": "error",
+        "no-multi-str": "error",
+        "no-global-assign": "error",
+        "no-nested-ternary": "error",
+        "no-new": "error",
+        "no-new-func": "error",
+        "no-object-constructor": "error",
+        "no-new-require": "error",
+        "no-new-wrappers": "error",
+        "no-octal": "error",
+        "no-octal-escape": "error",
+        "no-proto": "error",
+        "no-redeclare": "error",
+        "no-return-assign": "error",
+        "no-script-url": "error",
+        "no-sequences": "error",
+        "no-shadow": "error",
+        "no-shadow-restricted-names": "error",
+        "no-undef": "error",
+        "no-undef-init": "error",
+        "no-undefined": "error",
+        "no-underscore-dangle": "error",
+        "no-unused-expressions": "error",
+        "no-unused-vars": ["error", {
             vars: "all",
             args: "after-used",
         }],
+        "no-use-before-define": "error",
+        "no-var": "error",
+        "no-with": "error",
+        radix: "error",
+        strict: ["error", "global"],
+        yoda: ["error", "never"],
 
-        "no-use-before-define": 2,
-        "no-with": 2,
-        quotes: [2, "double"],
-        radix: 2,
-        semi: 2,
+        "eslint-plugin/meta-property-ordering": "error",
+        "eslint-plugin/no-property-in-node": "error",
+        "eslint-plugin/prefer-placeholders": "error",
+        "eslint-plugin/prefer-replace-text": "error",
+        "eslint-plugin/report-message-format": "error",
+        "eslint-plugin/require-meta-docs-description": "error",
+        "eslint-plugin/require-meta-docs-recommended": "error",
+        "eslint-plugin/require-meta-docs-url": "error",
 
-        "semi-spacing": [2, {
+        "n/callback-return": ["error", ["cb", "callback", "next"]],
+        "n/handle-callback-err": ["error", "err"],
+        "n/no-mixed-requires": "error",
+        "n/no-path-concat": "error",
+        "n/no-process-exit": "error",
+
+        "@stylistic/brace-style": ["error", "1tbs"],
+        "@stylistic/comma-spacing": "error",
+        "@stylistic/comma-style": ["error", "last"],
+        "@stylistic/eol-last": "error",
+        "@stylistic/function-call-spacing": "error",
+        "@stylistic/key-spacing": ["error", {
+            beforeColon: false,
+            afterColon: true,
+        }],
+        "@stylistic/keyword-spacing": ["error", {
+            after: true,
+        }],
+        "@stylistic/new-parens": "error",
+        "@stylistic/indent": ["error", 4, {
+            SwitchCase: 1,
+        }],
+        "@stylistic/max-len": ["error", {
+            code: 120,
+            comments: 80
+        }],
+        "@stylistic/no-floating-decimal": "error",
+        "@stylistic/no-mixed-spaces-and-tabs": ["error", false],
+        "@stylistic/no-multi-spaces": "error",
+        "@stylistic/no-trailing-spaces": "error",
+        "@stylistic/quotes": ["error", "double"],
+        "@stylistic/semi": "error",
+        "@stylistic/semi-spacing": ["error", {
             before: false,
             after: true,
         }],
-
-        "keyword-spacing": [2, {
-            after: true,
-        }],
-
-        "space-before-blocks": 2,
-        "space-before-function-paren": [2, "never"],
-        "space-infix-ops": 2,
-
-        "space-unary-ops": [2, {
+        "@stylistic/space-before-blocks": "error",
+        "@stylistic/space-before-function-paren": ["error", "never"],
+        "@stylistic/space-infix-ops": "error",
+        "@stylistic/space-unary-ops": ["error", {
             words: true,
             nonwords: false,
         }],
-
-        "spaced-comment": [2, "always", {
+        "@stylistic/spaced-comment": ["error", "always", {
             exceptions: ["-"],
         }],
+        "@stylistic/wrap-iife": "error",
 
-        strict: [2, "global"],
-
-        "wrap-iife": 2,
-        yoda: [2, "never"],
-        "no-catch-shadow": 0,
-        "no-mixed-requires": 2,
-        "no-new-require": 2,
-        "no-path-concat": 2,
-        "global-strict": [0, "always"],
-        "handle-callback-err": [2, "err"],
-
-        'header/header': [
-            'error',
-            'block',
+        "@tony.ganchev/header": [
+            "error",
+            "block",
             [
-                '',
-                ' * MIT License',
-                ' *',
+                "",
+                " * MIT License",
+                " *",
                 {
-                    pattern: ' * Copyright \\(c\\) \\d{4}-present .* and contributors',
-                    template: ' * Copyright (c) 2025-present Tony Ganchev and contributors',
+                    pattern: " * Copyright \\(c\\) \\d{4}-present .*Tony Ganchev,? and contributors",
+                    template: " * Copyright (c) 2025-present Tony Ganchev and contributors",
                 },
-                ' *',
-                ' * Permission is hereby granted, free of charge, to any person obtaining a copy',
-                ' * of this software and associated documentation files (the “Software”), to deal',
-                ' * in the Software without restriction, including without limitation the rights',
-                ' * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell',
-                ' * copies of the Software, and to permit persons to whom the Software is',
-                ' * furnished to do so, subject to the following conditions:',
-                ' *',
-                ' * The above copyright notice and this permission notice shall be included in all',
-                ' * copies or substantial portions of the Software.',
-                ' *',
-                ' * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR',
-                ' * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,',
-                ' * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE',
-                ' * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER',
-                ' * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,',
-                ' * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE',
-                ' * SOFTWARE.',
-                ' '
+                " *",
+                " * Permission is hereby granted, free of charge, to any person obtaining a copy",
+                " * of this software and associated documentation files (the “Software”), to deal",
+                " * in the Software without restriction, including without limitation the rights",
+                " * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell",
+                " * copies of the Software, and to permit persons to whom the Software is",
+                " * furnished to do so, subject to the following conditions:",
+                " *",
+                " * The above copyright notice and this permission notice shall be included in",
+                " * all copies or substantial portions of the Software.",
+                " *",
+                " * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR",
+                " * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,",
+                " * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE",
+                " * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER",
+                " * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,",
+                " * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE",
+                " * SOFTWARE.",
+                " "
             ],
             2
-        ]
+        ],
     }
 };
 
 export default defineConfig([
-    jsdoc.configs["flat/recommended"],
+    {
+        ignores: [
+            "coverage/**",
+            ".vscode/**"
+        ]
+    },
+    {
+        files: ["**/*.mjs"],
+        languageOptions: {
+            sourceType: "module",
+            globals: {
+                ...globals.node,
+            },
+        },
+        ...jsRules,
+    },
     {
         files: ["lib/**/*.js"],
         languageOptions: {
@@ -203,4 +250,20 @@ export default defineConfig([
         },
         ...jsRules,
     },
+    {
+        files: ["**/*.md"],
+        plugins: {
+            markdown,
+        },
+        language: "markdown/commonmark",
+        extends: [
+            markdown.configs.processor,
+            markdown.configs.recommended
+        ],
+        rules: {
+            "markdown/no-bare-urls": "error",
+            "markdown/no-duplicate-headings": "error",
+            "markdown/no-html": "error"
+        }
+    }
 ]);

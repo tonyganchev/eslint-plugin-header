@@ -112,7 +112,6 @@ Suppose we want our header to look like this:
  * Copyright (c) 2015
  * My Company
  */
-...
 ```
 
 All of the following configurations will match the header:
@@ -211,7 +210,6 @@ perfectly valid, such as:
  * Copyright 2020
  * My company
  */
-...
 ```
 
 Moreover, suppose your legal department expects that the year of first and last
@@ -223,7 +221,6 @@ support:
  * Copyright 2017-2022
  * My company
  */
-...
 ```
 
 We can use a regular expression to support all of these cases for your header:

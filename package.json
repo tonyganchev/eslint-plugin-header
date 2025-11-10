@@ -8,15 +8,21 @@
     "!/lib/rules/test-utils.js"
   ],
   "scripts": {
+    "eslint": "npx eslint .",
+    "lint": "npm run eslint && npm run markdownlint",
+    "markdownlint": "npx markdownlint-cli *.md",
     "test": "npm run lint && npm run unit",
-    "unit": "nyc --reporter=html --reporter=text --reporter=text-summary --check-coverage=true --statements=98 --branches=90 --lines=98 --functions=100 mocha tests/lib/**/*.js",
-    "lint": "eslint ."
+    "unit": "npx nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.32.0",
+    "@eslint/markdown": "^7.5.1",
+    "@stylistic/eslint-plugin": "^5.5.0",
     "eslint": "^9.32.0",
+    "eslint-plugin-eslint-plugin": "^7.2.0",
     "eslint-plugin-jsdoc": "^52.0.4",
+    "eslint-plugin-n": "^17.23.1",
     "mocha": "^11.7.1",
     "nyc": "^17.1.0",
     "testdouble": "^3.20.2"

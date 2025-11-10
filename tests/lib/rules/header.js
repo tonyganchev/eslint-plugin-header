@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2015-present Stuart Knightley and contributors
+ * Copyright (c) 2015-present Stuart Knightley, Tony Ganchev and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -10,8 +10,8 @@
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
  *
  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -105,7 +105,13 @@ describe("unix", () => {
                 options: ["block", ["Copyright 2015", "My Company"]]
             },
             {
-                code: "/*************************\n * Copyright 2015\n * My Company\n *************************/\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n"),
                 options: ["block", [
                     "************************",
                     " * Copyright 2015",
@@ -162,7 +168,13 @@ describe("unix", () => {
                 options: ["block", ["Copyright 2018", "My Company"], {"lineEndings": "unix"}]
             },
             {
-                code: "/*************************\n * Copyright 2015\n * My Company\n *************************/\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n"),
                 options: ["block", [
                     "************************",
                     { pattern: " \\* Copyright \\d{4}" },
@@ -197,7 +209,12 @@ describe("unix", () => {
                     " * Copyright",
                     " "
                 ], 0]
-            }
+            },
+            {
+                // TODD: should fail during validation.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);",
+                options: ["block", "Copyright 2020, My Company", 1, {}],
+            },
         ],
         invalid: generateInvalidTestCaseNames([
             {
@@ -223,6 +240,13 @@ describe("unix", () => {
                     {message: "missing header"}
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2014, My Company\nconsole.log(1);",
+                options: ["block", [{ pattern: "Copyright 2015" }, "My Company"]],
+                errors: [
+                    {message: "header should be a block comment"}
+                ],
             },
             {
                 code: "//Copyright 2014, My Company\nconsole.log(1);",
@@ -290,6 +314,20 @@ describe("unix", () => {
                 output: "//Copyright 2015\n//My Company\nconsole.log(1)"
             },
             {
+                code: "//Copyright 2014\n//My Company\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
+                code: "//Copyright 2014\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
                 code: "//Copyright 2015",
                 options: ["line", "Copyright 2015\nMy Company"],
                 errors: [
@@ -335,7 +373,13 @@ describe("unix", () => {
                 ]
             },
             {
-                code: "/*************************\n * Copyright 2015\n * All your base are belong to us!\n *************************/\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * All your base are belong to us!",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n"),
                 options: ["block", [
                     "************************",
                     { pattern: " \\* Copyright \\d{4}", template: " * Copyright 2019" },
@@ -345,7 +389,13 @@ describe("unix", () => {
                 errors: [
                     {message: "incorrect header"}
                 ],
-                output: "/*************************\n * Copyright 2019\n * My Company\n *************************/\nconsole.log(1)"
+                output: [
+                    "/*************************",
+                    " * Copyright 2019",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n")
             },
             {
                 code: "/*Copyright 2020, My Company*/console.log(1);",
@@ -372,12 +422,28 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);"
             },
             {
+                code: "//Copyright 2020\n//My Company\nconsole.log(1);",
+                options: ["line", [{pattern: "Copyright 2020"}, "My Company"], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
                 code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
                 options: ["block", "Copyright 2020, My Company", 2],
                 errors: [
                     {message: "no newline after header"}
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
+            },
+            {
+                // TODO: this should be fixable since the pattern is correct and
+                //       only the new lines differ.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                options: ["block", [{pattern: "Copyright 2020, My Company"}], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -388,12 +454,27 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                code: "//Copyright 2020\r\n//My Company\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
+                code: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n"),
                 options: ["line", ["Copyright 2020", "My Company"], 2, { lineEndings: "windows"}],
                 errors: [
                     {message: "no newline after header"}
                 ],
-                output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
+                output: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n"),
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -418,6 +499,15 @@ describe("unix", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
+            },
+            {
+                // TODO: this should not be right, documenting status quo
+                code: "\n\n\n\n\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\n//My Company\n\n\n\n\n\n\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
@@ -517,7 +607,13 @@ describe("windows", () => {
                 options: ["block", ["Copyright 2015", "My Company"]]
             },
             {
-                code: "/*************************\n * Copyright 2015\n * My Company\n *************************/\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n"),
                 options: ["block", [
                     "************************",
                     " * Copyright 2015",
@@ -574,7 +670,13 @@ describe("windows", () => {
                 options: ["block", ["Copyright 2018", "My Company"], {"lineEndings": "unix"}]
             },
             {
-                code: "/*************************\n * Copyright 2015\n * My Company\n *************************/\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\n"),
                 options: ["block", [
                     "************************",
                     { pattern: " \\* Copyright \\d{4}" },
@@ -609,7 +711,12 @@ describe("windows", () => {
                     " * Copyright",
                     " "
                 ], 0]
-            }
+            },
+            {
+                // TODD: should fail during validation.
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);",
+                options: ["block", "Copyright 2020, My Company", 1, {}],
+            },
         ],
         invalid: generateInvalidTestCaseNames([
             {
@@ -635,6 +742,13 @@ describe("windows", () => {
                     {message: "missing header"}
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
+            },
+            {
+                code: "//Copyright 2014, My Company\r\nconsole.log(1);",
+                options: ["block", [{ pattern: "Copyright 2015" }, "My Company"]],
+                errors: [
+                    {message: "header should be a block comment"}
+                ],
             },
             {
                 code: "//Copyright 2014, My Company\r\nconsole.log(1);",
@@ -702,6 +816,20 @@ describe("windows", () => {
                 output: "//Copyright 2015\r\n//My Company\r\nconsole.log(1)"
             },
             {
+                code: "//Copyright 2014\r\n//My Company\r\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
+                code: "//Copyright 2014\r\nconsole.log(1)",
+                options: ["line", [{pattern: "Copyright 2015"}, "My Company"]],
+                errors: [
+                    {message: "incorrect header"}
+                ],
+            },
+            {
                 code: "//Copyright 2015",
                 options: ["line", "Copyright 2015\r\nMy Company"],
                 errors: [
@@ -747,7 +875,13 @@ describe("windows", () => {
                 ]
             },
             {
-                code: "/*************************\r\n * Copyright 2015\r\n * All your base are belong to us!\r\n *************************/\r\nconsole.log(1)",
+                code: [
+                    "/*************************",
+                    " * Copyright 2015",
+                    " * All your base are belong to us!",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\r\n"),
                 options: ["block", [
                     "************************",
                     { pattern: " \\* Copyright \\d{4}", template: " * Copyright 2019" },
@@ -757,7 +891,13 @@ describe("windows", () => {
                 errors: [
                     {message: "incorrect header"}
                 ],
-                output: "/*************************\r\n * Copyright 2019\r\n * My Company\r\n *************************/\r\nconsole.log(1)"
+                output: [
+                    "/*************************",
+                    " * Copyright 2019",
+                    " * My Company",
+                    " *************************/",
+                    "console.log(1)"
+                ].join("\r\n")
             },
             {
                 code: "/*Copyright 2020, My Company*/console.log(1);",
@@ -784,12 +924,26 @@ describe("windows", () => {
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);"
             },
             {
+                code: "//Copyright 2020\n//My Company\nconsole.log(1);",
+                options: ["line", [{pattern: "Copyright 2020"}, "My Company"], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
                 code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
                 options: ["block", "Copyright 2020, My Company", 2],
                 errors: [
                     {message: "no newline after header"}
                 ],
-                output: "/*Copyright 2020, My Company*/\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
+                output: [
+                    "/*Copyright 2020, My Company*/",
+                    "",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n")
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -800,20 +954,59 @@ describe("windows", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                code: "//Copyright 2020\r\n//My Company\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
+                code: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n"),
                 options: ["line", ["Copyright 2020", "My Company"], 2, { lineEndings: "windows"}],
                 errors: [
                     {message: "no newline after header"}
                 ],
-                output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
+                output: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n")
             },
             {
-                code: "//Copyright 2020\r\n//My Company\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
+                // TODO: this should be fixable since the pattern is correct and
+                //       only the new lines differ.
+                code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
+                options: ["block", [{pattern: "Copyright 2020, My Company"}], 2],
+                errors: [
+                    {message: "no newline after header"}
+                ],
+            },
+            {
+                code: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n"),
                 options: ["line", ["Copyright 2020", "My Company"], 2],
                 errors: [
                     {message: "no newline after header"}
                 ],
-                output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment"
+                output: [
+                    "//Copyright 2020",
+                    "//My Company",
+                    "",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n")
             },
             {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
@@ -830,6 +1023,14 @@ describe("windows", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\r\nconsole.log(1);",

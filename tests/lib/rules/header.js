@@ -514,7 +514,7 @@ describe("unix", () => {
                 errors: [
                     {message: "header should be a block comment"}
                 ],
-                output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
+                output: "/*Copyright 2015, My Company*/\nconsole.log(1);",
             },
             {
                 code: "//Copyright 2014, My Company\nconsole.log(1);",
@@ -907,7 +907,6 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                // TODO: this should not be right, documenting status quo
                 code: "\n\n\n\n\nconsole.log(1);",
                 options: [{
                     header: {
@@ -921,7 +920,23 @@ describe("unix", () => {
                 errors: [
                     {message: "missing header"}
                 ],
-                output: "//Copyright 2020\n//My Company\n\n\n\n\n\n\nconsole.log(1);"
+                output: "//Copyright 2020\n//My Company\n\n\n\n\nconsole.log(1);"
+            },
+            {
+                code: "\n\n\n\n\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: ["", " * Copyright 2020", " * My Company", " "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "/*\n * Copyright 2020\n * My Company\n */\n\n\n\n\nconsole.log(1);"
             },
             {
                 code: "//Copyright 2020 My Company\nconsole.log(1);",
@@ -938,6 +953,22 @@ describe("unix", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
+            },
+            {
+                code: "\n\n\n\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2020", "My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
@@ -963,7 +994,7 @@ describe("unix", () => {
                 errors: [
                     {message: "missing header"},
                 ],
-                output: "#!/usr/bin/env node\n// Copyright\n\n\nconsole.log(1);",
+                output: "#!/usr/bin/env node\n// Copyright\n\nconsole.log(1);",
             },
             {
                 code: "#!/usr/bin/env node\n\n// My Company\nconsole.log(1);",
@@ -976,10 +1007,10 @@ describe("unix", () => {
                 errors: [
                     {message: "missing header"},
                 ],
-                output: "#!/usr/bin/env node\n// Copyright\n\n// My Company\nconsole.log(1);",
+                output: "#!/usr/bin/env node\n// Copyright\n// My Company\nconsole.log(1);",
             },
             {
-                code: "#!/usr/bin/env node\n\n/* Copyright */\nconsole.log(1);",
+                code: "#!/usr/bin/env node\n\n\n/* Copyright */\nconsole.log(1);",
                 options: [{
                     header: {
                         commentType: "block",
@@ -1821,13 +1852,29 @@ describe("windows", () => {
                         lines: ["Copyright 2020", "My Company"]
                     },
                     trailingEmptyLines: {
-                        minimum: 2
+                        minimum: 7
                     }
                 }],
                 errors: [
                     {message: "missing header"}
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: ["", " * Copyright 2020", " * My Company", " "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "/*\r\n * Copyright 2020\r\n * My Company\r\n */\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
             {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
@@ -1844,6 +1891,22 @@ describe("windows", () => {
                     {message: "no newline after header"}
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2020", "My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {message: "missing header"}
+                ],
+                output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
             {
                 code: "#!/usr/bin/env node\r\nconsole.log(1);",
@@ -1869,7 +1932,7 @@ describe("windows", () => {
                 errors: [
                     {message: "missing header"},
                 ],
-                output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\n\r\nconsole.log(1);",
+                output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\nconsole.log(1);",
             },
             {
                 code: "#!/usr/bin/env node",

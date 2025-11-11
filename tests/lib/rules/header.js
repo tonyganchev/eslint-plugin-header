@@ -118,6 +118,19 @@ describe("legacy config", () => {
                 ], 0]
             },
             {
+                code: [
+                    "/**",
+                    " * Copyright",
+                    " */",
+                    "console.log(1)"
+                ].join("\n"),
+                options: ["block", [
+                    "*",
+                    " * Copyright",
+                    " "
+                ], 0]
+            },
+            {
                 code: "//Copyright 2018\r\n//My Company\r\n/* DOCS */",
                 options: ["line", ["Copyright 2018", "My Company"]]
             },
@@ -912,15 +925,15 @@ describe("unix", () => {
             },
             {
                 code: "//Copyright 2020 My Company\nconsole.log(1);",
-                options: ["line", "Copyright 2020 My Company", 3],
-                errors: [
-                    {message: "no newline after header"}
-                ],
-                output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
-            },
-            {
-                code: "//Copyright 2020 My Company\nconsole.log(1);",
-                options: ["line", ["Copyright 2020 My Company"], 3],
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2020 My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 3
+                    }
+                }],
                 errors: [
                     {message: "no newline after header"}
                 ],

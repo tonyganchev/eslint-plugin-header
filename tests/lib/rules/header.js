@@ -99,15 +99,15 @@ describe("legacy config", () => {
             },
             {
                 code: "// Copyright 2017",
-                options: ["line", {pattern: "^ Copyright \\d+$"}, 0]
+                options: ["line", { pattern: "^ Copyright \\d+$" }, 0]
             },
             {
                 code: "// Copyright 2017\n// Author: abc@example.com",
-                options: ["line", [{pattern: "^ Copyright \\d+$"}, {pattern: "^ Author: \\w+@\\w+\\.\\w+$"}], 0]
+                options: ["line", [{ pattern: "^ Copyright \\d+$" }, { pattern: "^ Author: \\w+@\\w+\\.\\w+$" }], 0]
             },
             {
                 code: "/* Copyright 2017\n Author: abc@example.com */",
-                options: ["block", {pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $"}, 0]
+                options: ["block", { pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $" }, 0]
             },
             {
                 code: "#!/usr/bin/env node\n/**\n * Copyright\n */",
@@ -136,7 +136,7 @@ describe("legacy config", () => {
             },
             {
                 code: "/*Copyright 2018\r\nMy Company*/\r\nconsole.log(1)",
-                options: ["block", ["Copyright 2018", "My Company"], {lineEndings: "windows"}]
+                options: ["block", ["Copyright 2018", "My Company"], { lineEndings: "windows" }]
             },
             {
                 code: [
@@ -265,7 +265,7 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$"}]
+                        lines: [{ pattern: "^ Copyright \\d+$" }]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -292,7 +292,7 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $"}]
+                        lines: [{ pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $" }]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -459,7 +459,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -473,7 +473,7 @@ describe("unix", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -487,7 +487,7 @@ describe("unix", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -500,7 +500,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
             },
             {
@@ -512,7 +512,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);",
             },
@@ -526,7 +526,7 @@ describe("unix", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -540,7 +540,7 @@ describe("unix", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -553,7 +553,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a line comment"}
+                    { message: "header should be a line comment" }
                 ],
                 output: "//Copyright 2015, My Company\nconsole.log(1);"
             },
@@ -566,7 +566,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -580,7 +580,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
             },
@@ -593,7 +593,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
             },
@@ -606,7 +606,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "//Copyright 2015\n//My Company\nconsole.log(1)"
             },
@@ -615,11 +615,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2015"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2015" }, "My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
             },
             {
@@ -627,11 +627,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2015"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2015" }, "My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
             },
             {
@@ -643,7 +643,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "//Copyright 2015\n//My Company\n"
             },
@@ -652,11 +652,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$"}],
+                        lines: [{ pattern: "^ Copyright \\d+$" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -664,11 +664,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$", template: " Copyright 2018"}],
+                        lines: [{ pattern: "^ Copyright \\d+$", template: " Copyright 2018" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "// Copyright 2018\n"
             },
@@ -677,11 +677,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$", template: " Copyright 2018"}, " My Company"]
+                        lines: [{ pattern: "^ Copyright \\d+$", template: " Copyright 2018" }, " My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "// Copyright 2018\n// My Company\n"
             },
@@ -690,11 +690,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright \\d+"}, {pattern: "^ Author: \\w+@\\w+\\.\\w+$"}]
+                        lines: [{ pattern: "Copyright \\d+" }, { pattern: "^ Author: \\w+@\\w+\\.\\w+$" }]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -702,11 +702,11 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "^ Copyright \\d+\\n Author: \\w+@\\w+\\.\\w+ $"}],
+                        lines: [{ pattern: "^ Copyright \\d+\\n Author: \\w+@\\w+\\.\\w+ $" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -751,7 +751,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);"
             },
@@ -767,7 +767,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "/*Copyright 2020, My Company*/\nconsole.log(1);"
             },
@@ -783,7 +783,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);"
             },
@@ -792,14 +792,14 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2020"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2020" }, "My Company"]
                     },
                     trailingEmptyLines: {
                         minimum: 2
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
             },
             {
@@ -814,7 +814,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -831,14 +831,14 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "Copyright 2020, My Company"}]
+                        lines: [{ pattern: "Copyright 2020, My Company" }]
                     },
                     trailingEmptyLines: {
                         minimum: 2
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
             },
             {
@@ -854,7 +854,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -878,7 +878,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -902,7 +902,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -918,7 +918,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\n\n\n\nconsole.log(1);"
             },
@@ -934,7 +934,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*\n * Copyright 2020\n * My Company\n */\n\n\n\n\nconsole.log(1);"
             },
@@ -950,7 +950,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
             },
@@ -966,7 +966,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
@@ -979,7 +979,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
             },
@@ -992,7 +992,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n\nconsole.log(1);",
             },
@@ -1005,7 +1005,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n// My Company\nconsole.log(1);",
             },
@@ -1018,7 +1018,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\n\n/* Copyright */\nconsole.log(1);",
             },
@@ -1031,7 +1031,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"},
+                    { message: "incorrect header" },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\nconsole.log(1);",
             },
@@ -1044,7 +1044,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a line comment"},
+                    { message: "header should be a line comment" },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
             },
@@ -1057,7 +1057,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n",
             },
@@ -1070,7 +1070,7 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\n",
             }
@@ -1190,7 +1190,7 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$"}]
+                        lines: [{ pattern: "^ Copyright \\d+$" }]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -1202,7 +1202,7 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$"}, {pattern: "^ Author: \\w+@\\w+\\.\\w+$"}]
+                        lines: [{ pattern: "^ Copyright \\d+$" }, { pattern: "^ Author: \\w+@\\w+\\.\\w+$" }]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -1214,7 +1214,7 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $"}]
+                        lines: [{ pattern: "^ Copyright \\d{4}\\n Author: \\w+@\\w+\\.\\w+ $" }]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -1381,7 +1381,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1395,7 +1395,7 @@ describe("windows", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -1409,7 +1409,7 @@ describe("windows", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1422,7 +1422,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
             },
             {
@@ -1434,7 +1434,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1448,7 +1448,7 @@ describe("windows", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -1462,7 +1462,7 @@ describe("windows", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    {message: "header should be a block comment"}
+                    { message: "header should be a block comment" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1475,7 +1475,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "header should be a line comment"}
+                    { message: "header should be a line comment" }
                 ],
                 output: "//Copyright 2015, My Company\r\nconsole.log(1);"
             },
@@ -1488,7 +1488,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1502,7 +1502,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
             },
@@ -1515,7 +1515,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
             },
@@ -1528,7 +1528,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "//Copyright 2015\r\n//My Company\r\nconsole.log(1)"
             },
@@ -1537,11 +1537,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2015"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2015" }, "My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
             },
             {
@@ -1549,11 +1549,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2015"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2015" }, "My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
             },
             {
@@ -1565,7 +1565,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "//Copyright 2015\r\n//My Company\r\n"
             },
@@ -1574,11 +1574,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$"}],
+                        lines: [{ pattern: "^ Copyright \\d+$" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -1586,11 +1586,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$", template: " Copyright 2018"}],
+                        lines: [{ pattern: "^ Copyright \\d+$", template: " Copyright 2018" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "// Copyright 2018\r\n"
             },
@@ -1599,11 +1599,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "^ Copyright \\d+$", template: " Copyright 2018"}, " My Company"]
+                        lines: [{ pattern: "^ Copyright \\d+$", template: " Copyright 2018" }, " My Company"]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: "// Copyright 2018\r\n// My Company\r\n"
             },
@@ -1612,11 +1612,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright \\d+"}, {pattern: "^ Author: \\w+@\\w+\\.\\w+$"}]
+                        lines: [{ pattern: "Copyright \\d+" }, { pattern: "^ Author: \\w+@\\w+\\.\\w+$" }]
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -1624,11 +1624,11 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "^ Copyright \\d+\\r\\n Author: \\w+@\\w+\\.\\w+ $"}],
+                        lines: [{ pattern: "^ Copyright \\d+\\r\\n Author: \\w+@\\w+\\.\\w+ $" }],
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ]
             },
             {
@@ -1651,7 +1651,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "incorrect header"}
+                    { message: "incorrect header" }
                 ],
                 output: [
                     "/*************************",
@@ -1673,7 +1673,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "/*Copyright 2020, My Company*/\r\n\r\nconsole.log(1);"
             },
@@ -1689,7 +1689,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "/*Copyright 2020, My Company*/\r\nconsole.log(1);"
             },
@@ -1705,7 +1705,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);"
             },
@@ -1714,14 +1714,14 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "line",
-                        lines: [{pattern: "Copyright 2020"}, "My Company"]
+                        lines: [{ pattern: "Copyright 2020" }, "My Company"]
                     },
                     trailingEmptyLines: {
                         minimum: 2
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
             },
             {
@@ -1736,7 +1736,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: [
                     "/*Copyright 2020, My Company*/",
@@ -1760,7 +1760,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -1771,14 +1771,14 @@ describe("windows", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{pattern: "Copyright 2020, My Company"}]
+                        lines: [{ pattern: "Copyright 2020, My Company" }]
                     },
                     trailingEmptyLines: {
                         minimum: 2
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
             },
             {
@@ -1801,7 +1801,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -1832,7 +1832,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -1856,7 +1856,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1872,7 +1872,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "/*\r\n * Copyright 2020\r\n * My Company\r\n */\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1880,7 +1880,7 @@ describe("windows", () => {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
                 options: ["line", "Copyright 2020 My Company", 3],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1888,7 +1888,7 @@ describe("windows", () => {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
                 options: ["line", ["Copyright 2020 My Company"], 3],
                 errors: [
-                    {message: "no newline after header"}
+                    { message: "no newline after header" }
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1904,7 +1904,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"}
+                    { message: "missing header" }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1917,7 +1917,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\nconsole.log(1);",
             },
@@ -1930,7 +1930,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\nconsole.log(1);",
             },
@@ -1943,7 +1943,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\n",
             },
@@ -1956,7 +1956,7 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    {message: "missing header"},
+                    { message: "missing header" },
                 ],
                 output: "#!/usr/bin/env node\r\n/* Copyright */\r\n",
             }

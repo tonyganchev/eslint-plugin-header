@@ -16,14 +16,14 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.32.0",
+    "@eslint/js": "^9.39.1",
     "@eslint/markdown": "^7.5.1",
     "@stylistic/eslint-plugin": "^5.5.0",
-    "eslint": "^9.32.0",
+    "eslint": "^9.39.1",
     "eslint-plugin-eslint-plugin": "^7.2.0",
-    "eslint-plugin-jsdoc": "^52.0.4",
+    "eslint-plugin-jsdoc": "^61.1.12",
     "eslint-plugin-n": "^17.23.1",
-    "mocha": "^11.7.1",
+    "mocha": "^11.7.5",
     "nyc": "^17.1.0",
     "testdouble": "^3.20.2"
   },

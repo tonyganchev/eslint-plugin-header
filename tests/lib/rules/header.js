@@ -500,7 +500,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -512,7 +518,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);",
             },
@@ -526,7 +538,13 @@ describe("unix", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -540,7 +558,13 @@ describe("unix", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -553,7 +577,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a line comment" }
+                    {
+                        message: "header should be a line comment",
+                        column: 1,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015, My Company\nconsole.log(1);"
             },
@@ -1044,7 +1074,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a line comment" },
+                    {
+                        message: "header should be a line comment",
+                        column: 1,
+                        endColumn: 16,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
             },
@@ -1422,7 +1458,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -1434,7 +1476,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1448,7 +1496,13 @@ describe("windows", () => {
                     lineEndings: "unix"
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -1462,7 +1516,13 @@ describe("windows", () => {
                     lineEndings: "windows"
                 }],
                 errors: [
-                    { message: "header should be a block comment" }
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 29,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1475,7 +1535,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "header should be a line comment" }
+                    {
+                        message: "header should be a line comment",
+                        column: 1,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015, My Company\r\nconsole.log(1);"
             },

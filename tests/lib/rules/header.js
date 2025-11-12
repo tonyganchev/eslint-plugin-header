@@ -596,7 +596,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -610,7 +616,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 8,
+                        endLine: 3,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
             },
@@ -623,7 +635,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 3,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
             },
@@ -636,7 +654,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 13,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015\n//My Company\nconsole.log(1)"
             },
@@ -649,7 +673,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 13,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -661,7 +691,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -673,7 +709,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015\n//My Company\n"
             },
@@ -686,7 +728,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 27,
+                        endLine: 1,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -698,7 +746,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 27,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "// Copyright 2018\n"
             },
@@ -711,7 +765,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 11,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "// Copyright 2018\n// My Company\n"
             },
@@ -724,7 +784,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 2,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -736,7 +802,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 2,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -759,7 +831,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 4,
+                        line: 1
+                    }
                 ],
                 output: [
                     "/*************************",
@@ -1116,7 +1194,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" },
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 17,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\nconsole.log(1);",
             },
@@ -1609,7 +1693,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1623,7 +1713,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 8,
+                        endLine: 3,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
             },
@@ -1636,7 +1732,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 3,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
             },
@@ -1649,7 +1751,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 13,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015\r\n//My Company\r\nconsole.log(1)"
             },
@@ -1662,7 +1770,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 13,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -1674,7 +1788,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
             },
             {
@@ -1686,7 +1806,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2015\r\n//My Company\r\n"
             },
@@ -1699,7 +1825,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 27,
+                        endLine: 1,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -1711,7 +1843,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 27,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "// Copyright 2018\r\n"
             },
@@ -1724,7 +1862,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 11,
+                        endLine: 2,
+                        line: 1
+                    }
                 ],
                 output: "// Copyright 2018\r\n// My Company\r\n"
             },
@@ -1737,7 +1881,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 2,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -1749,7 +1899,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 2,
+                        line: 1
+                    }
                 ]
             },
             {
@@ -1772,7 +1928,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "incorrect header" }
+                    {
+                        message: "incorrect header",
+                        column: 1,
+                        endColumn: 28,
+                        endLine: 4,
+                        line: 1
+                    }
                 ],
                 output: [
                     "/*************************",

@@ -221,7 +221,13 @@ describe("unix", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -229,7 +235,13 @@ describe("unix", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company", { lineEndings: "unix" }],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -237,7 +249,13 @@ describe("unix", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company", { lineEndings: "windows" }],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -655,7 +673,13 @@ describe("unix", () => {
                     2
                 ],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\n\n\n\nconsole.log(1);"
             },
@@ -667,7 +691,13 @@ describe("unix", () => {
                     2
                 ],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*\n * Copyright 2020\n * My Company\n */\n\n\n\n\nconsole.log(1);"
             },
@@ -703,7 +733,13 @@ describe("unix", () => {
                 code: "\n\n\n\nconsole.log(1);",
                 options: ["line", ["Copyright 2020", "My Company"], 2],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
@@ -711,7 +747,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\nconsole.log(1);",
             },
@@ -719,7 +761,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node\n\n\nconsole.log(1);",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n\nconsole.log(1);",
             },
@@ -727,7 +775,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node\n\n// My Company\nconsole.log(1);",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n// My Company\nconsole.log(1);",
             },
@@ -735,7 +789,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node\n\n\n/* Copyright */\nconsole.log(1);",
                 options: ["block", " Copyright "],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\n\n/* Copyright */\nconsole.log(1);",
             },
@@ -771,7 +831,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n// Copyright\n",
             },
@@ -779,7 +845,13 @@ describe("unix", () => {
                 code: "#!/usr/bin/env node",
                 options: ["block", " Copyright "],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\n",
             }
@@ -933,7 +1005,13 @@ describe("windows", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -941,7 +1019,13 @@ describe("windows", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company", { lineEndings: "unix" }],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\nconsole.log(1);"
             },
@@ -949,7 +1033,13 @@ describe("windows", () => {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company", { lineEndings: "windows" }],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
@@ -1395,7 +1485,13 @@ describe("windows", () => {
                     7
                 ],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1407,7 +1503,13 @@ describe("windows", () => {
                     2
                 ],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*\r\n * Copyright 2020\r\n * My Company\r\n */\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1443,7 +1545,13 @@ describe("windows", () => {
                 code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
                 options: ["line", ["Copyright 2020", "My Company"], 2],
                 errors: [
-                    { message: "missing header" }
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1451,7 +1559,13 @@ describe("windows", () => {
                 code: "#!/usr/bin/env node\r\nconsole.log(1);",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\nconsole.log(1);",
             },
@@ -1459,7 +1573,13 @@ describe("windows", () => {
                 code: "#!/usr/bin/env node\r\n\r\n\r\nconsole.log(1);",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\n\r\nconsole.log(1);",
             },
@@ -1467,7 +1587,13 @@ describe("windows", () => {
                 code: "#!/usr/bin/env node",
                 options: ["line", " Copyright"],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\r\n// Copyright\r\n",
             },
@@ -1475,7 +1601,13 @@ describe("windows", () => {
                 code: "#!/usr/bin/env node",
                 options: ["block", " Copyright "],
                 errors: [
-                    { message: "missing header" },
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 2,
+                        line: 2
+                    },
                 ],
                 output: "#!/usr/bin/env node\r\n/* Copyright */\r\n",
             }

@@ -751,7 +751,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 0" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 0",
+                        column: 31,
+                        endColumn: 32,
+                        endLine: 1,
+                        line: 1
+                    }
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);"
             },
@@ -767,7 +773,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 1, actual: 0" }
+                    {
+                        message: "not enough newlines after header: expected: 1, actual: 0",
+                        column: 31,
+                        endColumn: 32,
+                        endLine: 1,
+                        line: 1,
+                    }
                 ],
                 output: "/*Copyright 2020, My Company*/\nconsole.log(1);"
             },
@@ -783,7 +795,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);"
             },
@@ -799,8 +817,15 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
+                output: "//Copyright 2020\n//My Company\n\nconsole.log(1);",
             },
             {
                 code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -814,20 +839,18 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 31,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                // TODO: this should be fixable since the pattern is correct and
-                //       only the new lines differ.
-                code: [
-                    "/*Copyright 2020, My Company*/",
-                    "console.log(1);",
-                    "//Comment",
-                    "console.log(2);",
-                    "//Comment"
-                ].join("\n"),
+                code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
                 options: [{
                     header: {
                         commentType: "block",
@@ -838,8 +861,16 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 31,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+
+                    }
                 ],
+                output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -854,7 +885,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -878,7 +915,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -902,7 +945,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
@@ -950,7 +999,13 @@ describe("unix", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 3, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 3, actual: 1",
+                        column: 28,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: "//Copyright 2020 My Company\n\n\nconsole.log(1);"
             },
@@ -1673,7 +1728,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 0" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 0",
+                        column: 31,
+                        endColumn: 32,
+                        endLine: 1,
+                        line: 1,
+                    }
                 ],
                 output: "/*Copyright 2020, My Company*/\r\n\r\nconsole.log(1);"
             },
@@ -1689,7 +1750,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 1, actual: 0" }
+                    {
+                        message: "not enough newlines after header: expected: 1, actual: 0",
+                        column: 31,
+                        endColumn: 32,
+                        endLine: 1,
+                        line: 1,
+                    }
                 ],
                 output: "/*Copyright 2020, My Company*/\r\nconsole.log(1);"
             },
@@ -1705,7 +1772,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: "//Copyright 2020\r\n//My Company\r\n\r\nconsole.log(1);"
             },
@@ -1721,8 +1794,15 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
+                output: "//Copyright 2020\n//My Company\r\n\nconsole.log(1);"
             },
             {
                 code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
@@ -1736,7 +1816,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 31,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: [
                     "/*Copyright 2020, My Company*/",
@@ -1760,13 +1846,17 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                // TODO: this should be fixable since the pattern is correct and
-                //       only the new lines differ.
                 code: "/*Copyright 2020, My Company*/\r\nconsole.log(1);\r\n//Comment\r\nconsole.log(2);\r\n//Comment",
                 options: [{
                     header: {
@@ -1780,6 +1870,14 @@ describe("windows", () => {
                 errors: [
                     { message: "not enough newlines after header: expected: 2, actual: 1" }
                 ],
+                output: [
+                    "/*Copyright 2020, My Company*/",
+                    "",
+                    "console.log(1);",
+                    "//Comment",
+                    "console.log(2);",
+                    "//Comment"
+                ].join("\r\n")
             },
             {
                 code: [
@@ -1801,7 +1899,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -1832,7 +1936,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2,
+                    }
                 ],
                 output: [
                     "//Copyright 2020",
@@ -1880,7 +1990,13 @@ describe("windows", () => {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
                 options: ["line", "Copyright 2020 My Company", 3],
                 errors: [
-                    { message: "not enough newlines after header: expected: 3, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 3, actual: 1",
+                        column: 28,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
             },
@@ -1888,7 +2004,13 @@ describe("windows", () => {
                 code: "//Copyright 2020 My Company\r\nconsole.log(1);",
                 options: ["line", ["Copyright 2020 My Company"], 3],
                 errors: [
-                    { message: "not enough newlines after header: expected: 3, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 3, actual: 1",
+                        column: 28,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: "//Copyright 2020 My Company\r\n\r\n\r\nconsole.log(1);"
             },

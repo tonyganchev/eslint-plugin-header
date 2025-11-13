@@ -615,9 +615,9 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 31,
+                        message: "header line does not match expected after this position; expected: 5, My Company",
+                        column: 16,
+                        endColumn: 29,
                         endLine: 1,
                         line: 1
                     }
@@ -635,11 +635,11 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header too long",
                         column: 1,
-                        endColumn: 8,
+                        endColumn: 6,
                         endLine: 3,
-                        line: 1
+                        line: 3
                     }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
@@ -654,11 +654,11 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header line shorter than expected; missing: My Company",
                         column: 1,
-                        endColumn: 3,
+                        endColumn: 2,
                         endLine: 2,
-                        line: 1
+                        line: 2
                     }
                 ],
                 output: "/*Copyright 2015\nMy Company*/\nconsole.log(1);"
@@ -673,10 +673,10 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 13,
-                        endLine: 2,
+                        message: "header line does not match expected after this position; expected: 5",
+                        column: 16,
+                        endColumn: 17,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -692,10 +692,10 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 13,
-                        endLine: 2,
+                        message: "header line does not match pattern: /Copyright 2015/",
+                        column: 3,
+                        endColumn: 17,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -710,8 +710,8 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
+                        message: "header line does not match pattern: /Copyright 2015/",
+                        column: 3,
                         endColumn: 17,
                         endLine: 1,
                         line: 1
@@ -728,10 +728,8 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 17,
-                        endLine: 1,
+                        message: "header too short: missing lines: My Company",
+                        column: 17,
                         line: 1
                     }
                 ],
@@ -784,10 +782,10 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 11,
-                        endLine: 2,
+                        message: "header line does not match pattern: /^ Copyright \\d+$/",
+                        column: 3,
+                        endColumn: 27,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -803,11 +801,11 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
+                        message: "header line does not match pattern: /^ Author: \\w+@\\w+\\.\\w+$/",
+                        column: 3,
                         endColumn: 28,
                         endLine: 2,
-                        line: 1
+                        line: 2
                     }
                 ]
             },
@@ -821,10 +819,10 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 28,
-                        endLine: 2,
+                        message: "header line does not match pattern: /^ Copyright \\d+\\n Author: \\w+@\\w+\\.\\w+ $/",
+                        column: 3,
+                        endColumn: 50,
+                        endLine: 1,
                         line: 1
                     }
                 ]
@@ -850,11 +848,11 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 28,
-                        endLine: 4,
-                        line: 1
+                        message: "header line does not match expected after this position; expected: My Company",
+                        column: 4,
+                        endColumn: 35,
+                        endLine: 3,
+                        line: 3
                     }
                 ],
                 output: [
@@ -1255,9 +1253,9 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 17,
+                        message: "header line does not match expected after this position; expected: Copyright ",
+                        column: 4,
+                        endColumn: 15,
                         endLine: 2,
                         line: 2
                     },
@@ -1320,7 +1318,244 @@ describe("unix", () => {
                     },
                 ],
                 output: "#!/usr/bin/env node\n/* Copyright */\n",
-            }
+            },
+            {
+                code: "//Copyright 681\n//Bulgaria\n\nconsole.log('founding');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 681", "Bulgaria", { pattern: "Khan Asparuh" }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too short: missing lines: /Khan Asparuh/",
+                        column: 11,
+                        line: 2
+                    }
+                ]
+            },
+            {
+                code: "//Copyright 1969\n//Levski 7:2 CSKA\n\nconsole.log('destroying');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 1969", "Levski"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+                output: "//Copyright 1969\n//Levski\n\nconsole.log('destroying');"
+            },
+            {
+                code: "//Copyright 1994\n//Levski 7:1 CSKA\n\nconsole.log('emrassing');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [{ pattern: "Copyright 1994" }, "Levski"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                code: "//Copyright 2014\n//Levski\n\nconsole.log('centenial');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2014", "Levski Sofia"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  Sofia",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+                output: "//Copyright 2014\n//Levski Sofia\n\nconsole.log('centenial');",
+            },
+            {
+                code: "//Copyright 1994\n//Levski\n\nconsole.log('thrashing');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [{ pattern: "Copyright 1994" }, "Levski 8:0 Lokomotiv Sofia"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  8:0 Lokomotiv Sofia",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                code: [
+                    "/* Copyright 1985",
+                    "   Megadeth ",
+                    "   Killing Is My Business ... And Business Is Good",
+                    "   Combat Records */",
+                    "",
+                    "console.log('founding');"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 1985", "   Megadeth "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too long",
+                        column: 1,
+                        endColumn: 19,
+                        endLine: 4,
+                        line: 3
+                    }
+                ],
+                output: "/* Copyright 1985\n   Megadeth */\n\nconsole.log('founding');"
+            },
+            {
+                code: "/* Copyright\n   1985 (c)\n   Tony Ganchev */\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright", "   1985", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 8,
+                        endColumn: 12,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: "/* Copyright\n   1985\n   Tony Ganchev */\n\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Copyright\n   Tony Ganchev */\n\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2000", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  2000",
+                        column: 13,
+                        endColumn: 14,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Copyright 2000\n   Tony Ganchev */\n\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Right to Copy\n   Tony Ganchev */\n\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Right", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Right\n   Tony Ganchev */\n\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Copyright 1988\n   Iron Maiden */\n\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 1988", { pattern: "^   Megadeth $" }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match pattern: /^   Megadeth $/",
+                        column: 1,
+                        endColumn: 16,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                // NOTE: strange use-case. We should probably guard against this
+                //       in the schema.
+                code: "/* Copyright 1988 Queensrÿche\n   EMI America */\n\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: []
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too long",
+                        column: 3,
+                        endColumn: 16,
+                        endLine: 2,
+                        line: 1
+                    }
+                ],
+                output: "/**/\n\nconsole.log('hello!');"
+            },
         ])
     });
 });
@@ -1784,9 +2019,9 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 31,
+                        message: "header line does not match expected after this position; expected: 5, My Company",
+                        column: 16,
+                        endColumn: 29,
                         endLine: 1,
                         line: 1
                     }
@@ -1804,11 +2039,11 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header too long",
                         column: 1,
-                        endColumn: 8,
+                        endColumn: 6,
                         endLine: 3,
-                        line: 1
+                        line: 3
                     }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
@@ -1823,11 +2058,11 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header line shorter than expected; missing: My Company",
                         column: 1,
-                        endColumn: 3,
+                        endColumn: 2,
                         endLine: 2,
-                        line: 1
+                        line: 2
                     }
                 ],
                 output: "/*Copyright 2015\r\nMy Company*/\r\nconsole.log(1);"
@@ -1842,10 +2077,10 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 13,
-                        endLine: 2,
+                        message: "header line does not match expected after this position; expected: 5",
+                        column: 16,
+                        endColumn: 17,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -1861,10 +2096,10 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 13,
-                        endLine: 2,
+                        message: "header line does not match pattern: /Copyright 2015/",
+                        column: 3,
+                        endColumn: 17,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -1879,8 +2114,8 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
+                        message: "header line does not match pattern: /Copyright 2015/",
+                        column: 3,
                         endColumn: 17,
                         endLine: 1,
                         line: 1
@@ -1897,10 +2132,8 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 17,
-                        endLine: 1,
+                        message: "header too short: missing lines: My Company",
+                        column: 17,
                         line: 1
                     }
                 ],
@@ -1953,10 +2186,10 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 11,
-                        endLine: 2,
+                        message: "header line does not match pattern: /^ Copyright \\d+$/",
+                        column: 3,
+                        endColumn: 27,
+                        endLine: 1,
                         line: 1
                     }
                 ],
@@ -1972,11 +2205,11 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
+                        message: "header line does not match pattern: /^ Author: \\w+@\\w+\\.\\w+$/",
+                        column: 3,
                         endColumn: 28,
                         endLine: 2,
-                        line: 1
+                        line: 2
                     }
                 ]
             },
@@ -1990,10 +2223,11 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 28,
-                        endLine: 2,
+                        message:
+                            "header line does not match pattern: /^ Copyright \\d+\\r\\n Author: \\w+@\\w+\\.\\w+ $/",
+                        column: 3,
+                        endColumn: 51,
+                        endLine: 1,
                         line: 1
                     }
                 ]
@@ -2019,11 +2253,11 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
-                        column: 1,
-                        endColumn: 28,
-                        endLine: 4,
-                        line: 1
+                        message: "header line does not match expected after this position; expected: My Company",
+                        column: 4,
+                        endColumn: 35,
+                        endLine: 3,
+                        line: 3
                     }
                 ],
                 output: [
@@ -2441,7 +2675,243 @@ describe("windows", () => {
                     },
                 ],
                 output: "#!/usr/bin/env node\r\n/* Copyright */\r\n",
-            }
-        ])
+            },
+            {
+                code: "//Copyright 681\r\n//Bulgaria\r\n\r\nconsole.log('founding');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 681", "Bulgaria", { pattern: "Khan Asparuh" }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too short: missing lines: /Khan Asparuh/",
+                        column: 11,
+                        line: 2
+                    }
+                ]
+            },
+            {
+                code: "//Copyright 1969\r\n//Levski 7:2 CSKA\r\n\r\nconsole.log('destroying');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 1969", "Levski"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+                output: "//Copyright 1969\r\n//Levski\r\n\r\nconsole.log('destroying');"
+            },
+            {
+                code: "//Copyright 1994\r\n//Levski 7:1 CSKA\r\n\r\nconsole.log('emrassing');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [{ pattern: "Copyright 1994" }, "Levski"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                code: "//Copyright 2014\r\n//Levski\r\n\r\nconsole.log('centenial');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2014", "Levski Sofia"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  Sofia",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+                output: "//Copyright 2014\r\n//Levski Sofia\r\n\r\nconsole.log('centenial');",
+            },
+            {
+                code: "//Copyright 1994\r\n//Levski\r\n\r\nconsole.log('thrashing');",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [{ pattern: "Copyright 1994" }, "Levski 8:0 Lokomotiv Sofia"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  8:0 Lokomotiv Sofia",
+                        column: 9,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                code: [
+                    "/* Copyright 1985",
+                    "   Megadeth ",
+                    "   Killing Is My Business ... And Business Is Good",
+                    "   Combat Records */",
+                    "",
+                    "console.log('founding');"
+                ].join("\r\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 1985", "   Megadeth "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too long",
+                        column: 1,
+                        endColumn: 19,
+                        endLine: 4,
+                        line: 3
+                    }
+                ],
+                output: "/* Copyright 1985\r\n   Megadeth */\r\n\r\nconsole.log('founding');"
+            },
+            {
+                code: "/* Copyright\r\n   1985 (c)\r\n   Tony Ganchev */\r\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright", "   1985", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 8,
+                        endColumn: 12,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: "/* Copyright\r\n   1985\r\n   Tony Ganchev */\r\n\r\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Copyright\r\n   Tony Ganchev */\r\n\r\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2000", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing:  2000",
+                        column: 13,
+                        endColumn: 14,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Copyright 2000\r\n   Tony Ganchev */\r\n\r\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Right to Copy\r\n   Tony Ganchev */\r\n\r\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Right", "   Tony Ganchev "]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 9,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Right\r\n   Tony Ganchev */\r\n\r\nconsole.log('hello!');",
+            },
+            {
+                code: "/* Copyright 1988\r\n   Iron Maiden */\r\n\r\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 1988", { pattern: "^   Megadeth $" }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match pattern: /^   Megadeth $/",
+                        column: 1,
+                        endColumn: 16,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+            },
+            {
+                // NOTE: strange use-case. We should probably guard against this
+                //       in the schema.
+                code: "/* Copyright 1988 Queensrÿche\r\n   EMI America */\r\n\r\nconsole.log('hello!');",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: []
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too long",
+                        column: 3,
+                        endColumn: 16,
+                        endLine: 2,
+                        line: 1
+                    }
+                ],
+                output: "/**/\r\n\r\nconsole.log('hello!');"
+            },])
     });
 });

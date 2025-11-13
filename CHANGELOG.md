@@ -1,5 +1,37 @@
 # Changelog
 
+## 3.1.11
+
+* Major overhaul of error reporting for mismatched headers and more precise
+  source code locations of the different rule violations. Addresses work items
+  [#58](https://github.com/tonyganchev/eslint-plugin-header/issues/58) and its
+  sub-issues as well as
+  [#37](https://github.com/tonyganchev/eslint-plugin-header/issues/92)
+  
+  Detailed changes added to the list of PRs
+  below:
+  * improv: better error message for missing newlines - fixes
+    [#92](https://github.com/tonyganchev/eslint-plugin-header/issues/92) by
+    [@tonyganchev](https://github.com/tonyganchev) in
+    [#83](https://github.com/tonyganchev/eslint-plugin-header/pull/83)
+  * imrpov: put more precise location when reporting missing empty lines - fixes
+    [#84](https://github.com/tonyganchev/eslint-plugin-header/issues/84) by
+    [@tonyganchev](https://github.com/tonyganchev) in
+    [#87](https://github.com/tonyganchev/eslint-plugin-header/pull/87)
+  * improv: put more precise location when reporting incorrect comment style -
+    fixes
+    [#90](https://github.com/tonyganchev/eslint-plugin-header/issues/90) by
+    [@tonyganchev](https://github.com/tonyganchev) in
+    [#94](https://github.com/tonyganchev/eslint-plugin-header/pull/94)
+  * improv: put more precise location when reporting incorrect header - fixes
+    [#89](https://github.com/tonyganchev/eslint-plugin-header/issues/89) by
+    [@tonyganchev](https://github.com/tonyganchev) in
+    [#96](https://github.com/tonyganchev/eslint-plugin-header/pull/96)
+  * improv: put more precise location when reporting missing headers - fixes
+    [#86](https://github.com/tonyganchev/eslint-plugin-header/issues/86) by
+    [@tonyganchev](https://github.com/tonyganchev) in
+    [#98](https://github.com/tonyganchev/eslint-plugin-header/pull/98)
+
 ## 3.1.10
 
 * fix: address all autofix cases where too many new lines get created - fixes

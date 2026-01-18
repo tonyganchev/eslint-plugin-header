@@ -1,0 +1,17 @@
+{
+    "root": true,
+    "overrides": [
+        {
+            "files": ["**/*.js"],
+            "plugins": ["@tony.ganchev/header"],
+            "rules": {
+                "@tony.ganchev/header/header": [
+                    "error",
+                    "line",
+                    [" Copyright 1985", " Tony Ganchev"],
+                    2
+                ]
+            }
+        }
+    ]
+}

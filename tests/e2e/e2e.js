@@ -39,7 +39,12 @@ describe("E2E", () => {
         const packOutput = execSync("npm pack", { cwd: rootDir, encoding: "utf8" }).trim();
         tarballPath = path.resolve(rootDir, packOutput);
 
-        execSync(`npm install ${tarballPath} --no-save`, { cwd: fixturePath });
+        execSync(undefined, {
+            cwd: fixturePath,
+            shell: false,
+            file: "npm",
+            args: ["install", tarballPath, "--no-save"]
+        });
     });
 
     after(() => {

@@ -10,17 +10,18 @@ defined in the rule settings.
 ## Table of Contents
 
 1. [Scope and Acknowledgements](#scope-and-acknowledgements)
-2. [Usage](#usage)
+2. [Compatibility](#compatibility)
+3. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
       2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
       3. [Line Endings](#line-endings)
-3. [Examples](#examples)
-4. [Versioning](#versioning)
+4. [Examples](#examples)
+5. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
    2. [What is Backward-compatibility?](#what-is-backward-compatibility)
-5. [License](#license)
+6. [License](#license)
 
 ## Scope and Acknowledgements
 
@@ -38,6 +39,16 @@ It addresses the following issus:
 - Provides the foundation to evolve the plugin to add more capabilities moving
   forward. This would come at the expense of plugin compatibility and the
   portability of fixes to the upstream repository.
+
+## Compatibility
+
+The plugin is thoroughly tested with the current latest version of ESLint as per
+its _package-lock.json_ file. Additionally, smoke tests are being run against
+ESLint 8 for hierarchical / JSON config, and for both ESLint 9 and ESLint 10
+(pre-release) for flat config.
+
+The plugin is not compatible with ESLint 7 as it has switched to APIs introduced
+with ESLint 8.
 
 ## Usage
 

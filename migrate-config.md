@@ -107,6 +107,10 @@ const headerConfig = [
 
 ### Single-line
 
+There is no special configuration format for a single-line matcher. The _header_
+rule assumes that if only a single line is given it should be tested against
+the full header comment. Applies to both string- and regular-expression rules.
+
 Legacy Configuration:
 
 ```js
@@ -125,7 +129,7 @@ const headerConfig = [
     {
         header: {
             commentType: "block",
-            lines: "config/header.js"
+            lines: ["\n * Copyright (c) 2015\n * My Company\n "]
         }
     }
 ];
@@ -154,10 +158,7 @@ const headerConfig = [
     {
         header: {
             commentType: "block",
-            lines: {
-                "pattern":
-                    "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n "
-            }
+            lines: [/\n \* Copyright \(c\) 2015\n \* My Company\n /]
         }
     }
 ];
@@ -226,7 +227,7 @@ const headerConfig = [
             commentType: "block",
             lines: [
                 "",
-                { pattern: " \\* Copyright \\(c\\) 2015" },
+                / \* Copyright \(c\) 2015/,
                 " * My Company",
                 " "
             ]
@@ -234,6 +235,10 @@ const headerConfig = [
     }
 ];
 ```
+
+Note: you can still use strings in place of RegExp objects (do not forget to
+escape the backslashes). This would allow you to use the new configuration in
+legacy hierarchical ESLint configuration files.
 
 ### Adding Auto-fixable Patterns
 
@@ -263,7 +268,7 @@ const headerConfig = [
             commentType: "block",
             lines: [
                 {
-                    pattern: " Copyright \\(c\\) (\\d{4}-)?\\d{4}",
+                    pattern: / Copyright \(c\) (\d{4}-)?\d{4}/,
                     template: " Copyright 2025",
                 },
                 " My Company"

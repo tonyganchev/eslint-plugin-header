@@ -148,7 +148,7 @@ All of the following configurations will match the header:
                     {
                         header: {
                             commentType: "block",
-                            lines: "\n * Copyright (c) 2015\n * My Company\n "
+                            lines: ["\n * Copyright (c) 2015\n * My Company\n "]
                         }
                     },
                 ]
@@ -170,6 +170,8 @@ All of the following configurations will match the header:
 
 - **Single regular expression**:
 
+    You can match the whole header with a regular expression. To do it, simply pass a `RegExp` object in place of a string.
+
     ```js
     import header from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
@@ -186,10 +188,40 @@ All of the following configurations will match the header:
                     {
                         header: {
                             commentType: "block",
-                            lines: {
-                                pattern: "\\n \\* Copyright \\(c\\) 2015"
-                                    + "\\n \\* My Company\\n "
-                            }
+                            lines: [
+                                /\n \* Copyright \(c\) 2015\n \* Company\n /
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]);
+    ```
+
+    If you still use hierarchical configuration, you can define the regular
+    expression as a string.
+
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                { pattern: "\\n \\* Copyright \\(c\\) 2015"
+                                    + "\\n \\* My Company\\n "}
+                            ]
                         }
                     }
                 ]
@@ -201,6 +233,38 @@ All of the following configurations will match the header:
     Notice the double escaping of the braces. Since these pattern strings into
     `RegExp` objects, the backslashes need to be present in the string instead
     of disappear as escape characters.
+
+    You can pass a `RegExp` object to the `pattern` field. This is necessary if
+    you want to add an aut-fix for the line as we will explain further in this
+    document.
+
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                { pattern: /Copyright \(c\) 20\d{2}/ }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]);
+    ```
+
 
 - **Array of strings**:
 
@@ -254,7 +318,7 @@ All of the following configurations will match the header:
                             commentType: "block",
                             lines: [
                                 "",
-                                { pattern: " \\* Copyright \\(c\\) 2015" },
+                                / \* Copyright \(c\) 2015/,
                                 " * My Company",
                                 " "
                             ]
@@ -309,7 +373,7 @@ export default defineConfig([
                         commentType: "block",
                         lines: [
                             "",
-                            { pattern: " \\* Copyright \\(c\\) (\\d{4}-)?\\d{4}" },
+                            / \* Copyright \(c\) (\d{4}-)?\d{4}/,
                             " * My Company",
                             " "
                         ]
@@ -345,7 +409,7 @@ export default defineConfig([
                         commentType: "line",
                         lines: [
                             {
-                                pattern: " Copyright \\(c\\) (\\d{4}-)?\\d{4}",
+                                pattern: / Copyright \(c\) (\d{4}-)?\d{4}/,
                                 template: " Copyright 2025",
                             },
                             " My Company"
@@ -546,7 +610,7 @@ export default defineConfig([
                 {
                     header: {
                         commentType: "block",
-                        lines: "Copyright 2015, My Company"
+                        lines: ["Copyright 2015, My Company"]
                     }
                 }
             ]
@@ -611,8 +675,8 @@ export default defineConfig([
                     header: {
                         commentType: "line",
                         lines: [
-                            { pattern: "^Copyright \\d{4}$" },
-                            { pattern: "^My Company$" }
+                            /^Copyright \d{4}$/,
+                            /^My Company$/
                         ]
                     }
                 }
@@ -678,7 +742,7 @@ The following guidelines apply:
 - **major versions** - new functionality that breaks compatibility.
 - **minor versions** - new features that do not break compatibility. For the
   most part we would aim to continue releasing new versions in the 3.x product
-  line and have opt-in flags for changes in behavior of existign features.
+  line and have opt-in flags for changes in behavior of existing features.
 - **revisions** - bugfixes and minor non-feature improvements that do not break
   compatibility. Note that bug-fixes are allowed to break compatibility with
   previous version if the older version regressed previous expected behavior.

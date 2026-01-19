@@ -28,9 +28,10 @@ const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
 const os = td.replace("os");
 
+const { RuleTester } = require("eslint");
+
 const rule = require("../../../lib/rules/header");
 const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
-const { RuleTester } = require("eslint");
 
 const ruleTester = new RuleTester();
 
@@ -266,6 +267,30 @@ describe("unix", () => {
                     header: {
                         commentType: "line",
                         lines: [{ pattern: "^ Copyright \\d+$" }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }]
+            },
+            {
+                code: "// Copyright 2017",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [{ pattern: /^ Copyright \d+$/ }]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }]
+            },
+            {
+                code: "// Copyright 2017",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [/^ Copyright \d+$/]
                     },
                     trailingEmptyLines: {
                         minimum: 0
@@ -1359,7 +1384,7 @@ describe("unix", () => {
                 output: "//Copyright 1969\n//Levski\n\nconsole.log('destroying');"
             },
             {
-                code: "//Copyright 1994\n//Levski 7:1 CSKA\n\nconsole.log('emrassing');",
+                code: "//Copyright 1994\n//Levski 7:1 CSKA\n\nconsole.log('embarrassing');",
                 options: [{
                     header: {
                         commentType: "line",
@@ -1378,7 +1403,7 @@ describe("unix", () => {
                 ],
             },
             {
-                code: "//Copyright 2014\n//Levski\n\nconsole.log('centenial');",
+                code: "//Copyright 2014\n//Levski\n\nconsole.log('centennial');",
                 options: [{
                     header: {
                         commentType: "line",
@@ -1395,7 +1420,7 @@ describe("unix", () => {
                         line: 2
                     }
                 ],
-                output: "//Copyright 2014\n//Levski Sofia\n\nconsole.log('centenial');",
+                output: "//Copyright 2014\n//Levski Sofia\n\nconsole.log('centennial');",
             },
             {
                 code: "//Copyright 1994\n//Levski\n\nconsole.log('thrashing');",
@@ -2716,7 +2741,7 @@ describe("windows", () => {
                 output: "//Copyright 1969\r\n//Levski\r\n\r\nconsole.log('destroying');"
             },
             {
-                code: "//Copyright 1994\r\n//Levski 7:1 CSKA\r\n\r\nconsole.log('emrassing');",
+                code: "//Copyright 1994\r\n//Levski 7:1 CSKA\r\n\r\nconsole.log('embarrassing');",
                 options: [{
                     header: {
                         commentType: "line",
@@ -2735,7 +2760,7 @@ describe("windows", () => {
                 ],
             },
             {
-                code: "//Copyright 2014\r\n//Levski\r\n\r\nconsole.log('centenial');",
+                code: "//Copyright 2014\r\n//Levski\r\n\r\nconsole.log('centennial');",
                 options: [{
                     header: {
                         commentType: "line",
@@ -2752,7 +2777,7 @@ describe("windows", () => {
                         line: 2
                     }
                 ],
-                output: "//Copyright 2014\r\n//Levski Sofia\r\n\r\nconsole.log('centenial');",
+                output: "//Copyright 2014\r\n//Levski Sofia\r\n\r\nconsole.log('centennial');",
             },
             {
                 code: "//Copyright 1994\r\n//Levski\r\n\r\nconsole.log('thrashing');",

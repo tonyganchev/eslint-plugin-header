@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.0
+
+* New rule configuration format using a single-object structure. Legacy
+  configuration format is still supported. Both formats are available in both
+  hierarchical and flat configs.
+
 ## 3.1.12
 
 * Fix broken compatibility with ESLint 7.
@@ -18,7 +24,7 @@
     [#92](https://github.com/tonyganchev/eslint-plugin-header/issues/92) by
     [@tonyganchev](https://github.com/tonyganchev) in
     [#83](https://github.com/tonyganchev/eslint-plugin-header/pull/83)
-  * imrpov: put more precise location when reporting missing empty lines - fixes
+  * improv: put more precise location when reporting missing empty lines - fixes
     [#84](https://github.com/tonyganchev/eslint-plugin-header/issues/84) by
     [@tonyganchev](https://github.com/tonyganchev) in
     [#87](https://github.com/tonyganchev/eslint-plugin-header/pull/87)

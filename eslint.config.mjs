@@ -216,7 +216,9 @@ export default defineConfig([
     {
         ignores: [
             "coverage/**",
-            ".vscode/**"
+            ".vscode/**",
+            "tests/e2e/project/**",
+            "tests/support/**",
         ]
     },
     {
@@ -240,7 +242,10 @@ export default defineConfig([
         ...jsRules,
     },
     {
-        files: ["tests/lib/**/*.js"],
+        files: [
+            "tests/lib/**/*.js",
+            "tests/e2e/*.js"
+        ],
         languageOptions: {
             sourceType: "script",
             globals: {

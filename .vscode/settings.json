@@ -4,16 +4,28 @@
       120
    ],
    "cSpell.words": [
+      "Asparuh",
       "commonmark",
+      "CSKA",
       "ganchev",
       "Knightley",
+      "Levski",
+      "Lokomotiv",
+      "Megadeth",
       "nonwords",
+      "Queensrÿche",
       "tonyganchev"
    ],
    "markdown.extension.toc.levels": "2..6",
    "markdown.extension.toc.orderedList": true,
    "markdown.extension.toc.omittedFromToc": {
       "README.md": [
+         "## Table of Contents"
+      ],
+      "legacy-config.md": [
+         "## Table of Contents"
+      ],
+      "migrate-config.md": [
          "## Table of Contents"
       ]
    } 

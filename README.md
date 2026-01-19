@@ -47,47 +47,53 @@ Both flat config and legacy, hierarchical config can be used.
 
 ## Usage
 
-This rule takes between 1 and 4 arguments after the rule validation severity.
+The plugin and its _header_ rule goes through evolution of its configuration in
+the 3.2.x release. We introduced a new single object-based configuration format
+that is easier to evolve in the future to add more capabilities.
 
-The configuration can take any of the following forms:
+The legacy configuration format inherited from
+[eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header) is still
+supported and you can learn how to use it in a
+[dedicated document](legacy-config.md). For information on how to switch from
+the legacy configuration format to the new style, follow our
+[migration guide](migrate-config.md). The current document from this point on
+will cover only the new configuration format.
 
-- File-based Configuration
-  - `[<severity>, "<file>"]` - read the header template from a file.
-  - `[<severity>, "<file>", {<settings>}]` - read the header template from a
-    file with additional settings.
-- Inline Configuration
-  - `"<severity>", "<comment-type>", <header-contents>` - define the header
-    contents inline.
-  - `[<severity>, "<comment-type>", <header-contents>, {<settings>}]` - define
-    the header contents inline and pass additional settings.
-  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>]` -
-    define the header contents inline and an expected number of empty lines
-    after the header.
-  - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>,
-    {<settings>}]` - define the header contents inline and an expected number of
-    empty lines after the header and pass additional settings.
+This _header_ rule takes a single object as configuration, after the severity
+level. At the very least, the object should contain a `header` field describing
+the expected header to match in the source files.
 
 ### File-based Configuration
 
-In this configuration mode, the first argument is a string pointing to a JS
-file containing the header contents. The rule would expect an exact match to be
-found in the source code.
+In this configuration mode, the header template is read from a file.
 
-The second argument can be a settings object that will be covered later in this
-document.
+_eslint.config.mjs_:
 
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [2, "config/header.js"]
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        file: "config/header.js"
+                    }
+                }
+            ]
+        }
     }
-}
+]);
 ```
 
-config/header.js:
+_config/header.js_:
 
 ```js
 // Copyright 2015
@@ -100,14 +106,16 @@ tree then the header file will not be found.
 
 ### Inline Configuration
 
-The inline configuration expects at least two arguments to be given:
+In this configuration mode, the matching rules for the header are given inline.
+The `header` field should contain the following nested properties:
 
-- _comment-type_ which is either `"block"` or `"line"` to indicate what style
+- `commentType` which is either `"block"` or `"line"` to indicate what style
   of comment should be used.
-- _header-contents_ which defines the lines of the header. It can be either a
+- `line` which defines the lines of the header. It can be either a
   single multiline string / regular expression with the full contents of the
   header comment or an array with comment lines or regular expressions matching
-  each line.
+  each line. It can also include template replacement strings to enable ESLint's
+  auto-fix capabilities.
 
 #### Header Contents Configuration
 
@@ -124,16 +132,29 @@ All of the following configurations will match the header:
 
 - **Single string**:
 
-    ```json
-    {
-        "rules": {
-            "header/header": [
-                2,
-                "block",
-                "\n * Copyright (c) 2015\n * My Company\n "
-            ]
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: ["\n * Copyright (c) 2015\n * My Company\n "]
+                        }
+                    },
+                ]
+            }
         }
-    }
+    ]);
     ```
 
     Note that the above would work for both Windows and POSIX systems even
@@ -149,61 +170,164 @@ All of the following configurations will match the header:
 
 - **Single regular expression**:
 
-    ```json
-    {
-        "rules": {
-            "header/header": [
-                2,
-                "block",
-                {
-                    "pattern":
-                        "\\n \\* Copyright \\(c\\) 2015\\n \\* My Company\\n "
-                }
-            ]
+    You can match the whole header with a regular expression. To do it, simply
+    pass a `RegExp` object in place of a string.
+
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                /\n \* Copyright \(c\) 2015\n \* Company\n /
+                            ]
+                        }
+                    }
+                ]
+            }
         }
-    }
+    ]);
+    ```
+
+    If you still use hierarchical configuration, you can define the regular
+    expression as a string.
+
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                { pattern: "\\n \\* Copyright \\(c\\) 2015"
+                                    + "\\n \\* My Company\\n "}
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]);
     ```
 
     Notice the double escaping of the braces. Since these pattern strings into
     `RegExp` objects, the backslashes need to be present in the string instead
     of disappear as escape characters.
 
+    You can pass a `RegExp` object to the `pattern` field. This is necessary if
+    you want to add an aut-fix for the line as we will explain further in this
+    document.
+
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                { pattern: /Copyright \(c\) 20\d{2}/ }
+                            ]
+                        }
+                    }
+                ]
+            }
+        }
+    ]);
+    ```
+
 - **Array of strings**:
 
-    ```json
-    {
-        "rules": {
-            "header/header": [
-                2,
-                "block",
-                [
-                    "",
-                    " * Copyright (c) 2015",
-                    " * My Company",
-                    " "
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                "",
+                                " * Copyright (c) 2015",
+                                " * My Company",
+                                " "
+                            ]
+                        }
+                    }
                 ]
-            ]
+            }
         }
-    }
+    ]);
     ```
 
 - **Array of strings and/or patterns**:
 
-    ```json
-    {
-        "rules": {
-            "header/header": [
-                2,
-                "block",
-                [
-                    "",
-                    { "pattern": " \\* Copyright \\(c\\) 2015" },
-                    " * My Company",
-                    " "
+    ```js
+    import header from "@tony.ganchev/eslint-plugin-header";
+    import { defineConfig } from "eslint/config";
+
+    export default defineConfig([
+        {
+            files: ["**/*.js"],
+            plugins: {
+                "@tony.ganchev": header
+            },
+            rules: {
+                "@tony.ganchev/header": [
+                    "error",
+                    {
+                        header: {
+                            commentType: "block",
+                            lines: [
+                                "",
+                                / \* Copyright \(c\) 2015/,
+                                " * My Company",
+                                " "
+                            ]
+                        }
+                    }
                 ]
-            ]
+            }
         }
-    }
+    ]);
     ```
 
 Regular expressions allow for a number of improvements in the maintainability
@@ -231,21 +355,34 @@ support:
 
 We can use a regular expression to support all of these cases for your header:
 
-```json
-{
-    "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                "",
-                { "pattern": " \\* Copyright \\(c\\) (\\d{4}-)?\\d{4}" },
-                " * My Company",
-                " "
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "",
+                            / \* Copyright \(c\) (\d{4}-)?\d{4}/,
+                            " * My Company",
+                            " "
+                        ]
+                    }
+                }
             ]
-        ]
+        }
     }
-}
+]);
 ```
 
 Note on auto-fixes i.e. `eslint --fix`: whenever strings are used to define the
@@ -254,22 +391,35 @@ to replace a header comment that did not pass validation. This is not possible
 with regular expressions. For regular expression pattern-objects, a second
 property `template` adds a replacement string.
 
-```json
-{
-    "rules": {
-        "header/header": [
-            2,
-            "line",
-            [
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
                 {
-                    "pattern": " Copyright \\(c\\) (\\d{4}-)?\\d{4}",
-                    "template": " Copyright 2025",
-                },
-                " My Company"
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            {
+                                pattern: / Copyright \(c\) (\d{4}-)?\d{4}/,
+                                template: " Copyright 2025",
+                            },
+                            " My Company"
+                        ]
+                    }
+                }
             ]
-        ]
+        }
     }
-}
+]);
 ```
 
 There are a number of things to consider:
@@ -287,23 +437,35 @@ number of newlines that are enforced after the header.
 
 Zero newlines:
 
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                " Copyright now",
-                "My Company "
-            ],
-            0
-        ]
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright now",
+                            "My Company "
+                        ],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }
+            ]
+        }
     }
-}
+]);
 ```
 
 ```js
@@ -313,23 +475,35 @@ My Company */ console.log(1)
 
 One newline (default):
 
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                " Copyright now",
-                "My Company "
-            ],
-            1
-        ]
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright now",
+                            "My Company "
+                        ],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 1
+                    }
+                }
+            ]
+        }
     }
-}
+]);
 ```
 
 ```js
@@ -340,23 +514,35 @@ console.log(1)
 
 Two newlines:
 
-```json
-{
-    "plugins": [
-        "header"
-    ],
-    "rules": {
-        "header/header": [
-            2,
-            "block",
-            [
-                " Copyright now",
-                "My Company "
-            ],
-            2
-        ]
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright now",
+                            "My Company "
+                        ]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }
+            ]
+        }
     }
-}
+]);
 ```
 
 ```js
@@ -372,36 +558,99 @@ The rule works with both Unix/POSIX and Windows line endings. For ESLint
 `--fix`, the rule will use the line ending format of the current operating
 system (via Node's `os` package). This setting can be overwritten as follows:
 
-```json
-"rules": {
-    "header/header": [
-        2,
-        "block",
-        [
-            "Copyright 2018",
-            "My Company"
-        ],
-        {
-            "lineEndings": "windows"
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "Copyright 2018",
+                            "My Company"
+                        ]
+                    },
+                    lineEndings: "windows"
+                }
+            ]
         }
-    ]
-}
+    }
+]);
 ```
 
 Possible values are `"unix"` for `\n` and `"windows"` for `\r\n` line endings.
+The default value is `"os"` which means assume the system-specific line endings.
 
 ## Examples
 
 The following examples are all valid.
 
-`"block", "Copyright 2015, My Company"`:
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: ["Copyright 2015, My Company"]
+                    }
+                }
+            ]
+        }
+    }
+]);
+```
 
 ```js
 /*Copyright 2015, My Company*/
 console.log(1);
 ```
 
-`"line", ["Copyright 2015", "My Company"]]`:
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            "Copyright 2015",
+                            "My Company"
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+]);
+```
 
 ```js
 //Copyright 2015
@@ -409,7 +658,33 @@ console.log(1);
 console.log(1)
 ```
 
-`"line", [{pattern: "^Copyright \\d{4}$"}, {pattern: "^My Company$"}]]`:
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            /^Copyright \d{4}$/,
+                            /^My Company$/
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+]);
+```
 
 ```js
 //Copyright 2017
@@ -419,13 +694,34 @@ console.log(1)
 
 With more decoration:
 
-```json
-"header/header": [2, "block", [
-    "************************",
-    " * Copyright 2015",
-    " * My Company",
-    " ************************"
-]]
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "************************",
+                            " * Copyright 2015",
+                            " * My Company",
+                            " ************************"
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+]);
 ```
 
 ```js
@@ -446,7 +742,7 @@ The following guidelines apply:
 - **major versions** - new functionality that breaks compatibility.
 - **minor versions** - new features that do not break compatibility. For the
   most part we would aim to continue releasing new versions in the 3.x product
-  line and have opt-in flags for changes in behavior of existign features.
+  line and have opt-in flags for changes in behavior of existing features.
 - **revisions** - bugfixes and minor non-feature improvements that do not break
   compatibility. Note that bug-fixes are allowed to break compatibility with
   previous version if the older version regressed previous expected behavior.

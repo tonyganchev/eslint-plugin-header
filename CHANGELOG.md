@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.12
+
+* Fix broken compatibility with ESLint 7.
+
 ## 3.1.11
 
 * Major overhaul of error reporting for mismatched headers and more precise

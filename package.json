@@ -11,8 +11,9 @@
     "eslint": "npx eslint .",
     "lint": "npm run eslint && npm run markdownlint",
     "markdownlint": "npx markdownlint-cli *.md",
-    "test": "npm run lint && npm run unit",
-    "unit": "npx nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js"
+    "test": "npm run lint && npm run unit && npm run e2e",
+    "unit": "npx nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js",
+    "e2e": "npx mocha --timeout 60000 tests/e2e/*.js"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",

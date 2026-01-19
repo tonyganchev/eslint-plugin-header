@@ -15,6 +15,12 @@
    "markdown.extension.toc.omittedFromToc": {
       "README.md": [
          "## Table of Contents"
+      ],
+      "legacy-config.md": [
+         "## Table of Contents"
+      ],
+      "migrate-config.md": [
+         "## Table of Contents"
       ]
    } 
 }

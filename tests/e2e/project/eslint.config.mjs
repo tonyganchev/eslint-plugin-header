@@ -10,9 +10,18 @@ export default defineConfig([
         rules: {
             "@tony.ganchev/header/header": [
                 "error",
-                "line",
-                [" Copyright 1985", " Tony Ganchev"],
-                2
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 1985",
+                            " Tony Ganchev"
+                        ]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }
             ]
         }
     },

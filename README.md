@@ -42,13 +42,8 @@ It addresses the following issus:
 
 ## Compatibility
 
-The plugin is thoroughly tested with the current latest version of ESLint as per
-its _package-lock.json_ file. Additionally, smoke tests are being run against
-ESLint 8 for hierarchical / JSON config, and for both ESLint 9 and ESLint 10
-(pre-release) for flat config.
-
-The plugin is not compatible with ESLint 7 as it has switched to APIs introduced
-with ESLint 8.
+The plugin supports ESLint 7 / 8 / 9 / 10rc0 (check package.json for details).
+Both flat config and legacy, hierarchical config can be used.
 
 ## Usage
 

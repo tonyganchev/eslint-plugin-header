@@ -49,6 +49,7 @@ describe("E2E", () => {
     });
 
     for (const [cmdLine, envVars] of [
+        ["npx eslint@7 -c .eslintrc.json --no-eslintrc", {}],
         [
             "npx eslint@8 -c .eslintrc.json --no-eslintrc",
             { ESLINT_USE_FLAT_CONFIG: "false" }

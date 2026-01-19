@@ -170,7 +170,8 @@ All of the following configurations will match the header:
 
 - **Single regular expression**:
 
-    You can match the whole header with a regular expression. To do it, simply pass a `RegExp` object in place of a string.
+    You can match the whole header with a regular expression. To do it, simply
+    pass a `RegExp` object in place of a string.
 
     ```js
     import header from "@tony.ganchev/eslint-plugin-header";
@@ -264,7 +265,6 @@ All of the following configurations will match the header:
         }
     ]);
     ```
-
 
 - **Array of strings**:
 

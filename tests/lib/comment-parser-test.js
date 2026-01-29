@@ -25,7 +25,7 @@
 /* eslint-env mocha */
 "use strict";
 
-const assert = require("assert");
+const assert = require("node:assert");
 const commentParser = require("../../lib/comment-parser");
 
 describe("comment parser", function() {

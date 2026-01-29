@@ -24,7 +24,7 @@
 
 "use strict";
 
-const assert = require("assert");
+const assert = require("node:assert");
 const { contextSourceCode } = require("../../../lib/rules/eslint-utils");
 
 describe("ESLint compatibility utils", () => {

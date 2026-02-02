@@ -24,11 +24,13 @@
 
 "use strict";
 
-module.exports = {
+const header = require("./lib/rules/header");
+
+/** @type {import('eslint').ESLint.Plugin} */
+const pluginDefinition = {
     rules: {
-        "header": require("./lib/rules/header")
-    },
-    rulesConfig: {
-        "header": 0
+        header
     }
 };
+
+module.exports = pluginDefinition;

@@ -26,7 +26,7 @@
 
 const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
-const os = td.replace("os");
+const os = td.replace("node:os");
 
 const rule = require("../../../lib/rules/header");
 const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");

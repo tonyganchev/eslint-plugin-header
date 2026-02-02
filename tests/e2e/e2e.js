@@ -24,10 +24,10 @@
 
 "use strict";
 
-const { execSync } = require("child_process");
-const assert = require("assert");
-const fs = require("fs");
-const path = require("path");
+const assert = require("node:assert");
+const { execSync } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
 
 describe("E2E", () => {
 

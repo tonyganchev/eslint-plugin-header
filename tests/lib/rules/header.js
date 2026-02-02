@@ -1417,6 +1417,8 @@ describe("unix", () => {
                     {
                         message: "header line shorter than expected; missing:  Sofia",
                         column: 9,
+                        endColumn: 9,
+                        endLine: 2,
                         line: 2
                     }
                 ],
@@ -1437,6 +1439,8 @@ describe("unix", () => {
                     {
                         message: "header line shorter than expected; missing:  8:0 Lokomotiv Sofia",
                         column: 9,
+                        endColumn: 9,
+                        endLine: 2,
                         line: 2
                     }
                 ],

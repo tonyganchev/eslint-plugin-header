@@ -22,7 +22,6 @@
  * SOFTWARE.
  */
 
-/* eslint-env mocha */
 "use strict";
 
 const assert = require("node:assert");

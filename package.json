@@ -3,13 +3,15 @@
   "version": "3.2.0",
   "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
+  "types": "/types/index.d.ts",
   "files": [
     "/lib/**/*.js",
+    "/types/index.d.ts*",
     "!/lib/rules/test-utils.js"
   ],
   "scripts": {
     "build": "npx tsc",
-    "e2e": "npx mocha --timeout 60000 tests/e2e/*.js",
+    "e2e": "npm run build && npx mocha --timeout 60000 tests/e2e/*.js",
     "eslint": "npx eslint .",
     "lint": "npm run eslint && npm run markdownlint",
     "markdownlint": "npx markdownlint-cli *.md",

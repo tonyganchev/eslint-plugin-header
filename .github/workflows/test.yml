@@ -9,10 +9,9 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
 
+  test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -21,4 +20,7 @@ jobs:
         node-version: '24.x'
     - name: Install dependencies
       run: npm ci
-    - run: npm test
+    - name: Generate TypeScript definitions
+      run: npm run build 
+    - name: Run lint, unit- and E2E tests
+      run: npm run test

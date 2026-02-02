@@ -1,9 +1,12 @@
+// Copyright 1985
+// Tony Ganchev
+
 import { defineConfig } from "eslint/config";
 import header from "@tony.ganchev/eslint-plugin-header";
 
 export default defineConfig([
     {
-        files: ["**/*.js"],
+        files: ["index.ts"],
         plugins: {
             "@tony.ganchev/header": header
         },

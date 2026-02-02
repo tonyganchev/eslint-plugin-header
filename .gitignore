@@ -7,3 +7,4 @@ yarn.lock
 !/.vscode/settings.json
 .nyc_output
 /types
+dist

@@ -2,7 +2,7 @@
     "root": true,
     "overrides": [
         {
-            "files": ["**/*.js"],
+            "files": ["index.ts"],
             "plugins": ["@tony.ganchev/header"],
             "rules": {
                 "@tony.ganchev/header/header": [

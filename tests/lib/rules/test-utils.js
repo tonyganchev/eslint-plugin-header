@@ -41,11 +41,58 @@ describe("generateInvalidTestCaseNames", () => {
         [
             {
                 code: "someCode();",
+            },
+            "1:  - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: 666,
+            },
+            "1: 666 - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [],
+            },
+            "1:  - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    "incorrect header"
+                ],
+            },
+            "1: incorrect header - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
                 errors: [
                     { message: "incorrect header" }
                 ],
             },
             "1: incorrect header - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: /^incorrect header$/ }
+                ],
+            },
+            "1: ^incorrect header$ - [ ] - someCode();"
+        ],
+        [
+            {
+                code: "someCode();",
+                errors: [
+                    { message: null }
+                ],
+            },
+            "1:  - [ ] - someCode();"
         ],
         [
             {

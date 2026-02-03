@@ -237,6 +237,7 @@ export default defineConfig([
             sourceType: "commonjs",
             globals: {
                 ...globals.node,
+                BufferEncoding: "readonly"
             },
         },
         ...jsRules,

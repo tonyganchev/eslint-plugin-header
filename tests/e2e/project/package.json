@@ -1,5 +1,10 @@
 {
   "name": "test-project",
   "version": "1.0.0",
-  "main": "index.ts"
+  "main": "index.ts",
+  "devDependencies": {
+    "@tony.ganchev/eslint-plugin-header": "file:../../..",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1"
+  }
 }

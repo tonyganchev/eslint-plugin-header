@@ -67,6 +67,17 @@ This _header_ rule takes a single object as configuration, after the severity
 level. At the very least, the object should contain a `header` field describing
 the expected header to match in the source files.
 
+For TypesScript-based flat ESLint configuration, two types are provided:
+
+- `HeaderRuleConfig` defines the overall rule configuration for the `header`
+  rule and includes severity level and supports both the modern object-based
+  configuration and the legacy array-based configuration.
+- `HeaderOptions` helper type that defines the structure of the configuration
+  object used in the modern configuration style that is used in this document.
+  It can be used to either simplify auto-completion since this type is not mixed
+  with a large number of named tuple types, or it can be used when the config
+  object is defined outside of the definition of a specific rule.
+
 ### File-based Configuration
 
 In this configuration mode, the header template is read from a file.
@@ -74,7 +85,9 @@ In this configuration mode, the header template is read from a file.
 _eslint.config.ts_:
 
 ```ts
-import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import header, {
+    HeaderOptions, HeaderRuleConfig
+} from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -91,7 +104,7 @@ export default defineConfig([
                         file: "config/header.js"
                     }
                 } as HeaderOptions
-            ]
+            ] as HeaderRuleConfig
         }
     }
 ]);
@@ -442,9 +455,7 @@ number of newlines that are enforced after the header.
 Zero newlines:
 
 ```ts
-import header, {
-    InlineConfig, HeaderOptions, TrailingEmptyLines
-} from "@tony.ganchev/eslint-plugin-header";
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -463,10 +474,10 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ],
-                    } as InlineConfig,
+                    },
                     trailingEmptyLines: {
                         minimum: 0
-                    } as TrailingEmptyLines
+                    }
                 } as HeaderOptions
             ]
         }
@@ -482,9 +493,7 @@ My Company */ console.log(1)
 One newline (default):
 
 ```ts
-import header, {
-    InlineConfig, HeaderOptions, TrailingEmptyLines
-} from "@tony.ganchev/eslint-plugin-header";
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -503,10 +512,10 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ],
-                    } as InlineConfig,
+                    },
                     trailingEmptyLines: {
                         minimum: 1
-                    } as TrailingEmptyLines
+                    }
                 } as HeaderOptions
             ]
         }
@@ -523,9 +532,7 @@ console.log(1)
 Two newlines:
 
 ```ts
-import header, {
-    InlineConfig, HeaderOptions, TrailingEmptyLines
-} from "@tony.ganchev/eslint-plugin-header";
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -544,10 +551,10 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ]
-                    } as InlineConfig,
+                    },
                     trailingEmptyLines: {
                         minimum: 2
-                    } as TrailingEmptyLines
+                    }
                 } as HeaderOptions
             ]
         }

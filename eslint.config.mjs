@@ -33,6 +33,7 @@ import eslintPlugin from "eslint-plugin-eslint-plugin";
 import jsdoc from "eslint-plugin-jsdoc";
 import n from "eslint-plugin-n";
 import globals from "globals";
+import typescript from "typescript-eslint";
 import header from "./index.js";
 
 const filename = fileURLToPath(import.meta.url);
@@ -185,7 +186,7 @@ const jsRules = {
                 " *",
                 {
                     pattern: " * Copyright \\(c\\) \\d{4}-present .*Tony Ganchev,? and contributors",
-                    template: " * Copyright (c) 2025-present Tony Ganchev and contributors",
+                    template: " * Copyright (c) 2026-present Tony Ganchev and contributors",
                 },
                 " *",
                 " * Permission is hereby granted, free of charge, to any person obtaining a copy",
@@ -257,6 +258,17 @@ export default defineConfig([
         ...jsRules,
     },
     {
+        files: ["**/*.ts"],
+        ignores: ["types/**"],
+        languageOptions: {
+            parser: typescript.parser,
+            parserOptions: {
+                project: false,
+            },
+        },
+        ...jsRules,
+    },
+    {
         files: ["**/*.md"],
         plugins: {
             markdown,
@@ -270,6 +282,12 @@ export default defineConfig([
             "markdown/no-bare-urls": "error",
             "markdown/no-duplicate-headings": "error",
             "markdown/no-html": "error"
+        }
+    },
+    {
+        files: ["**/*.md/*.ts", "**/*.md/*.js"],
+        rules: {
+            "@tony.ganchev/header": "off"
         }
     }
 ]);

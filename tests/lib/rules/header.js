@@ -30,13 +30,13 @@ const os = td.replace("node:os");
 
 const { RuleTester } = require("eslint");
 
-const rule = require("../../../lib/rules/header");
+const { header } = require("../../../lib/rules/header");
 const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 
 const ruleTester = new RuleTester();
 
 describe("legacy config", () => {
-    ruleTester.run("header", rule, {
+    ruleTester.run("header", header, {
         valid: [
             {
                 code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
@@ -173,7 +173,7 @@ describe("unix", () => {
     beforeEach(() => {
         os.EOL = "\n";
     });
-    ruleTester.run("header", rule, {
+    ruleTester.run("header", header, {
         valid: [
             {
                 code: "/*Copyright 2015, My Company*/\nconsole.log(1);",
@@ -1592,7 +1592,7 @@ describe("windows", () => {
     beforeEach(() => {
         os.EOL = "\r\n";
     });
-    ruleTester.run("header", rule, {
+    ruleTester.run("header", header, {
         valid: [
             {
                 code: "/*Copyright 2015, My Company*/\nconsole.log(1);",

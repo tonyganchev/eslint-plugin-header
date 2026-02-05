@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.1
+
+* TypeScript definitions for rule configuration.
+
 ## 3.2.0
 
 * New rule configuration format using a single-object structure. Legacy

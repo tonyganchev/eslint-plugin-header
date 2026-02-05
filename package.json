@@ -1,6 +1,6 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -31,10 +31,10 @@
     "@eslint/js": "^9.39.2",
     "@eslint/markdown": "^7.5.1",
     "@stylistic/eslint-plugin": "^5.7.1",
-    "@types/node": "^25.2.0",
+    "@types/node": "^25.2.1",
     "eslint": "^9.39.2",
     "eslint-plugin-eslint-plugin": "^7.3.0",
-    "eslint-plugin-jsdoc": "^62.5.1",
+    "eslint-plugin-jsdoc": "^62.5.2",
     "eslint-plugin-n": "^17.23.2",
     "markdownlint-cli": "^0.47.0",
     "mocha": "^12.0.0-beta-6",
@@ -52,7 +52,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/tonyganchev/eslint-plugin-header.git"
+    "url": "git+https://github.com/tonyganchev/eslint-plugin-header.git"
   },
   "author": "Stuart Knightley",
   "license": "MIT",

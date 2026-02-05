@@ -33,16 +33,16 @@ describe("E2E", () => {
 
     const rootDir = path.resolve(__dirname, "../../");
     const fixturePath = path.resolve(__dirname, "project");
-    let tarball;
+    const tarballPath = path.resolve(rootDir, "test-plugin.tgz");
 
     before(() => {
         const packOutput = execSync("npm pack", { cwd: rootDir, encoding: "utf8" }).trim();
-        tarball = path.resolve(rootDir, packOutput);
+        fs.renameSync(path.resolve(rootDir, packOutput), tarballPath);
     });
 
     after(() => {
-        if (fs.existsSync(tarball)) {
-            fs.unlinkSync(tarball);
+        if (fs.existsSync(tarballPath)) {
+            fs.unlinkSync(tarballPath);
         }
     });
 
@@ -61,7 +61,7 @@ describe("E2E", () => {
         },
         {
             name: "eslint@9",
-            deps: "eslint@9 jiti", // Install jiti explicitly here
+            deps: "eslint@9 jiti",
             args: "-c eslint.config.ts --no-config-lookup",
             env: {}
         },
@@ -75,12 +75,11 @@ describe("E2E", () => {
 
     for (const { name, deps, args, env } of testCases) {
 
-        const tarballPath = tarball;
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
 
             execSync(`npm install ${deps} ${tarballPath} --no-save --force`, {
                 cwd: fixturePath,
-                stdio: "ignore" // Keep test output clean
+                stdio: "ignore"
             });
 
             let output;

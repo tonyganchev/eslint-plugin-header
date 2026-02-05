@@ -3,11 +3,19 @@
   "version": "3.2.0",
   "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
   "main": "index.js",
-  "types": "/types/index.d.ts",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.js"
+    }
+  },
   "files": [
-    "/lib/**/*.js",
-    "/types/index.d.ts*",
-    "!/lib/rules/test-utils.js"
+    "lib/**/*.js",
+    "index.d.ts*",
+    "types",
+    "!lib/rules/test-utils.js"
   ],
   "scripts": {
     "build": "npx tsc",
@@ -22,17 +30,18 @@
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^9.39.2",
     "@eslint/markdown": "^7.5.1",
-    "@stylistic/eslint-plugin": "^5.7.0",
-    "@types/node": "^25.1.0",
+    "@stylistic/eslint-plugin": "^5.7.1",
+    "@types/node": "^25.2.0",
     "eslint": "^9.39.2",
     "eslint-plugin-eslint-plugin": "^7.3.0",
-    "eslint-plugin-jsdoc": "^62.1.0",
+    "eslint-plugin-jsdoc": "^62.5.1",
     "eslint-plugin-n": "^17.23.2",
     "markdownlint-cli": "^0.47.0",
-    "mocha": "^12.0.0-beta-5",
+    "mocha": "^12.0.0-beta-6",
     "nyc": "^17.1.0",
     "testdouble": "^3.20.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.54.0"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"

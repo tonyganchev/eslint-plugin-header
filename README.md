@@ -45,6 +45,10 @@ It addresses the following issus:
 The plugin supports ESLint 7 / 8 / 9 / 10rc0 (check package.json for details).
 Both flat config and legacy, hierarchical config can be used.
 
+The NPM package provides TypeScript type definitions and can be used with
+TypeScript-based ESLint flat configuration without the need for `@ts-ignore`
+statements.
+
 ## Usage
 
 The plugin and its _header_ rule goes through evolution of its configuration in
@@ -67,10 +71,10 @@ the expected header to match in the source files.
 
 In this configuration mode, the header template is read from a file.
 
-_eslint.config.mjs_:
+_eslint.config.ts_:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -86,7 +90,7 @@ export default defineConfig([
                     header: {
                         file: "config/header.js"
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -132,8 +136,8 @@ All of the following configurations will match the header:
 
 - **Single string**:
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -150,7 +154,7 @@ All of the following configurations will match the header:
                             commentType: "block",
                             lines: ["\n * Copyright (c) 2015\n * My Company\n "]
                         }
-                    },
+                    } as HeaderOptions
                 ]
             }
         }
@@ -173,8 +177,8 @@ All of the following configurations will match the header:
     You can match the whole header with a regular expression. To do it, simply
     pass a `RegExp` object in place of a string.
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -193,7 +197,7 @@ All of the following configurations will match the header:
                                 /\n \* Copyright \(c\) 2015\n \* Company\n /
                             ]
                         }
-                    }
+                    } as HeaderOptions
                 ]
             }
         }
@@ -203,8 +207,8 @@ All of the following configurations will match the header:
     If you still use hierarchical configuration, you can define the regular
     expression as a string.
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -224,7 +228,7 @@ All of the following configurations will match the header:
                                     + "\\n \\* My Company\\n "}
                             ]
                         }
-                    }
+                    } as HeaderOptions
                 ]
             }
         }
@@ -239,8 +243,8 @@ All of the following configurations will match the header:
     you want to add an aut-fix for the line as we will explain further in this
     document.
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -259,7 +263,7 @@ All of the following configurations will match the header:
                                 { pattern: /Copyright \(c\) 20\d{2}/ }
                             ]
                         }
-                    }
+                    } as HeaderOptions
                 ]
             }
         }
@@ -268,8 +272,8 @@ All of the following configurations will match the header:
 
 - **Array of strings**:
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -291,7 +295,7 @@ All of the following configurations will match the header:
                                 " "
                             ]
                         }
-                    }
+                    } as HeaderOptions
                 ]
             }
         }
@@ -300,8 +304,8 @@ All of the following configurations will match the header:
 
 - **Array of strings and/or patterns**:
 
-    ```js
-    import header from "@tony.ganchev/eslint-plugin-header";
+    ```ts
+    import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
     import { defineConfig } from "eslint/config";
 
     export default defineConfig([
@@ -323,7 +327,7 @@ All of the following configurations will match the header:
                                 " "
                             ]
                         }
-                    }
+                    } as HeaderOptions
                 ]
             }
         }
@@ -355,8 +359,8 @@ support:
 
 We can use a regular expression to support all of these cases for your header:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -378,7 +382,7 @@ export default defineConfig([
                             " "
                         ]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -391,8 +395,8 @@ to replace a header comment that did not pass validation. This is not possible
 with regular expressions. For regular expression pattern-objects, a second
 property `template` adds a replacement string.
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -415,7 +419,7 @@ export default defineConfig([
                             " My Company"
                         ]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -437,8 +441,10 @@ number of newlines that are enforced after the header.
 
 Zero newlines:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, {
+    InlineConfig, HeaderOptions, TrailingEmptyLines
+} from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -457,11 +463,11 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ],
-                    },
+                    } as InlineConfig,
                     trailingEmptyLines: {
                         minimum: 0
-                    }
-                }
+                    } as TrailingEmptyLines
+                } as HeaderOptions
             ]
         }
     }
@@ -475,8 +481,10 @@ My Company */ console.log(1)
 
 One newline (default):
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, {
+    InlineConfig, HeaderOptions, TrailingEmptyLines
+} from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -495,11 +503,11 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ],
-                    },
+                    } as InlineConfig,
                     trailingEmptyLines: {
                         minimum: 1
-                    }
-                }
+                    } as TrailingEmptyLines
+                } as HeaderOptions
             ]
         }
     }
@@ -514,8 +522,10 @@ console.log(1)
 
 Two newlines:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, {
+    InlineConfig, HeaderOptions, TrailingEmptyLines
+} from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -534,11 +544,11 @@ export default defineConfig([
                             " Copyright now",
                             "My Company "
                         ]
-                    },
+                    } as InlineConfig,
                     trailingEmptyLines: {
                         minimum: 2
-                    }
-                }
+                    } as TrailingEmptyLines
+                } as HeaderOptions
             ]
         }
     }
@@ -558,8 +568,8 @@ The rule works with both Unix/POSIX and Windows line endings. For ESLint
 `--fix`, the rule will use the line ending format of the current operating
 system (via Node's `os` package). This setting can be overwritten as follows:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -580,7 +590,7 @@ export default defineConfig([
                         ]
                     },
                     lineEndings: "windows"
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -594,8 +604,8 @@ The default value is `"os"` which means assume the system-specific line endings.
 
 The following examples are all valid.
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -612,7 +622,7 @@ export default defineConfig([
                         commentType: "block",
                         lines: ["Copyright 2015, My Company"]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -624,8 +634,8 @@ export default defineConfig([
 console.log(1);
 ```
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -645,7 +655,7 @@ export default defineConfig([
                             "My Company"
                         ]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -658,8 +668,8 @@ export default defineConfig([
 console.log(1)
 ```
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -679,7 +689,7 @@ export default defineConfig([
                             /^My Company$/
                         ]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }
@@ -694,8 +704,8 @@ console.log(1)
 
 With more decoration:
 
-```js
-import header from "@tony.ganchev/eslint-plugin-header";
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
@@ -717,7 +727,7 @@ export default defineConfig([
                             " ************************"
                         ]
                     }
-                }
+                } as HeaderOptions
             ]
         }
     }

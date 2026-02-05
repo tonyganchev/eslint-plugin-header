@@ -2,13 +2,13 @@
 // Tony Ganchev
 
 import { defineConfig } from "eslint/config";
-import header from "@tony.ganchev/eslint-plugin-header";
+import plugin, { HeaderOptions, HeaderRuleConfig } from "@tony.ganchev/eslint-plugin-header";
 
 export default defineConfig([
     {
         files: ["index.ts"],
         plugins: {
-            "@tony.ganchev/header": header
+            "@tony.ganchev/header": plugin
         },
         rules: {
             "@tony.ganchev/header/header": [
@@ -21,11 +21,12 @@ export default defineConfig([
                             " Tony Ganchev"
                         ]
                     },
+                    lineEndings: "os",
                     trailingEmptyLines: {
                         minimum: 2
                     }
-                }
-            ]
+                } as HeaderOptions
+            ] as HeaderRuleConfig
         }
     },
 ]);

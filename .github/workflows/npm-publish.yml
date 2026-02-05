@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       tag_name:
-        description: 'Tag to checkout (e.g., v3.1.13)'
+        description: 'Tag to checkout (e.g., v3.2.0)'
         required: true
 
 permissions:
@@ -33,4 +33,4 @@ jobs:
       - name: Generate TypeScript definitions
         run: npm run build
       - name: Publish NPM package
-        run: npm publish --provenance --access public --tag maintenance
+        run: npm publish --provenance --access public

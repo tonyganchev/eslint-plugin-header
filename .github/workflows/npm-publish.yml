@@ -6,6 +6,11 @@ name: Node.js Package
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag to checkout (e.g., v3.1.13)'
+        required: true
 
 permissions:
   contents: read
@@ -17,6 +22,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag_name || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 24
@@ -26,4 +33,4 @@ jobs:
       - name: Generate TypeScript definitions
         run: npm run build
       - name: Publish NPM package
-        run: npm publish --provenance --access public
+        run: npm publish --provenance --access public --tag maintenance

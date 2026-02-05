@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.13
+
+* TypeScript definitions for rule configuration.
+
 ## 3.1.12
 
 * Fix broken compatibility with ESLint 7.

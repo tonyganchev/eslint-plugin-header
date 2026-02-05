@@ -2,13 +2,13 @@
 // Tony Ganchev
 
 import { defineConfig } from "eslint/config";
-import header from "@tony.ganchev/eslint-plugin-header";
+import plugin, { HeaderRuleConfig } from "@tony.ganchev/eslint-plugin-header";
 
 export default defineConfig([
     {
         files: ["index.ts"],
         plugins: {
-            "@tony.ganchev/header": header
+            "@tony.ganchev/header": plugin
         },
         rules: {
             "@tony.ganchev/header/header": [
@@ -16,7 +16,7 @@ export default defineConfig([
                 "line",
                 [" Copyright 1985", " Tony Ganchev"],
                 2
-            ]
+            ] as HeaderRuleConfig
         }
     },
 ]);

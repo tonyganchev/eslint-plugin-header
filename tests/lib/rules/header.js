@@ -27,10 +27,10 @@
 const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
 const os = td.replace("node:os");
-
-const rule = require("../../../lib/rules/header");
-const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 const { RuleTester } = require("eslint");
+
+const { header } = require("../../../lib/rules/header");
+const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 
 const ruleTester = new RuleTester();
 
@@ -38,7 +38,7 @@ describe("unix", () => {
     beforeEach(() => {
         os.EOL = "\n";
     });
-    ruleTester.run("header", rule, {
+    ruleTester.run("header", header, {
         valid: [
             {
                 code: "/*\n * Copyright (c) 2015\n * My Company\n */\n",
@@ -877,7 +877,7 @@ describe("unix", () => {
                 output: "//Copyright 1969\n//Levski\n\nconsole.log('destroying');"
             },
             {
-                code: "//Copyright 1994\n//Levski 7:1 CSKA\n\nconsole.log('emrassing');",
+                code: "//Copyright 1994\n//Levski 7:1 CSKA\n\nconsole.log('embarrassing');",
                 options: ["line", [{ pattern: "Copyright 1994" }, "Levski"], 2],
                 errors: [
                     {
@@ -888,7 +888,7 @@ describe("unix", () => {
                 ],
             },
             {
-                code: "//Copyright 2014\n//Levski\n\nconsole.log('centenial');",
+                code: "//Copyright 2014\n//Levski\n\nconsole.log('centennial');",
                 options: ["line", ["Copyright 2014", "Levski Sofia"], 2],
                 errors: [
                     {
@@ -899,7 +899,7 @@ describe("unix", () => {
                         line: 2
                     }
                 ],
-                output: "//Copyright 2014\n//Levski Sofia\n\nconsole.log('centenial');",
+                output: "//Copyright 2014\n//Levski Sofia\n\nconsole.log('centennial');",
             },
             {
                 code: "//Copyright 1994\n//Levski\n\nconsole.log('thrashing');",
@@ -1013,7 +1013,7 @@ describe("windows", () => {
     beforeEach(() => {
         os.EOL = "\r\n";
     });
-    ruleTester.run("header", rule, {
+    ruleTester.run("header", header, {
         valid: [
             {
                 code: "/*Copyright 2015, My Company*/\nconsole.log(1);",

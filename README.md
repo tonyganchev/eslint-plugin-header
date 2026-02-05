@@ -45,6 +45,10 @@ It addresses the following issus:
 The plugin supports ESLint 7 / 8 / 9 / 10rc0 (check package.json for details).
 Both flat config and legacy, hierarchical config can be used.
 
+The NPM package provides TypeScript type definitions and can be used with
+TypeScript-based ESLint flat configuration without the need for `@ts-ignore`
+statements.
+
 ## Usage
 
 This rule takes between 1 and 4 arguments after the rule validation severity.
@@ -66,6 +70,12 @@ The configuration can take any of the following forms:
   - `[<severity>, "<comment-type>", <header-contents>, <n-empty-lines>,
     {<settings>}]` - define the header contents inline and an expected number of
     empty lines after the header and pass additional settings.
+
+For TypesScript-based flat ESLint configuration, the following type is provided:
+
+- `HeaderRuleConfig` defines the overall rule configuration for the `header`
+  rule and includes severity level and supports both the modern object-based
+  configuration and the legacy array-based configuration.
 
 ### File-based Configuration
 
@@ -446,7 +456,7 @@ The following guidelines apply:
 - **major versions** - new functionality that breaks compatibility.
 - **minor versions** - new features that do not break compatibility. For the
   most part we would aim to continue releasing new versions in the 3.x product
-  line and have opt-in flags for changes in behavior of existign features.
+  line and have opt-in flags for changes in behavior of existing features.
 - **revisions** - bugfixes and minor non-feature improvements that do not break
   compatibility. Note that bug-fixes are allowed to break compatibility with
   previous version if the older version regressed previous expected behavior.

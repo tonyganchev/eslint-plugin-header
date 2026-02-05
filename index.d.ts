@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2015-present Stuart Knightley, Tony Ganchev, and contributors
+ * Copyright (c) 2026-present Tony Ganchev and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
@@ -22,15 +22,8 @@
  * SOFTWARE.
  */
 
-"use strict";
+export { HeaderOptions, HeaderRuleConfig } from "./types/lib/rules/header";
 
-const { header } = require("./lib/rules/header");
+import plugin = require("./types");
 
-/** @type {import('eslint').ESLint.Plugin} */
-const pluginDefinition = {
-    rules: {
-        header
-    }
-};
-
-module.exports = pluginDefinition;
+export default plugin;

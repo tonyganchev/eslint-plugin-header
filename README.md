@@ -74,8 +74,7 @@ The configuration can take any of the following forms:
 For TypesScript-based flat ESLint configuration, the following type is provided:
 
 - `HeaderRuleConfig` defines the overall rule configuration for the `header`
-  rule and includes severity level and supports both the modern object-based
-  configuration and the legacy array-based configuration.
+  rule and includes severity level and all array-based configuration options.
 
 ### File-based Configuration
 

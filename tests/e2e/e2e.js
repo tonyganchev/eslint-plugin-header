@@ -67,7 +67,7 @@ describe("E2E", () => {
         },
         {
             name: "eslint@10",
-            deps: "eslint@10.0.0-rc.0 jiti",
+            deps: "eslint@10 jiti",
             args: "-c eslint.config.ts --no-config-lookup",
             env: {}
         }

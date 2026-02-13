@@ -30,7 +30,6 @@ const os = td.replace("node:os");
 const { RuleTester } = require("eslint");
 
 const { header } = require("../../../lib/rules/header");
-const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 
 const ruleTester = new RuleTester();
 
@@ -216,7 +215,7 @@ describe("unix", () => {
                 options: ["block", "Copyright 2020, My Company", 1, {}],
             },
         ],
-        invalid: generateInvalidTestCaseNames([
+        invalid: [
             {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
@@ -1006,7 +1005,7 @@ describe("unix", () => {
                 ],
                 output: "/**/\n\nconsole.log('hello!');"
             },
-        ])
+        ]
     });
 });
 describe("windows", () => {
@@ -1151,7 +1150,7 @@ describe("windows", () => {
                 options: ["block", "Copyright 2020, My Company", 1, {}],
             },
         ],
-        invalid: generateInvalidTestCaseNames([
+        invalid: [
             {
                 code: "console.log(1);",
                 options: ["block", "Copyright 2015, My Company"],
@@ -1864,6 +1863,6 @@ describe("windows", () => {
                 ],
                 output: "/**/\r\n\r\nconsole.log('hello!');"
             },
-        ])
+        ]
     });
 });

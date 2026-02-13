@@ -19,6 +19,7 @@
             "ES2021"
         ],
         "outDir": "types",
+        "skipLibCheck": true,
         "strict": true
     }
 }

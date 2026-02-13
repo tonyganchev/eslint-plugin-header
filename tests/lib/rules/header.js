@@ -31,7 +31,6 @@ const os = td.replace("node:os");
 const { RuleTester } = require("eslint");
 
 const { header } = require("../../../lib/rules/header");
-const { generateInvalidTestCaseNames } = require("../../../lib/rules/test-utils");
 
 const ruleTester = new RuleTester();
 
@@ -474,7 +473,7 @@ describe("unix", () => {
                 }]
             },
         ],
-        invalid: generateInvalidTestCaseNames([
+        invalid: [
             {
                 code: "console.log(1);",
                 options: [{
@@ -1585,7 +1584,7 @@ describe("unix", () => {
                 ],
                 output: "/**/\n\nconsole.log('hello!');"
             },
-        ])
+        ]
     });
 });
 describe("windows", () => {
@@ -1882,7 +1881,7 @@ describe("windows", () => {
                 }]
             },
         ],
-        invalid: generateInvalidTestCaseNames([
+        invalid: [
             {
                 code: "console.log(1);",
                 options: [{
@@ -2941,6 +2940,7 @@ describe("windows", () => {
                     }
                 ],
                 output: "/**/\r\n\r\nconsole.log('hello!');"
-            },])
+            },
+        ]
     });
 });

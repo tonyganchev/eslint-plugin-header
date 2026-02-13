@@ -46,7 +46,7 @@ It addresses the following issus:
 
 ## Compatibility
 
-The plugin supports ESLint 7 / 8 / 9 / 10rc0 (check package.json for details).
+The plugin supports ESLint 7 / 8 / 9 / 10 (check package.json for details).
 Both flat config and legacy, hierarchical config can be used.
 
 The NPM package provides TypeScript type definitions and can be used with

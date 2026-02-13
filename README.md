@@ -1,4 +1,9 @@
-# eslint-plugin-header
+# @tony.ganchev/eslint-plugin-header
+
+[![npm version](https://img.shields.io/npm/v/@tony.ganchev/eslint-plugin-header.svg)](https://www.npmjs.com/package/eslint-plugin-eslint-comments)
+[![Downloads/month](https://img.shields.io/npm/dm/@tony.ganchev/eslint-plugin-header.svg)](http://www.npmtrends.com/eslint-plugin-eslint-comments)
+[![Build Status](https://github.com/tonyganchev/eslint-plugin-header/workflows/Test/badge.svg)](https://github.com/mysticatea/eslint-plugin-eslint-comments/actions)
+<!-- [![codecov](https://codecov.io/gh/tonyganchev/eslint-plugin-header/branch/main/graph/badge.svg)](https://codecov.io/gh/mysticatea/eslint-plugin-eslint-comments) -->
 
 ESLint plugin / rule to ensure that files begin with a given comment - usually a
 copyright notice.

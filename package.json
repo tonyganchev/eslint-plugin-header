@@ -1,7 +1,7 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.2.1",
-  "description": "ESLint plugin to ensure files begin with a given comment, usually a copyright or license notice.",
+  "version": "3.2.2",
+  "description": "The native ESLint 9/10 header plugin. A zero-bloat, drop-in replacement for 'eslint-plugin-header' with first-class Flat Config & TypeScript support. Auto-fix Copyright, License, and banner comments in JavaScrip and TypeScript files.",
   "main": "index.js",
   "types": "index.d.ts",
   "exports": {
@@ -36,11 +36,11 @@
     "eslint-plugin-jsdoc": "^62.5.4",
     "eslint-plugin-n": "^17.23.2",
     "markdownlint-cli": "^0.47.0",
-    "mocha": "^12.0.0-beta-8",
+    "mocha": "^12.0.0-beta-9",
     "nyc": "^17.1.0",
     "testdouble": "^3.20.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.55.0"
+    "typescript-eslint": "^8.56.0"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"
@@ -50,15 +50,40 @@
   },
   "keywords": [
     "eslint",
-    "eslintplugin"
+    "eslint-plugin",
+    "eslint9",
+    "flat-config",
+    "header",
+    "copyright",
+    "license",
+    "banner",
+    "notice",
+    "license-header",
+    "copyright-header",
+    "legal",
+    "gdpr",
+    "source-header",
+    "typescript",
+    "react",
+    "check",
+    "fix"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tonyganchev/eslint-plugin-header.git"
+    "url": "https://github.com/tonyganchev/eslint-plugin-header.git"
   },
-  "author": "Stuart Knightley",
+  "homepage": "https://github.com/tonyganchev/eslint-plugin-header#readme",
+  "bugs": {
+    "url": "https://github.com/tonyganchev/eslint-plugin-header/issues"
+  },
   "license": "MIT",
+  "author": "Tony Ganchev",
   "maintainers": [
+    "Gyokan Syuleymanov",
     "Tony Ganchev"
+  ],
+  "contributors": [
+    "Josh Kelley",
+    "Stuart Knightley"
   ]
 }

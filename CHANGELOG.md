@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.2
+
+* Documentation and metadata improvements.
+
 ## 3.2.1
 
 * TypeScript definitions for rule configuration.

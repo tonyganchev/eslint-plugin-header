@@ -4,50 +4,60 @@
 [![Downloads/month](https://img.shields.io/npm/dm/@tony.ganchev/eslint-plugin-header.svg)](http://www.npmtrends.com/@tony.ganchev/eslint-plugin-header)
 [![Build Status](https://github.com/tonyganchev/eslint-plugin-header/workflows/Test/badge.svg)](https://github.com/tonyganchev/eslint-plugin-header)
 
-ESLint plugin / rule to ensure that files begin with a given comment - usually a
-copyright notice.
-
-Often you will want to have a copyright notice at the top of every file. This
-ESLint plugin checks that the first comment in every file has the contents
-defined in the rule settings.
+The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
+replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
+with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
+and banner comments in JavaScript and TypeScript files.
 
 ## Table of Contents
 
-1. [Scope and Acknowledgements](#scope-and-acknowledgements)
+1. [Motivation and Acknowledgements](#motivation-and-acknowledgements)
 2. [Compatibility](#compatibility)
 3. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
-      2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
-      3. [Line Endings](#line-endings)
-4. [Examples](#examples)
+      2. [Providing To-year in Auto-fix](#providing-to-year-in-auto-fix)
+      3. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
+      4. [Line Endings](#line-endings)
+   3. [Examples](#examples)
+4. [Comparison to Alternatives](#comparison-to-alternatives)
+   1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
+      1. [Health Scans](#health-scans)
+   2. [Compared to eslint-plugin-license-header](#compared-to-eslint-plugin-license-header)
 5. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
    2. [What is Backward-compatibility?](#what-is-backward-compatibility)
 6. [License](#license)
 
-## Scope and Acknowledgements
+## Motivation and Acknowledgements
 
-This is a fork of <https://github.com/Stuk/eslint-plugin-header>.
+The plugin started as a fork of [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
+to address missing ESLint 9 compatibility.
 
-It addresses the following issus:
+Today it addresses the following issues:
 
-- Adds bugfixes where the original project has not been updated in the last
-  three years.
-- Adds support for ESLint 9 with a fully-validated configuration schema.
-- Addresses a number of bugs on Windows and adds significant amount of tests to
-  verify there are no future regressions.
+- Support for ESLint 9/10 with a fully-validated configuration schema.
+- Continued support for ESLint 7/8.
+- Complete Windows support.
+- New object-based configuration providing the bases for future enhancements.
+- Continued support for _eslint-plugin-header_ array configuration.
+- Bugfixes where the original project has not been updated for the three
+  years before the fork.
 - Fixes issues with she-bangs and empty lines before the header. See PR history
   for more details.
-- Provides the foundation to evolve the plugin to add more capabilities moving
-  forward. This would come at the expense of plugin compatibility and the
-  portability of fixes to the upstream repository.
+- Good error reporting and improved auto-fixes.
+- Complete drop-in-replacement compatibility with existing projects using
+  _eslint-plugin-header_.
+
+Multiple other projects took from where _eslint-plugin-header_ left off. A
+comparison of the current project to these alternatives is available in a
+dedicated section.
 
 ## Compatibility
 
-The plugin supports ESLint 7 / 8 / 9 / 10 (check package.json for details).
-Both flat config and legacy, hierarchical config can be used.
+The plugin supports ESLint 7 / 8 / 9 / 10. Both flat config and legacy,
+hierarchical config can be used.
 
 The NPM package provides TypeScript type definitions and can be used with
 TypeScript-based ESLint flat configuration without the need for `@ts-ignore`
@@ -451,6 +461,44 @@ There are a number of things to consider:
 - Templates are hardcoded strings therefore it may be better to hand-fix a bad
   header in order not to lose the from- and to-years in the copyright notice.
 
+#### Providing To-year in Auto-fix
+
+A common request across similar plugins is to provide for `{year}` variable to
+not change the ESLint configuration every year. While such special requests were
+relevant to old JSON-based configuration, this can be handled with JavaScript in
+the flat configuration format:
+
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            {
+                                pattern: / Copyright \(c\) (\d{4}-)?\d{4}/,
+                                template: ` Copyright ${new Date().getFullYear()}`,
+                            },
+                            " My Company"
+                        ]
+                    }
+                } as HeaderOptions
+            ]
+        }
+    }
+]);
+```
+
 #### Trailing Empty Lines Configuration
 
 The third argument of the rule configuration which defaults to 1 specifies the
@@ -611,7 +659,7 @@ export default defineConfig([
 Possible values are `"unix"` for `\n` and `"windows"` for `\r\n` line endings.
 The default value is `"os"` which means assume the system-specific line endings.
 
-## Examples
+### Examples
 
 The following examples are all valid.
 
@@ -752,6 +800,70 @@ export default defineConfig([
  *************************/
  console.log(1);
 ```
+
+## Comparison to Alternatives
+
+A number of projects have been aiming to solve problems similar to
+_\@tony.ganchev/eslint-plugin-header_ - mainly with respect to providing ESLint
+9 support. The section below tries to outline why developers may choose either.
+The evaluation is based on the versions of each project as of the time of
+publishing the current version of _\@tony.ganchev/eslint-plugin-header_.
+
+Further iterations of this document would add migration information.
+
+### Compared to [eslint-plugin-headers](https://github.com/robmisasi/eslint-plugin-headers)
+
+_\@tony.ganchev/eslint-plugin-header_ is a drop-in replacement for
+_eslint-plugin-header_ and all plugins that already use the latter can migrate
+to the fork right away. At the same time, it provides improved user experience
+and windows support.
+
+eslint-plugin-headers is not a drop-in replacement. It offers additional
+features. Some of them, such as support for Vue templates do not have an
+analogue in the current version of _\@tony.ganchev/eslint-plugin-header_ while
+others such as `{year}` variable placeholders are redundant in the world of
+ESLint 9's flat, JavaScript-based configuration as [already pointed out in this
+document](#providing-to-year-in-auto-fix).
+
+The configuration format philosophy of the two plugin differs.
+_\@tony.ganchev/eslint-plugin-header_ supports both the legacy model inherited
+from _eslint-plugin-header_ and a new object-based configuration that is easy to
+adopt and offers both a lot of power to the user as to what the headers should
+look like, and keeps the configuration compact - just a few lines defining the
+content inside the comment. At the same time, the configuration is structured in
+a way that can evolve without breaking compatibility, which is critical for a
+tool that is not differentiating for the critical delivery of teams.
+
+_eslint-plugin-headers_ also offers an object-based format, but the content is
+flat and may need breaking changes to be kept concise as new features come
+about. Further, it makes assumption that then need to be corrected such as a
+block comment starting with `/**` instead of `/*` by default. The correction
+needs to happen not by adjusting the header template but through a separate
+confusing configuration properties.
+Overall, the configuration tends to be noisier nad harder to read than that of
+_\@tony.ganchev/eslint-plugin-header_.
+
+#### Health Scans
+
+- _\@tony.ganchev/eslint-plugin-header_</th> -
+  [snyk.io](https://security.snyk.io/package/npm/%40tony.ganchev%2Feslint-plugin-header),
+  [socket.dev](https://socket.dev/npm/package/@tony.ganchev/eslint-plugin-header/overview/3.2.2)
+
+- _eslint-plugin-headers_ -
+  [snyk.io](https://security.snyk.io/package/npm/eslint-plugin-headers),
+  [socket.dev](https://socket.dev/npm/package/eslint-plugin-headers/overview/1.3.4)
+
+At the time of the publishing of the current version of
+_\@tony.ganchev/eslint-plugin-header_, the latter has a slight edge in both
+scans against _eslint-plugin-headers_.
+
+### Compared to [eslint-plugin-license-header](https://github.com/nikku/eslint-plugin-license-header)
+
+_eslint-plugin-license-header_ per its limited documentation does not have a lot
+of features including not matching arbitrary from-years in the copyright notice.
+This on one hand leads to it having a nice, dead-simple configuration, but means
+no complex multi-year project would be happy with it. Surprisingly, given the
+limited feature set, the plugin has more peer dependencies than the competition.
 
 ## Versioning
 

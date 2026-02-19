@@ -3,26 +3,27 @@
 The document explains how to migrate from the
 [legacy configuration format](legacy-config.md) inherited from
 [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header), to the
-[new configuration format](README.md#usage).
+[new configuration format](../README.md#usage).
 
 ## Table of Contents
 
-1. [Before we Begin](#before-we-begin)
-2. [File-based Configuration](#file-based-configuration)
+1. [Table of Contents](#table-of-contents)
+2. [Before we Begin](#before-we-begin)
+3. [File-based Configuration](#file-based-configuration)
    1. [File-only](#file-only)
    2. [File and Settings](#file-and-settings)
-3. [Inline Configuration](#inline-configuration)
+4. [Inline Configuration](#inline-configuration)
    1. [Single-line](#single-line)
    2. [Single Regular Expression](#single-regular-expression)
    3. [Array of Strings](#array-of-strings)
    4. [Array of Strings and/or Patterns](#array-of-strings-andor-patterns)
    5. [Adding Auto-fixable Patterns](#adding-auto-fixable-patterns)
-4. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
+5. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
 
 ## Before we Begin
 
-The document is structured broken down into configuration use-cases. For each we
-present both their _Legacy Configuration_ and _New Configuration_ equivalent.
+The document structured as a list of configuration use-cases. For each use-case
+we present both their _Legacy Configuration_ and _New Configuration_ equivalent.
 
 To keep the code concise, we just show the _header_ configuration rule snippet.
 It is part of a larger flat ESLint configuration as presented here:

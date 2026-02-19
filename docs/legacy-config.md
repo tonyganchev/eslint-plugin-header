@@ -5,19 +5,20 @@ This plugin continues to support the configuration format of
 will from this point on in the current document refer to as the _legacy config_.
 
 The current document describes this exact format. For the new configuration
-format check the [main documentation](README.md#usage). For information on how
+format check the [main documentation](../README.md#usage). For information on how
 to transition from the legacy configuration format to the new one, check out our
 [migration guide](migrate-config.md).
 
 ## Table of Contents
 
-1. [Usage](#usage)
+1. [Table of Contents](#table-of-contents)
+2. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
       2. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
       3. [Line Endings](#line-endings)
-2. [Examples](#examples)
+3. [Examples](#examples)
 
 ## Usage
 

@@ -843,6 +843,27 @@ confusing configuration properties.
 Overall, the configuration tends to be noisier nad harder to read than that of
 _\@tony.ganchev/eslint-plugin-header_.
 
+_eslint-plugin-headers_'s error reporting is rudimentary - either the header
+passes or it fails and with complex templates you get no idea what the issue is.
+Granted this is the case with _eslint-plugin-header_ but we spent many hours
+improving  this and the side by side comparison is telling.
+
+_eslint-plugin-headers_ does not offer TypeScript bindings for its
+configuration format making it slower to author configuration.
+_\@tony.ganchev/eslint-plugin-header_ as often as possible reports which line
+is problematic and starting from which character.
+
+_eslint-plugin-headers_ supports some level of partial auto-fixes such as
+replacing company names but not years. Or keeping JSDoc variables after the
+copyright notice within the same comment. Some cases can be supported by
+_\@tony.ganchev/eslint-plugin-header_ but in general our design has shied away
+from touching existing comments to provide "smart" fixes. This is the current
+state of the feature set yet the team is looking for the right model to bridge
+the functionality gaps.
+
+We have prepared a detailed [migration guide](docs/migrate-from-headers.md) for
+anyone eager to migrate to _\@tony.ganchev/eslint-plugin-header_.
+
 #### Health Scans
 
 - _\@tony.ganchev/eslint-plugin-header_</th> -
@@ -864,6 +885,10 @@ of features including not matching arbitrary from-years in the copyright notice.
 This on one hand leads to it having a nice, dead-simple configuration, but means
 no complex multi-year project would be happy with it. Surprisingly, given the
 limited feature set, the plugin has more peer dependencies than the competition.
+
+We have prepared a detailed
+[migration guide](docs/migrate-from-license-header.md) for anyone eager to
+migrate to _\@tony.ganchev/eslint-plugin-header_.
 
 ## Versioning
 

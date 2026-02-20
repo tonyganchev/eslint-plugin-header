@@ -81,12 +81,12 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of testCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
-            writeFileSync(resolve(__dirname, "package.json"),
+            writeFileSync(resolve(fixturePath, "package.json"),
                 JSON.stringify({
                     name: "test-project",
                     private: true
                 }));
-            execFileSync("pnpm", ["install", ...deps, tarballPath], {
+            execFileSync("pnpm", ["install", ...deps, tarballPath, "--no-frozen-lockfile"], {
                 cwd: fixturePath,
                 shell: true,
                 stdio: "inherit",

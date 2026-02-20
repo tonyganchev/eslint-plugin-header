@@ -82,7 +82,7 @@ describe("E2E", () => {
                     name: "test-project",
                     private: true
                 }));
-            execSync(`pnpm install ${deps} ${tarballPath}`, {
+            execSync("pnpm", ["install", ...deps.split(" "), tarballPath], {
                 cwd: fixturePath,
                 stdio: "ignore"
             });

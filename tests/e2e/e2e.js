@@ -81,12 +81,17 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of testCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
+            const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
+
+            if (existsSync(lockPath)) {
+                unlinkSync(lockPath);
+            }
             writeFileSync(resolve(fixturePath, "package.json"),
                 JSON.stringify({
                     name: "test-project",
                     private: true
                 }));
-            execFileSync("pnpm", ["install", ...deps, tarballPath, "--no-frozen-lockfile"], {
+            execFileSync("pnpm", ["install", ...deps, tarballPath], {
                 cwd: fixturePath,
                 shell: true,
                 stdio: "inherit",

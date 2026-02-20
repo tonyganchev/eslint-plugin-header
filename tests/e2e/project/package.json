@@ -1,8 +1,0 @@
-{
-  "name": "test-project",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "devDependencies": {
-    "jiti": "^2.6.1"
-  }
-}

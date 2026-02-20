@@ -25,50 +25,55 @@
 "use strict";
 
 const assert = require("node:assert");
-const { execSync } = require("node:child_process");
-const fs = require("node:fs");
-const path = require("node:path");
+const { execFileSync } = require("node:child_process");
+const { existsSync, renameSync, unlinkSync, writeFileSync } = require("node:fs");
+const { resolve } = require("node:path");
 
 describe("E2E", () => {
 
-    const rootDir = path.resolve(__dirname, "../../");
-    const fixturePath = path.resolve(__dirname, "project");
-    const tarballPath = path.resolve(rootDir, "test-plugin.tgz");
+    const rootDir = resolve(__dirname, "../../");
+    const fixturePath = resolve(__dirname, "project");
+    const tarballPath = resolve(rootDir, "test-plugin.tgz");
 
     before(() => {
-        const packOutput = execSync("npm pack", { cwd: rootDir, encoding: "utf8" }).trim();
-        fs.renameSync(path.resolve(rootDir, packOutput), tarballPath);
+        const packOutput = execFileSync("pnpm", ["pack", "--json"], {
+            cwd: rootDir,
+            encoding: "utf8",
+            shell: true
+        }).trim();
+        const outputObj = JSON.parse(packOutput);
+        renameSync(resolve(rootDir, outputObj.filename), tarballPath);
     });
 
     after(() => {
-        if (fs.existsSync(tarballPath)) {
-            fs.unlinkSync(tarballPath);
+        if (existsSync(tarballPath)) {
+            unlinkSync(tarballPath);
         }
     });
 
     const testCases = [
         {
             name: "eslint@7",
-            deps: "eslint@7",
-            args: "-c .eslintrc.json --no-eslintrc",
+            deps: ["eslint@7"],
+            args: ["-c", ".eslintrc.json", "--no-eslintrc"],
             env: {}
         },
         {
             name: "eslint@8",
-            deps: "eslint@8",
-            args: "-c .eslintrc.json --no-eslintrc",
+            deps: ["eslint@8"],
+            args: ["-c", ".eslintrc.json", "--no-eslintrc"],
             env: { ESLINT_USE_FLAT_CONFIG: "false" }
         },
         {
             name: "eslint@9",
-            deps: "eslint@9 jiti",
-            args: "-c eslint.config.ts --no-config-lookup",
+            deps: ["eslint@9", "jiti"],
+            args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         },
         {
             name: "eslint@10",
-            deps: "eslint@10 jiti",
-            args: "-c eslint.config.ts --no-config-lookup",
+            deps: ["eslint@10", "jiti"],
+            args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         }
     ];
@@ -76,19 +81,30 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of testCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
+            const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
 
-            execSync(`npm install ${deps} ${tarballPath} --no-save --force`, {
+            if (existsSync(lockPath)) {
+                unlinkSync(lockPath);
+            }
+            writeFileSync(resolve(fixturePath, "package.json"),
+                JSON.stringify({
+                    name: "test-project",
+                    private: true
+                }));
+            execFileSync("pnpm", ["install", ...deps, tarballPath], {
                 cwd: fixturePath,
-                stdio: "ignore"
+                shell: true,
+                stdio: "inherit",
             });
 
             let output;
             try {
-                execSync(`npx eslint ${args} --format=json .`, {
+                execFileSync("pnpm", ["eslint", ...args, "--format=json", "."], {
                     cwd: fixturePath,
                     encoding: "utf8",
                     env: { ...process.env, ...env },
-                    stdio: ["ignore", "pipe", "pipe"]
+                    stdio: ["ignore", "pipe", "pipe"],
+                    shell: true
                 });
                 assert.fail("Error expected (lint violation)");
             } catch(error) {
@@ -99,13 +115,7 @@ describe("E2E", () => {
                 output = error.stdout.toString();
             }
 
-            let results;
-            try {
-                results = JSON.parse(output);
-            } catch {
-                assert.fail(`Failed to parse JSON output: ${output}`);
-            }
-
+            const results = JSON.parse(output);
             assert.ok(results.length > 0, "Should have lint results");
         });
     }

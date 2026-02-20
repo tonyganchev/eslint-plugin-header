@@ -18,24 +18,27 @@
     "CONTRIBUTING.md"
   ],
   "scripts": {
-    "build": "npx tsc",
-    "e2e": "npm run build && npx mocha --timeout 60000 tests/e2e/*.js",
-    "eslint": "npx eslint .",
-    "lint": "npm run eslint && npm run markdownlint",
-    "markdownlint": "npx markdownlint-cli *.md",
-    "test": "npm run lint && npm run unit && npm run e2e",
-    "unit": "npx nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js"
+    "build": "tsc",
+    "e2e": "pnpm build && mocha --timeout 60000 tests/e2e/*.js",
+    "eslint": "eslint .",
+    "lint": "pnpm eslint && pnpm markdownlint",
+    "markdownlint": "markdownlint *.md",
+    "test": "pnpm lint && pnpm unit && pnpm e2e",
+    "unit": "nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^7.5.1",
     "@stylistic/eslint-plugin": "^5.8.0",
+    "@types/estree": "^1.0.8",
+    "@types/json-schema": "^7.0.15",
     "@types/node": "^25.2.3",
     "eslint": "^10.0.0",
     "eslint-plugin-eslint-plugin": "^7.3.0",
     "eslint-plugin-jsdoc": "^62.7.0",
     "eslint-plugin-n": "^17.23.2",
+    "globals": "^17.3.0",
     "markdownlint-cli": "^0.47.0",
     "mocha": "^12.0.0-beta-9",
     "nyc": "^17.1.0",
@@ -46,6 +49,7 @@
   "peerDependencies": {
     "eslint": ">=7.7.0"
   },
+  "packageManager": "pnpm@10.30.1",
   "keywords": [
     "eslint",
     "eslint-plugin",

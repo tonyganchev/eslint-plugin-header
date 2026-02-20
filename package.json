@@ -27,7 +27,6 @@
     "unit": "nyc --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage=true --statements=100 --branches=100 --lines=100 --functions=100 mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^7.5.1",
     "@stylistic/eslint-plugin": "^5.9.0",

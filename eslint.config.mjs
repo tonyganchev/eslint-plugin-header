@@ -22,9 +22,6 @@
  * SOFTWARE.
  */
 
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import markdown from "@eslint/markdown";
 import stylistic from "@stylistic/eslint-plugin";
@@ -36,20 +33,7 @@ import globals from "globals";
 import typescript from "typescript-eslint";
 import header from "./index.js";
 
-const filename = fileURLToPath(import.meta.url);
-const dirname = path.dirname(filename);
-const compat = new FlatCompat({
-    baseDirectory: dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
-
 const jsRules = {
-    extends: [
-        ...compat.extends("eslint:recommended"),
-        eslintPlugin.configs.recommended,
-        jsdoc.configs["flat/recommended"],
-    ],
     plugins: {
         "eslint-plugin": eslintPlugin,
         n,
@@ -222,6 +206,18 @@ export default defineConfig([
             "tests/support/**",
         ]
     },
+    js.configs.recommended,
+    jsdoc.configs["flat/recommended"],
+    ...(eslintPlugin.configs["flat/recommended"]
+        ? [].concat(eslintPlugin.configs["flat/recommended"])
+        : [
+            {
+                plugins: { "eslint-plugin": eslintPlugin },
+                rules: eslintPlugin.configs.recommended.rules
+            }
+        ]
+    ),
+
     {
         files: ["**/*.mjs"],
         languageOptions: {
@@ -233,7 +229,7 @@ export default defineConfig([
         ...jsRules,
     },
     {
-        files: ["lib/**/*.js"],
+        files: ["lib/**/*.js", "index.js"],
         languageOptions: {
             sourceType: "commonjs",
             globals: {
@@ -268,16 +264,16 @@ export default defineConfig([
         },
         ...jsRules,
     },
+
+    // 3. Markdown Configs (previously inside the markdown object extends)
+    ...[].concat(markdown.configs.processor || []),
+    ...[].concat(markdown.configs.recommended || []),
     {
         files: ["**/*.md"],
+        language: "markdown/commonmark",
         plugins: {
             markdown,
         },
-        language: "markdown/commonmark",
-        extends: [
-            markdown.configs.processor,
-            markdown.configs.recommended
-        ],
         rules: {
             "markdown/no-bare-urls": "error",
             "markdown/no-duplicate-headings": "error",
@@ -287,7 +283,8 @@ export default defineConfig([
     {
         files: ["**/*.md/*.ts", "**/*.md/*.js"],
         rules: {
-            "@tony.ganchev/header": "off"
+            "@tony.ganchev/header": "off",
+            "jsdoc/tag-lines": "off"
         }
     }
 ]);

@@ -505,7 +505,7 @@ module.exports = 42;
 /**
  * Copyright 2024. All rights reserved.
  * 
- * @fileoverview This file contains a magic number.
+ * @file This file contains a magic number.
  * @author Rob Misasi
  */
 module.exports = 42;

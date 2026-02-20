@@ -74,7 +74,7 @@ The legacy configuration format inherited from
 supported and you can learn how to use it in a
 [dedicated document](legacy-config.md). For information on how to switch from
 the legacy configuration format to the new style, follow our
-[migration guide](migrate-config.md). The current document from this point on
+[migration guide](./docs/migrate-config.md). The current document from this point on
 will cover only the new configuration format.
 
 This _header_ rule takes a single object as configuration, after the severity

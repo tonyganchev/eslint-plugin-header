@@ -1,8 +1,7 @@
 {
-  "name": "test-project",
-  "version": "1.0.0",
-  "main": "index.ts",
-  "devDependencies": {
-    "jiti": "^2.6.1"
-  }
+	"dependencies": {
+		"@tony.ganchev/eslint-plugin-header": "file:D:/src/eslint-plugin-header/test-plugin.tgz",
+		"eslint": "^10.0.1",
+		"jiti": "^2.6.1"
+	}
 }

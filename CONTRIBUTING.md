@@ -45,20 +45,20 @@ There are two product lines as of today:
 After cloning the repository you can try to do a full CI/CD run:
 
 ```bash
-$ npm install
+$ pnpm install
 ...
-$ npm run test
+$ pnpm run test
 ...
 ```
 
 It will run a number of other npm scripts that together verify the code:
 
-| script          | Description                                                |
-|-----------------|------------------------------------------------------------|
-| `npm run lint`  | Lints the source and docs.                                 |
-| `npm run unit`  | Runs all mocha unit tests.                                 |
-| `npm run build` | Generates TypeScript bindings. Prerequisite for E2E tests. |
-| `npm run e2e`   | Runs E2E smoke tests for all supported versions of ESLint. |
+| script       | Description                                                   |
+|--------------|---------------------------------------------------------------|
+| `pnpm lint`  | Lints the source and docs.                                    |
+| `pnpm unit`  | Runs all mocha unit tests.                                    |
+| `pnpm build` | Generates TypeScript bindings. Prerequisite for E2E tests.    |
+| `pnpm e2e`   | Runs E2E smoke tests for all supported versions of ESLint.    |
 
 ## Development
 

@@ -36,8 +36,9 @@ describe("E2E", () => {
     const tarballPath = path.resolve(rootDir, "test-plugin.tgz");
 
     before(() => {
-        const packOutput = execSync("npm pack", { cwd: rootDir, encoding: "utf8" }).trim();
-        fs.renameSync(path.resolve(rootDir, packOutput), tarballPath);
+        const packOutput = execSync("pnpm pack --json", { cwd: rootDir, encoding: "utf8" }).trim();
+        const outputObj = JSON.parse(packOutput);
+        fs.renameSync(path.resolve(rootDir, outputObj.filename), tarballPath);
     });
 
     after(() => {
@@ -76,15 +77,19 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of testCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
-
-            execSync(`npm install ${deps} ${tarballPath} --no-save --force`, {
+            fs.writeFileSync(path.resolve(__dirname, "package.json"),
+                JSON.stringify({
+                    name: "test-project",
+                    private: true
+                }));
+            execSync(`pnpm install ${deps} ${tarballPath}`, {
                 cwd: fixturePath,
                 stdio: "ignore"
             });
 
             let output;
             try {
-                execSync(`npx eslint ${args} --format=json .`, {
+                execSync(`pnpm eslint ${args} --format=json .`, {
                     cwd: fixturePath,
                     encoding: "utf8",
                     env: { ...process.env, ...env },

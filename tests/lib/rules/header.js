@@ -1192,6 +1192,20 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
             {
+                code: "\n\n\n\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
+            },
+            {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
                 options: [{
                     header: {
@@ -2448,7 +2462,13 @@ describe("windows", () => {
                     }
                 }],
                 errors: [
-                    { message: "not enough newlines after header: expected: 2, actual: 1" }
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 31,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 1,
+                    }
                 ],
                 output: [
                     "/*Copyright 2020, My Company*/",
@@ -2617,6 +2637,20 @@ describe("windows", () => {
                         minimum: 2
                     }
                 }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "//Copyright 2020\r\n//My Company\r\n\r\n\r\n\r\n\r\nconsole.log(1);"
+            },
+            {
+                code: "\r\n\r\n\r\n\r\n\r\nconsole.log(1);",
+                options: ["line", ["Copyright 2020", "My Company"], 2],
                 errors: [
                     {
                         message: "missing header",

@@ -194,14 +194,13 @@ const jsRules = {
         "jsdoc/require-yields": "error",
         "jsdoc/sort-tags": "error",
         "jsdoc/tag-lines": "error",
-        // TODO: re-error this.
-        "jsdoc/text-escaping": "off",
-        // [
-        //     "error",
-        //     {
-        //         escapeMarkdown: true
-        //     }
-        // ],
+        "jsdoc/text-escaping": [
+            "error",
+            {
+                escapeHTML: true,
+                escapeMarkdown: false
+            }
+        ],
         "jsdoc/ts-no-unnecessary-template-expression": "error",
         // TODO: re-error this.
         "jsdoc/type-formatting": "off",

@@ -136,8 +136,7 @@ const jsRules = {
         "jsdoc/imports-as-dependencies": "error",
         "jsdoc/informative-docs": "error",
         "jsdoc/lines-before-block": "error",
-        // TODO: re-error this.
-        "jsdoc/match-description": "off",
+        "jsdoc/match-description": "error",
         // TODO: re-error this.
         "jsdoc/match-name": "off",
         "jsdoc/multiline-blocks": "error",

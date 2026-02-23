@@ -26,7 +26,7 @@
 
 const { header } = require("./lib/rules/header");
 
-/** @type {import('eslint').ESLint.Plugin} */
+/** @type {import("eslint").ESLint.Plugin} */
 const pluginDefinition = {
     rules: {
         header

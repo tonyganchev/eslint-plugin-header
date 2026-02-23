@@ -163,8 +163,7 @@ const jsRules = {
         "jsdoc/reject-function-type": "error",
         "jsdoc/require-asterisk-prefix": "error",
         "jsdoc/require-description": "error",
-        // TODO: re-error this.
-        "jsdoc/require-description-complete-sentence": "off",
+        "jsdoc/require-description-complete-sentence": "error",
         // TODO: re-error this.
         "jsdoc/require-example": "off",
         // TODO: re-error this.

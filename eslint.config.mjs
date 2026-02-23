@@ -36,6 +36,7 @@ import header from "./index.js";
 const jsRules = {
     plugins: {
         "eslint-plugin": eslintPlugin,
+        jsdoc,
         n,
         "@stylistic": stylistic,
         "@tony.ganchev": header
@@ -112,6 +113,106 @@ const jsRules = {
         "eslint-plugin/require-meta-docs-description": "error",
         "eslint-plugin/require-meta-docs-recommended": "error",
         "eslint-plugin/require-meta-docs-url": "error",
+
+        "jsdoc/check-access": "error",
+        "jsdoc/check-alignment": "error",
+        // TODO: re-error this.
+        "jsdoc/check-indentation": "off",
+        // TODO: re-error this.
+        "jsdoc/check-line-alignment": "off",
+        "jsdoc/check-param-names": "error",
+        "jsdoc/check-property-names": "error",
+        "jsdoc/check-syntax": "error",
+        "jsdoc/check-tag-names": "error",
+        "jsdoc/check-template-names": "error",
+        "jsdoc/check-types": "error",
+        "jsdoc/check-values": "error",
+        "jsdoc/convert-to-jsdoc-comments": "error",
+        "jsdoc/empty-tags": "error",
+        "jsdoc/implements-on-classes": "error",
+        "jsdoc/imports-as-dependencies": "error",
+        // TODO: re-error this.
+        "jsdoc/informative-docs": "off",
+        // TODO: re-error this.
+        "jsdoc/lines-before-block": "off",
+        // TODO: re-error this.
+        "jsdoc/match-description": "off",
+        // TODO: re-error this.
+        "jsdoc/match-name": "off",
+        "jsdoc/multiline-blocks": "error",
+        "jsdoc/no-bad-blocks": "error",
+        "jsdoc/no-blank-block-descriptions": "error",
+        "jsdoc/no-defaults": "error",
+        "jsdoc/no-missing-syntax": [
+            "error",
+            {
+                contexts: []
+            }
+        ],
+        "jsdoc/no-multi-asterisks": "error",
+        // TODO: re-error this.
+        "jsdoc/no-restricted-syntax": "off",
+        // "jsdoc/no-restricted-syntax": [
+        //     "error",
+        //     {
+        //         contexts: []
+        //     }
+        // ],
+        "jsdoc/no-undefined-types": "error",
+        "jsdoc/reject-any-type": "error",
+        "jsdoc/reject-function-type": "error",
+        "jsdoc/require-asterisk-prefix": "error",
+        // TODO: re-error this.
+        "jsdoc/require-description": "off",
+        // TODO: re-error this.
+        "jsdoc/require-description-complete-sentence": "off",
+        // TODO: re-error this.
+        "jsdoc/require-example": "off",
+        // TODO: re-error this.
+        "jsdoc/require-file-overview": "off",
+        // TODO: re-error this.
+        "jsdoc/require-hyphen-before-param-description": "off",
+        "jsdoc/require-jsdoc": "error",
+        "jsdoc/require-next-description": "error",
+        "jsdoc/require-next-type": "error",
+        "jsdoc/require-param-description": "error",
+        "jsdoc/require-param-name": "error",
+        "jsdoc/require-param-type": "error",
+        "jsdoc/require-param": "error",
+        "jsdoc/require-property-description": "error",
+        "jsdoc/require-property-name": "error",
+        "jsdoc/require-property-type": "error",
+        "jsdoc/require-property": "error",
+        "jsdoc/require-rejects": "off",
+        "jsdoc/require-returns-check": "error",
+        "jsdoc/require-returns-description": "error",
+        "jsdoc/require-returns-type": "error",
+        "jsdoc/require-returns": "error",
+        "jsdoc/require-template": "error",
+        // TODO: re-error this.
+        "jsdoc/require-template-description": "off",
+        // TODO: re-error this.
+        "jsdoc/require-throws": "off",
+        "jsdoc/require-throws-description": "error",
+        "jsdoc/require-throws-type": "error",
+        "jsdoc/require-yields-check": "error",
+        "jsdoc/require-yields-description": "error",
+        "jsdoc/require-yields-type": "error",
+        "jsdoc/require-yields": "error",
+        "jsdoc/sort-tags": "error",
+        "jsdoc/tag-lines": "error",
+        // TODO: re-error this.
+        "jsdoc/text-escaping": "off",
+        // [
+        //     "error",
+        //     {
+        //         escapeMarkdown: true
+        //     }
+        // ],
+        "jsdoc/ts-no-unnecessary-template-expression": "error",
+        // TODO: re-error this.
+        "jsdoc/type-formatting": "off",
+        "jsdoc/valid-types": "error",
 
         "n/callback-return": ["error", ["cb", "callback", "next"]],
         "n/handle-callback-err": ["error", "err"],
@@ -274,6 +375,10 @@ export default defineConfig([
         plugins: {
             markdown,
         },
+        extends: [
+            markdown.configs.processor,
+            markdown.configs.recommended
+        ],
         rules: {
             "markdown/no-bare-urls": "error",
             "markdown/no-duplicate-headings": "error",

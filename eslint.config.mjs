@@ -134,8 +134,7 @@ const jsRules = {
         "jsdoc/empty-tags": "error",
         "jsdoc/implements-on-classes": "error",
         "jsdoc/imports-as-dependencies": "error",
-        // TODO: re-error this.
-        "jsdoc/informative-docs": "off",
+        "jsdoc/informative-docs": "error",
         // TODO: re-error this.
         "jsdoc/lines-before-block": "off",
         // TODO: re-error this.

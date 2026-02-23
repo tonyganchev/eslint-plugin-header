@@ -122,8 +122,7 @@ const jsRules = {
                 allowIndentedSections: false
             }
         ],
-        // TODO: re-error this.
-        "jsdoc/check-line-alignment": "off",
+        "jsdoc/check-line-alignment": "error",
         "jsdoc/check-param-names": "error",
         "jsdoc/check-property-names": "error",
         "jsdoc/check-syntax": "error",

@@ -202,7 +202,8 @@ const jsRules = {
             }
         ],
         "jsdoc/ts-no-unnecessary-template-expression": "error",
-        // TODO: re-error this.
+        // TODO: Re-error this once
+        // https://github.com/gajus/eslint-plugin-jsdoc/issues/1640 is done.
         "jsdoc/type-formatting": "off",
         "jsdoc/valid-types": "error",
 

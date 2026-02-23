@@ -137,8 +137,6 @@ const jsRules = {
         "jsdoc/informative-docs": "error",
         "jsdoc/lines-before-block": "error",
         "jsdoc/match-description": "error",
-        // TODO: re-error this.
-        "jsdoc/match-name": "off",
         "jsdoc/multiline-blocks": "error",
         "jsdoc/no-bad-blocks": "error",
         "jsdoc/no-blank-block-descriptions": "error",

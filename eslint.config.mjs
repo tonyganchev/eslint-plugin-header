@@ -116,8 +116,12 @@ const jsRules = {
 
         "jsdoc/check-access": "error",
         "jsdoc/check-alignment": "error",
-        // TODO: re-error this.
-        "jsdoc/check-indentation": "off",
+        "jsdoc/check-indentation": [
+            "error",
+            {
+                allowIndentedSections: false
+            }
+        ],
         // TODO: re-error this.
         "jsdoc/check-line-alignment": "off",
         "jsdoc/check-param-names": "error",

@@ -185,8 +185,7 @@ const jsRules = {
         "jsdoc/require-returns": "error",
         "jsdoc/require-template": "error",
         "jsdoc/require-template-description": "error",
-        // TODO: re-error this.
-        "jsdoc/require-throws": "off",
+        "jsdoc/require-throws": "error",
         "jsdoc/require-throws-description": "error",
         "jsdoc/require-throws-type": "error",
         "jsdoc/require-yields-check": "error",

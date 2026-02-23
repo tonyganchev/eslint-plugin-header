@@ -150,14 +150,6 @@ const jsRules = {
             }
         ],
         "jsdoc/no-multi-asterisks": "error",
-        // TODO: re-error this.
-        "jsdoc/no-restricted-syntax": "off",
-        // "jsdoc/no-restricted-syntax": [
-        //     "error",
-        //     {
-        //         contexts: []
-        //     }
-        // ],
         "jsdoc/no-undefined-types": "error",
         "jsdoc/reject-any-type": "error",
         "jsdoc/reject-function-type": "error",

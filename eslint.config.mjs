@@ -168,8 +168,7 @@ const jsRules = {
         "jsdoc/require-example": "off",
         // TODO: re-error this.
         "jsdoc/require-file-overview": "off",
-        // TODO: re-error this.
-        "jsdoc/require-hyphen-before-param-description": "off",
+        "jsdoc/require-hyphen-before-param-description": ["error", "never"],
         "jsdoc/require-jsdoc": "error",
         "jsdoc/require-next-description": "error",
         "jsdoc/require-next-type": "error",

@@ -1,8 +1,8 @@
-/*
- * MIT License
- *
- * Copyright (c) 2015-present Stuart Knightley, Tony Ganchev, and contributors
- *
+/**
+ * @file Unit tests for the `header` rule.
+ * @copyright Copyright (c) 2015-present Stuart Knightley and contributors
+ * @copyright Copyright (c) 2025-2026 Tony Ganchev
+ * @license MIT
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
  * in the Software without restriction, including without limitation the rights

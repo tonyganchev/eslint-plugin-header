@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.4
+
+* Added CONTRIBUTING.md and CODE_OF_CONDUCT.md.
+
 ## 3.2.3
 
 * Documentation improvements.

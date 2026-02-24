@@ -1,8 +1,8 @@
-/*
- * MIT License
- *
- * Copyright (c) 2025-present Tony Ganchev and contributors
- *
+/**
+ * @file ESLint configuration.
+ * @copyright Copyright (c) 2015-present Stuart Knightley and contributors
+ * @copyright Copyright (c) 2025-2026 Tony Ganchev
+ * @license MIT
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the “Software”), to deal
  * in the Software without restriction, including without limitation the rights
@@ -42,6 +42,7 @@ const jsRules = {
         "@tony.ganchev": header
     },
     rules: {
+        ...js.configs.recommended.rules,
         camelcase: ["error", {
             properties: "never",
         }],
@@ -105,6 +106,7 @@ const jsRules = {
         strict: ["error", "global"],
         yoda: ["error", "never"],
 
+        ...eslintPlugin.configs.recommended.rules,
         "eslint-plugin/meta-property-ordering": "error",
         "eslint-plugin/no-property-in-node": "error",
         "eslint-plugin/prefer-placeholders": "error",
@@ -114,6 +116,7 @@ const jsRules = {
         "eslint-plugin/require-meta-docs-recommended": "error",
         "eslint-plugin/require-meta-docs-url": "error",
 
+        ...jsdoc.configs["flat/recommended"].rules,
         "jsdoc/check-access": "error",
         "jsdoc/check-alignment": "error",
         "jsdoc/check-indentation": [
@@ -154,8 +157,7 @@ const jsRules = {
         "jsdoc/require-asterisk-prefix": "error",
         "jsdoc/require-description": "error",
         "jsdoc/require-description-complete-sentence": "error",
-        // TODO: re-error this.
-        "jsdoc/require-file-overview": "off",
+        "jsdoc/require-file-overview": "error",
         "jsdoc/require-hyphen-before-param-description": ["error", "never"],
         "jsdoc/require-jsdoc": "error",
         "jsdoc/require-next-description": "error",
@@ -249,14 +251,17 @@ const jsRules = {
             "error",
             "block",
             [
-                "",
-                " * MIT License",
-                " *",
+                "*",
+                /^ \* @file .+$/,
                 {
-                    pattern: " * Copyright \\(c\\) \\d{4}-present .*Tony Ganchev,? and contributors",
-                    template: " * Copyright (c) 2026-present Tony Ganchev and contributors",
+                    pattern: /^ \* .+$/,
+                    template: " * @copyright Copyright (c) 2015-present Stuart Knightley and contributors"
                 },
-                " *",
+                {
+                    pattern: /^ \* @copyright Copyright \(c\) (\d{4}-)?\d{4} .*Tony Ganchev$/,
+                    template: ` * Copyright (c) ${new Date().getFullYear()} Tony Ganchev and contributors`
+                },
+                " * @license MIT",
                 " * Permission is hereby granted, free of charge, to any person obtaining a copy",
                 " * of this software and associated documentation files (the “Software”), to deal",
                 " * in the Software without restriction, including without limitation the rights",
@@ -290,18 +295,6 @@ export default defineConfig([
             "tests/support/**",
         ]
     },
-    js.configs.recommended,
-    jsdoc.configs["flat/recommended"],
-    ...(eslintPlugin.configs["flat/recommended"]
-        ? [].concat(eslintPlugin.configs["flat/recommended"])
-        : [
-            {
-                plugins: { "eslint-plugin": eslintPlugin },
-                rules: eslintPlugin.configs.recommended.rules
-            }
-        ]
-    ),
-
     {
         files: ["**/*.mjs"],
         languageOptions: {
@@ -349,7 +342,6 @@ export default defineConfig([
         ...jsRules,
     },
 
-    // 3. Markdown Configs (previously inside the markdown object extends)
     ...[].concat(markdown.configs.processor || []),
     ...[].concat(markdown.configs.recommended || []),
     {
@@ -372,6 +364,7 @@ export default defineConfig([
         files: ["**/*.md/*.ts", "**/*.md/*.js"],
         rules: {
             "@tony.ganchev/header": "off",
+            "jsdoc/require-file-overview": "off",
             "jsdoc/tag-lines": "off"
         }
     }

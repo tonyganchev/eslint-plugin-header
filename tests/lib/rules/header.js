@@ -952,7 +952,9 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: ["Copyright 2020, My Company"]
+                        lines: [
+                            { pattern: /^Copyright \d{4}, My Company$/, template: "Copyright 2026, My Company" },
+                        ]
                     },
                     trailingEmptyLines: {
                         minimum: 2

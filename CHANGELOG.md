@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.5
+
+* Fixed validation when a block comment header has fewer lines than expected.
+
 ## 3.2.4
 
 * Added CONTRIBUTING.md and CODE_OF_CONDUCT.md.

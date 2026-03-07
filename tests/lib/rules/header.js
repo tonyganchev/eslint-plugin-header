@@ -1687,7 +1687,11 @@ describe("unix", () => {
                     {
                         message: "header too short: missing lines: / \\(c\\) Copyright Acme Corp. \\d{4}/\n"
                             + "/(?: \\(c\\) Copyright Tony Ganchev and contributors \\d{4})?/\n" +
-                            "/(?:)/"
+                            "/(?:)/",
+                        column: 40,
+                        endColumn: 40,
+                        endLine: 1,
+                        line: 1
                     }
                 ]
             }

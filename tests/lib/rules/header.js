@@ -472,6 +472,66 @@ describe("unix", () => {
                     }
                 }]
             },
+            {
+                code: [
+                    "/* eslint-disable rule-to-test/header */",
+                    "/*",
+                    " * Multi",
+                    " * Line",
+                    " * Comment",
+                    " */",
+                    "// @ts-nocheck",
+                    "",
+                    "'use strict';",
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            /.*/,
+                            / \(c\) Copyright Acme Corp. \d{4} /,
+                            /(?: \(c\) Copyright Tony Ganchev and contributors \d{4})?/,
+                            /.*/
+                        ]
+                    }
+                }]
+            },
+            {
+                code: [
+                    "/* eslint-disable rule-to-test/header */",
+                    "/*",
+                    " * Multi",
+                    " * Line",
+                    " * Comment",
+                    " */",
+                    "// @ts-nocheck",
+                    "",
+                    "'use strict';",
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            {
+                                pattern: /.*/,
+                                template: ""
+                            },
+                            {
+                                pattern: / \(c\) Copyright Acme Corp. \d{4}/,
+                                template: " (c) Copyright Acme Corp. 2026"
+                            },
+                            {
+                                pattern: /(?: \(c\) Copyright Tony Ganchev and contributors \d{4})?/,
+                                template: " (c) Copyright Tony Ganchev and contributors 2026"
+                            },
+                            {
+                                pattern: /.*/,
+                                template: ""
+                            }
+                        ]
+                    }
+                }]
+            }
         ],
         invalid: [
             {
@@ -1598,6 +1658,37 @@ describe("unix", () => {
                 ],
                 output: "/**/\n\nconsole.log('hello!');"
             },
+            {
+                code: [
+                    "/* eslint-enable rule-to-test/header */",
+                    "/*",
+                    " * Multi",
+                    " * Line",
+                    " * Comment",
+                    " */",
+                    "// @ts-nocheck",
+                    "",
+                    "'use strict';",
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            { pattern: "" },
+                            { pattern: " \\(c\\) Copyright Acme Corp. \\d{4}" },
+                            { pattern: "(?: \\(c\\) Copyright Tony Ganchev and contributors \\d{4})?" },
+                            { pattern: "" }
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too short: missing lines: / \\(c\\) Copyright Acme Corp. \\d{4}/\n"
+                            + "/(?: \\(c\\) Copyright Tony Ganchev and contributors \\d{4})?/\n" +
+                            "/(?:)/"
+                    }
+                ]
+            }
         ]
     });
 });

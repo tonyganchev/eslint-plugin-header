@@ -236,7 +236,11 @@ const jsRules = {
             after: true,
         }],
         "@stylistic/space-before-blocks": "error",
-        "@stylistic/space-before-function-paren": ["error", "never"],
+        "@stylistic/space-before-function-paren": ["error", {
+            anonymous: "always",
+            named: "never",
+            asyncArrow: "always",
+        }],
         "@stylistic/space-infix-ops": "error",
         "@stylistic/space-unary-ops": ["error", {
             words: true,

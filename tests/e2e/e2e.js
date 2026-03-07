@@ -108,7 +108,7 @@ describe("E2E", () => {
                     shell: true
                 });
                 assert.fail("Error expected (lint violation)");
-            } catch(error) {
+            } catch (error) {
                 if (!error.stdout) {
                     console.error(error.stderr?.toString());
                     throw error;

@@ -36,7 +36,7 @@ describe("ESLint compatibility utils", () => {
         });
         it("works when context.sourceCode property is available on ESLint 8/9/10", () => {
             const context = {
-                getSourceCode: function() {
+                getSourceCode: function () {
                     return sourceCode;
                 }
             };

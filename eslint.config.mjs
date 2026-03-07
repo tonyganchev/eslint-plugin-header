@@ -317,6 +317,10 @@ export default defineConfig([
                 ...globals.node,
                 BufferEncoding: "readonly"
             },
+            parser: typescript.parser,
+            parserOptions: {
+                project: "tsconfig.json",
+            },
         },
         ...jsRules,
     },
@@ -336,7 +340,7 @@ export default defineConfig([
     },
     {
         files: ["**/*.ts"],
-        ignores: ["types/**"],
+        ignores: ["types/**", "index.d.ts"],
         languageOptions: {
             parser: typescript.parser,
             parserOptions: {
@@ -366,6 +370,11 @@ export default defineConfig([
     },
     {
         files: ["**/*.md/*.ts", "**/*.md/*.js"],
+        languageOptions: {
+            parserOptions: {
+                project: false,
+            },
+        },
         rules: {
             "@tony.ganchev/header": "off",
             "jsdoc/require-file-overview": "off",

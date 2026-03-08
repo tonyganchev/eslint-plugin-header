@@ -558,6 +558,24 @@ describe("unix", () => {
                 options: [{
                     header: {
                         commentType: "block",
+                        lines: [/^Copyright 2015, My Company$/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 2,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+            },
+            {
+                code: "console.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
                         lines: ["Copyright 2015, My Company"]
                     },
                     lineEndings: "unix"

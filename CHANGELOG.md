@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.6
+
+* Autofix is no longer attempted when the header is missing and no `template` is
+  provided.
+
 ## 3.2.5
 
 * Fixed validation when a block comment header has fewer lines than expected.

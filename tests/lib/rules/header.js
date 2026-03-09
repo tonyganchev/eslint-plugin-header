@@ -566,17 +566,17 @@ describe("unix", () => {
                         comments: [
                             {
                                 commentType: "line",
-                                lines: ["* foo"]
+                                lines: [" foo"]
                             },
                             {
                                 commentType: "line",
-                                lines: ["* bar"]
+                                lines: [" bar"]
                             }
                         ]
                     },
                     header: {
-                        commentType: "block",
-                        lines: [" Copyright "]
+                        commentType: "line",
+                        lines: [" Copyright"]
                     }
                 }]
             }
@@ -1771,7 +1771,39 @@ describe("unix", () => {
                         line: 1
                     }
                 ]
-            }
+            },
+            {
+                code: "/** @jest-environment browser */\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: ["* @jest-environment node "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match expected after this position; expected:  Copyright ",
+                        column: 3,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "header line does not match expected after this position; expected: node ",
+                        column: 23,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Copyright */\n/* Copyright */\nconsole.log(1);\n",
+            },
         ]
     });
 });

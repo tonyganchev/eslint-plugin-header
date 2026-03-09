@@ -184,6 +184,18 @@ describe("unix", () => {
                 }]
             },
             {
+                code: "/*Copyright 2015, My Company*//* non-header */\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: ["Copyright 2015, My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }]
+            },
+            {
                 code: "//Copyright 2015, My Company\nconsole.log(1);",
                 options: [{
                     header: {
@@ -1311,8 +1323,16 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
             {
-                code: "\n\n\n\nconsole.log(1);",
-                options: ["line", ["Copyright 2020", "My Company"], 2],
+                code: "\n\nconsole.log(1);\n// trailing comment",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2020", "My Company"],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
                 errors: [
                     {
                         message: "missing header",
@@ -1322,7 +1342,7 @@ describe("unix", () => {
                         line: 1
                     }
                 ],
-                output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
+                output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n// trailing comment"
             },
             {
                 code: "#!/usr/bin/env node\nconsole.log(1);",

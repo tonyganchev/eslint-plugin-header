@@ -531,6 +531,42 @@ describe("unix", () => {
                         ]
                     }
                 }]
+            },
+            {
+                code: "/** @jest-environment node */\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: ["* @jest-environment node "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }]
+            },
+            {
+                code: "// foo\n\n// bar\n\n// Copyright\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: ["* foo"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: ["* bar"]
+                            }
+                        ]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }]
             }
         ],
         invalid: [
@@ -1078,11 +1114,14 @@ describe("unix", () => {
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                code: "/*Copyright 2026, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{ pattern: "Copyright 2020, My Company" }]
+                        lines: [{
+                            pattern: /^Copyright \d{4}, My Company$/,
+                            template: "Copyright 2020, My Company"
+                        }]
                     },
                     trailingEmptyLines: {
                         minimum: 2
@@ -1098,7 +1137,7 @@ describe("unix", () => {
 
                     }
                 ],
-                output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                output: "/*Copyright 2026, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",

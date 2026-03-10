@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.3.0
+
+* feat: support leading comments before header to enable behavior control to
+  frameworks such as Jest.
+
 ## 3.2.6
 
 * Autofix is no longer attempted when the header is missing and no `template` is

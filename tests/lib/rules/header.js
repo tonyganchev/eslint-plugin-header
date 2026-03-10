@@ -593,8 +593,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -612,8 +612,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -631,8 +631,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -651,8 +651,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1248,8 +1248,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1270,8 +1270,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1314,8 +1314,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1336,8 +1336,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1355,8 +1355,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1374,8 +1374,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1393,8 +1393,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1412,8 +1412,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1469,8 +1469,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1488,8 +1488,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1804,6 +1804,118 @@ describe("unix", () => {
                 ],
                 output: "/* Copyright */\n/* Copyright */\nconsole.log(1);\n",
             },
+            {
+                code: "/* pragma */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: "/* Copyright */\n/* pragma */\nconsole.log(1);\n",
+            },
+            {
+                code: "/* pragma */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright $/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ]
+            },
+            {
+                code: "/* pragma *//* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "line",
+                        lines: [" Copyright"]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header should be a line comment",
+                        column: 1,
+                        endColumn: 13,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "not enough newlines after header: expected: 1, actual: 0",
+                        column: 13,
+                        endColumn: 14,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "// Copyright\n/* Copyright */\nconsole.log(1);\n",
+            },
+            {
+                code: "// pragma\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright $/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
         ]
     });
 });
@@ -2113,8 +2225,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2133,8 +2245,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2153,8 +2265,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2774,8 +2886,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2796,8 +2908,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2846,8 +2958,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2860,8 +2972,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2879,8 +2991,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2898,8 +3010,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2917,8 +3029,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2936,8 +3048,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },

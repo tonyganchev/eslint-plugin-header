@@ -184,6 +184,18 @@ describe("unix", () => {
                 }]
             },
             {
+                code: "/*Copyright 2015, My Company*//* non-header */\nconsole.log(1);",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: ["Copyright 2015, My Company"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }]
+            },
+            {
                 code: "//Copyright 2015, My Company\nconsole.log(1);",
                 options: [{
                     header: {
@@ -531,6 +543,42 @@ describe("unix", () => {
                         ]
                     }
                 }]
+            },
+            {
+                code: "/** @jest-environment node */\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: ["* @jest-environment node "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }]
+            },
+            {
+                code: "// foo\n\n// bar\n\n// Copyright\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" foo"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" bar"]
+                            }
+                        ]
+                    },
+                    header: {
+                        commentType: "line",
+                        lines: [" Copyright"]
+                    }
+                }]
             }
         ],
         invalid: [
@@ -545,8 +593,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -564,8 +612,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -583,8 +631,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -603,8 +651,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -717,7 +765,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: 5, My Company",
+                        message: "header line does not match expected after this position; expected: '5, My Company'",
                         column: 16,
                         endColumn: 29,
                         endLine: 1,
@@ -756,7 +804,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing: My Company",
+                        message: "header line shorter than expected; missing: 'My Company'",
                         column: 1,
                         endColumn: 2,
                         endLine: 2,
@@ -775,7 +823,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: 5",
+                        message: "header line does not match expected after this position; expected: '5'",
                         column: 16,
                         endColumn: 17,
                         endLine: 1,
@@ -794,7 +842,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /Copyright 2015/",
+                        message: "header line does not match pattern: '/Copyright 2015/'",
                         column: 3,
                         endColumn: 17,
                         endLine: 1,
@@ -812,7 +860,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /Copyright 2015/",
+                        message: "header line does not match pattern: '/Copyright 2015/'",
                         column: 3,
                         endColumn: 17,
                         endLine: 1,
@@ -830,7 +878,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header too short: missing lines: My Company",
+                        message: "header too short; missing lines: 'My Company'",
                         column: 17,
                         line: 1
                     }
@@ -847,7 +895,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header does not match pattern: '/^ Copyright \\d+$/'",
                         column: 1,
                         endColumn: 27,
                         endLine: 1,
@@ -865,7 +913,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header does not match pattern: '/^ Copyright \\d+$/'",
                         column: 1,
                         endColumn: 27,
                         endLine: 1,
@@ -884,7 +932,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^ Copyright \\d+$/",
+                        message: "header line does not match pattern: '/^ Copyright \\d+$/'",
                         column: 3,
                         endColumn: 27,
                         endLine: 1,
@@ -903,7 +951,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^ Author: \\w+@\\w+\\.\\w+$/",
+                        message: "header line does not match pattern: '/^ Author: \\w+@\\w+\\.\\w+$/'",
                         column: 3,
                         endColumn: 28,
                         endLine: 2,
@@ -921,7 +969,8 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^ Copyright \\d+\\n Author: \\w+@\\w+\\.\\w+ $/",
+                        message:
+                            "header line does not match pattern: '/^ Copyright \\d+\\n Author: \\w+@\\w+\\.\\w+ $/'",
                         column: 3,
                         endColumn: 50,
                         endLine: 1,
@@ -950,7 +999,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: My Company",
+                        message: "header line does not match expected after this position; expected: 'My Company'",
                         column: 4,
                         endColumn: 35,
                         endLine: 3,
@@ -1078,11 +1127,14 @@ describe("unix", () => {
                 output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment"
             },
             {
-                code: "/*Copyright 2020, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                code: "/*Copyright 2026, My Company*/\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
                 options: [{
                     header: {
                         commentType: "block",
-                        lines: [{ pattern: "Copyright 2020, My Company" }]
+                        lines: [{
+                            pattern: /^Copyright \d{4}, My Company$/,
+                            template: "Copyright 2020, My Company"
+                        }]
                     },
                     trailingEmptyLines: {
                         minimum: 2
@@ -1098,7 +1150,7 @@ describe("unix", () => {
 
                     }
                 ],
-                output: "/*Copyright 2020, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
+                output: "/*Copyright 2026, My Company*/\n\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
             },
             {
                 code: "//Copyright 2020\n//My Company\nconsole.log(1);\n//Comment\nconsole.log(2);\n//Comment",
@@ -1197,8 +1249,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1219,8 +1271,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1263,8 +1315,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -1272,18 +1324,26 @@ describe("unix", () => {
                 output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
             },
             {
-                code: "\n\n\n\nconsole.log(1);",
-                options: ["line", ["Copyright 2020", "My Company"], 2],
+                code: "\n\nconsole.log(1);\n// trailing comment",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2020", "My Company"],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
                 ],
-                output: "//Copyright 2020\n//My Company\n\n\n\nconsole.log(1);"
+                output: "//Copyright 2020\n//My Company\n\nconsole.log(1);\n// trailing comment"
             },
             {
                 code: "#!/usr/bin/env node\nconsole.log(1);",
@@ -1296,8 +1356,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1315,8 +1375,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1334,8 +1394,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1353,8 +1413,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1371,7 +1431,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: Copyright ",
+                        message: "header line does not match expected after this position; expected: 'Copyright '",
                         column: 4,
                         endColumn: 15,
                         endLine: 2,
@@ -1410,8 +1470,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1429,8 +1489,8 @@ describe("unix", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -1450,7 +1510,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header too short: missing lines: /Khan Asparuh/",
+                        message: "header too short; missing lines: '/Khan Asparuh/'",
                         column: 11,
                         line: 2
                     }
@@ -1508,7 +1568,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  Sofia",
+                        message: "header line shorter than expected; missing: ' Sofia'",
                         column: 9,
                         endColumn: 9,
                         endLine: 2,
@@ -1530,7 +1590,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  8:0 Lokomotiv Sofia",
+                        message: "header line shorter than expected; missing: ' 8:0 Lokomotiv Sofia'",
                         column: 9,
                         endColumn: 9,
                         endLine: 2,
@@ -1602,7 +1662,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  2000",
+                        message: "header line shorter than expected; missing: ' 2000'",
                         column: 13,
                         endColumn: 14,
                         endLine: 1,
@@ -1646,7 +1706,7 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^   Megadeth $/",
+                        message: "header line does not match pattern: '/^   Megadeth $/'",
                         column: 1,
                         endColumn: 16,
                         endLine: 2,
@@ -1703,16 +1763,164 @@ describe("unix", () => {
                 }],
                 errors: [
                     {
-                        message: "header too short: missing lines: / \\(c\\) Copyright Acme Corp. \\d{4}/\n"
-                            + "/(?: \\(c\\) Copyright Tony Ganchev and contributors \\d{4})?/\n" +
-                            "/(?:)/",
+                        message: "header too short; missing lines: '/ \\(c\\) Copyright Acme Corp. \\d{4}/\n" +
+                            "/(?: \\(c\\) Copyright Tony Ganchev and contributors \\d{4})?/\n" +
+                            "/(?:)/'",
                         column: 40,
                         endColumn: 40,
                         endLine: 1,
                         line: 1
                     }
                 ]
-            }
+            },
+            {
+                code: "/** @jest-environment browser */\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: ["* @jest-environment node "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match expected after this position; expected: ' Copyright '",
+                        column: 3,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message:
+                            "leading comment validation failed: line does not match expected after this position; "
+                            + "expected: 'node '",
+                        column: 23,
+                        endColumn: 31,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* Copyright */\n/* Copyright */\nconsole.log(1);\n",
+            },
+            {
+                code: "/* pragma */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright "]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: "/* Copyright */\n/* pragma */\nconsole.log(1);\n",
+            },
+            {
+                code: "/* pragma */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright $/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ]
+            },
+            {
+                code: "/* pragma *//* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "line",
+                        lines: [" Copyright"]
+                    }
+                }],
+                errors: [
+                    {
+                        message:
+                            "leading comment validation failed: line does not match expected after this position; "
+                            + "expected: 'pragma '",
+                        column: 4,
+                        endColumn: 14,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "header should be a line comment",
+                        column: 13,
+                        endColumn: 28,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "/* pragma */// Copyright\nconsole.log(1);\n",
+            },
+            {
+                code: "// pragma\n/* Copyright */\nconsole.log(1);\n",
+                options: [{
+                    leadingComments: {
+                        comments: [{
+                            commentType: "block",
+                            lines: [" pragma "]
+                        }]
+                    },
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright $/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header should be a block comment",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "leading comment validation failed: should be a block comment",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
         ]
     });
 });
@@ -2022,8 +2230,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2042,8 +2250,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2062,8 +2270,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2176,7 +2384,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: 5, My Company",
+                        message: "header line does not match expected after this position; expected: '5, My Company'",
                         column: 16,
                         endColumn: 29,
                         endLine: 1,
@@ -2215,7 +2423,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing: My Company",
+                        message: "header line shorter than expected; missing: 'My Company'",
                         column: 1,
                         endColumn: 2,
                         endLine: 2,
@@ -2234,7 +2442,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: 5",
+                        message: "header line does not match expected after this position; expected: '5'",
                         column: 16,
                         endColumn: 17,
                         endLine: 1,
@@ -2253,7 +2461,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /Copyright 2015/",
+                        message: "header line does not match pattern: '/Copyright 2015/'",
                         column: 3,
                         endColumn: 17,
                         endLine: 1,
@@ -2271,7 +2479,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /Copyright 2015/",
+                        message: "header line does not match pattern: '/Copyright 2015/'",
                         column: 3,
                         endColumn: 17,
                         endLine: 1,
@@ -2289,7 +2497,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header too short: missing lines: My Company",
+                        message: "header too short; missing lines: 'My Company'",
                         column: 17,
                         line: 1
                     }
@@ -2306,7 +2514,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header does not match pattern: '/^ Copyright \\d+$/'",
                         column: 1,
                         endColumn: 27,
                         endLine: 1,
@@ -2324,7 +2532,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "incorrect header",
+                        message: "header does not match pattern: '/^ Copyright \\d+$/'",
                         column: 1,
                         endColumn: 27,
                         endLine: 1,
@@ -2343,7 +2551,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^ Copyright \\d+$/",
+                        message: "header line does not match pattern: '/^ Copyright \\d+$/'",
                         column: 3,
                         endColumn: 27,
                         endLine: 1,
@@ -2362,7 +2570,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^ Author: \\w+@\\w+\\.\\w+$/",
+                        message: "header line does not match pattern: '/^ Author: \\w+@\\w+\\.\\w+$/'",
                         column: 3,
                         endColumn: 28,
                         endLine: 2,
@@ -2381,7 +2589,7 @@ describe("windows", () => {
                 errors: [
                     {
                         message:
-                            "header line does not match pattern: /^ Copyright \\d+\\r\\n Author: \\w+@\\w+\\.\\w+ $/",
+                            "header line does not match pattern: '/^ Copyright \\d+\\r\\n Author: \\w+@\\w+\\.\\w+ $/'",
                         column: 3,
                         endColumn: 51,
                         endLine: 1,
@@ -2410,7 +2618,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match expected after this position; expected: My Company",
+                        message: "header line does not match expected after this position; expected: 'My Company'",
                         column: 4,
                         endColumn: 35,
                         endLine: 3,
@@ -2683,8 +2891,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2705,8 +2913,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2755,8 +2963,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2769,8 +2977,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 1,
                         line: 1
                     }
@@ -2788,8 +2996,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2807,8 +3015,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2826,8 +3034,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2845,8 +3053,8 @@ describe("windows", () => {
                 errors: [
                     {
                         message: "missing header",
-                        column: 2,
-                        endColumn: 2,
+                        column: 1,
+                        endColumn: 1,
                         endLine: 2,
                         line: 2
                     },
@@ -2866,7 +3074,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header too short: missing lines: /Khan Asparuh/",
+                        message: "header too short; missing lines: '/Khan Asparuh/'",
                         column: 11,
                         line: 2
                     }
@@ -2924,7 +3132,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  Sofia",
+                        message: "header line shorter than expected; missing: ' Sofia'",
                         column: 9,
                         line: 2
                     }
@@ -2944,7 +3152,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  8:0 Lokomotiv Sofia",
+                        message: "header line shorter than expected; missing: ' 8:0 Lokomotiv Sofia'",
                         column: 9,
                         line: 2
                     }
@@ -3014,7 +3222,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line shorter than expected; missing:  2000",
+                        message: "header line shorter than expected; missing: ' 2000'",
                         column: 13,
                         endColumn: 14,
                         endLine: 1,
@@ -3058,7 +3266,7 @@ describe("windows", () => {
                 }],
                 errors: [
                     {
-                        message: "header line does not match pattern: /^   Megadeth $/",
+                        message: "header line does not match pattern: '/^   Megadeth $/'",
                         column: 1,
                         endColumn: 16,
                         endLine: 2,

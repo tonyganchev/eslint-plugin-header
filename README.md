@@ -20,7 +20,9 @@ and banner comments in JavaScript and TypeScript files.
       2. [Providing To-year in Auto-fix](#providing-to-year-in-auto-fix)
       3. [Trailing Empty Lines Configuration](#trailing-empty-lines-configuration)
       4. [Line Endings](#line-endings)
-   3. [Examples](#examples)
+   3. [Support for Leading Comments](#support-for-leading-comments)
+      1. [Notes on Behavior](#notes-on-behavior)
+   4. [Examples](#examples)
 4. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -659,6 +661,293 @@ export default defineConfig([
 Possible values are `"unix"` for `\n` and `"windows"` for `\r\n` line endings.
 The default value is `"os"` which means assume the system-specific line endings.
 
+### Support for Leading Comments
+
+_NOTE: This feature is still experimental and as such may break between minor
+versions and revisions._
+
+_NOTE: This feature will **only** be available with the modern object-based
+configuration._
+
+Some frameworks such as [Jest](https://jestjs.io/) change behavior based on
+pragma comments such as:
+
+```js
+/** @jest-environement node */
+```
+
+The problem with these is that they are not part of the header comment and
+should be allowed to appear before the header comment. The `leadingComments`
+option allows you to specify a set of comments that are allowed to appear before
+the header comment. It is configured as an array of comments-matching rules
+similar to the `header` section. For example to match the following header with
+a leading pragma:
+
+```js
+/** @jest-environement node */
+/* Copyright 2015, My Company */
+```
+
+... we can use the following configuration:
+
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2015, My Company "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: ["* @jest-environement node "]
+                            }
+                        ]
+                    }
+                } as HeaderOptions
+            ]
+        }
+    }
+]);
+```
+
+Assuming you need to tolerate more pragmas, you can have a longer list of
+comments e.g.
+
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2015, My Company "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: ["* @jest-environement node "]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" @ts-ignore"]
+                            }
+                        ]
+                    }
+                } as HeaderOptions
+            ]
+        }
+    }
+]);
+```
+
+You can also use file-based configuration for any of these allowed comments.
+
+#### Notes on Behavior
+
+There are a number of things to consider when validating headers when allowing
+some leading comments. It is important to understand the algorithm behind.
+During validation, the rule breaks up all comments before the first actual code
+token based either on the beginning and end of a block comments or based on the
+separation of line comments by more than one line. These discrete comment blocks
+are then validated against both the header-matching rule and all the leading
+comment-matching rules.
+
+For each comment, header is tested first and if it matches, validation completes
+successfully. If not, the algorithm verifies that the comment satisfies at least
+one comment matcher and if so, validation moves to the next comment.
+
+If the comment matches neither the header, nor any of the leading comment
+matchers, validation fails. To provide good troubleshooting information, errors
+are reported for the header matcher, followed by all leading comment matchers.
+While the information may seem overwhelming, this helps developers understand
+all possible failures and let them pick the essential one.
+
+Let's have the following configuration example:
+
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2015, My Company "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: ["* @jest-environement node "]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" @ts-ignore"]
+                            }
+                        ]
+                    }
+                } as HeaderOptions
+            ]
+        }
+    }
+]);
+```
+
+Let's lint the following piece of code:
+
+```js
+/** @jest-environement node */
+/* Copyright 2010, My Company */
+
+console.log(1);
+```
+
+The following errors would be shown:
+
+```bash
+  2:1  error  leading comment validation failed: should be a line comment
+        @tony.ganchev/header         
+  2:3  error  header line does not match expected after this position;
+    expected: 'Copyright 2015, My Company'
+        @tony.ganchev/header         
+  2:3  error  leading comment validation failed: line does not match expected
+    after this position; expected: '* @jest-environement node '
+        @tony.ganchev/header
+```
+
+Notice how all errors are reported on the second line. That is because the first
+line passes validation against the first leading comment matcher, while the
+second fails validation against all matchers.
+
+Requiring an empty line between line leading comments is important as it keeps
+the rule simple and fast but needs to be kept into account. Let's take the
+following configuration for example:
+
+```ts
+import header, { HeaderOptions } from "@tony.ganchev/eslint-plugin-header";
+import { defineConfig } from "eslint/config";
+
+export default defineConfig([
+    {
+        files: ["**/*.js"],
+        plugins: {
+            "@tony.ganchev": header
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2015, My Company "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" foo"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" bar"]
+                            }
+                        ]
+                    }
+                } as HeaderOptions
+            ]
+        }
+    }
+]);
+```
+
+This configuration would successfully lint any of the following snippets:
+
+```js
+// foo
+
+// bar
+/* Copyright 2015, My Company */
+console.log();
+```
+
+```js
+// bar
+
+// foo
+
+/* Copyright 2015, My Company */
+console.log();
+```
+
+```js
+// bar
+
+// bar
+/* Copyright 2015, My Company */
+console.log();
+```
+
+It will not pass the following snippets though:
+
+```js
+// foo
+// bar
+
+/* Copyright 2015, My Company */
+console.log();
+```
+
+```js
+// bar
+// foo
+/* Copyright 2015, My Company */
+console.log();
+```
+
+```js
+// bar
+// bar
+
+/* Copyright 2015, My Company */
+console.log();
+```
+
+Finally, it is worth noting that the current version accepts an arbitrary number
+of empty lines in between comments. The only expectation still in place is that
+there is no empty line after a shebang comment. Any of these details may change
+through configuration in the future.
+
 ### Examples
 
 The following examples are all valid.
@@ -937,4 +1226,4 @@ Backward-compatibility does not cover the following functional aspects:
 
 ## License
 
-MIT
+MIT, see [license file](./LICENSE.md) for more details.

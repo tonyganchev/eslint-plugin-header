@@ -352,6 +352,20 @@ describe("unix", () => {
                 }]
             },
             {
+                code: "#!/usr/bin/env node\n// Copyright\ntest();",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright"
+                        ],
+                    },
+                    trailingEmptyLines: {
+                        minimum: 0
+                    }
+                }]
+            },
+            {
                 code: "// Copyright 2015\r\n// My Company\r\nconsole.log(1)",
                 options: [{
                     header: {

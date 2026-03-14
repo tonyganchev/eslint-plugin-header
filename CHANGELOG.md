@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.1
+
+* fix: regression: shebangs were treated as part of the initial line comments.
+
 ## 3.3.0
 
 * feat: support leading comments before header to enable behavior control to

@@ -27,8 +27,8 @@ importers:
         specifier: ^7.0.15
         version: 7.0.15
       '@types/node':
-        specifier: ^25.4.0
-        version: 25.4.0
+        specifier: ^25.5.0
+        version: 25.5.0
       c8:
         specifier: ^11.0.0
         version: 11.0.0
@@ -39,8 +39,8 @@ importers:
         specifier: ^7.3.2
         version: 7.3.2(eslint@10.0.3)
       eslint-plugin-jsdoc:
-        specifier: ^62.7.1
-        version: 62.7.1(eslint@10.0.3)
+        specifier: ^62.8.0
+        version: 62.8.0(eslint@10.0.3)
       eslint-plugin-n:
         specifier: ^17.24.0
         version: 17.24.0(eslint@10.0.3)(typescript@5.9.3)
@@ -192,8 +192,8 @@ packages:
   '@types/ms@2.1.0':
     resolution: {integrity: sha512-GsCCIZDE/p3i96vtEqx+7dBUGXrc7zeSK3wwPHIaRThS+9OhWIXRqzs4d6k1SVU8g91DrNRWxWUGhp5KXQb2VA==}
 
-  '@types/node@25.4.0':
-    resolution: {integrity: sha512-9wLpoeWuBlcbBpOY3XmzSTG3oscB6xjBEEtn+pYXTfhyXhIxC5FsBer2KTopBlvKEiW9l13po9fq+SJY/5lkhw==}
+  '@types/node@25.5.0':
+    resolution: {integrity: sha512-jp2P3tQMSxWugkCUKLRPVUpGaL5MVFwF8RDuSRztfwgN1wmqJeMSbKlnEtQqU8UrhTmzEmZdu2I6v2dpp7XIxw==}
 
   '@types/unist@2.0.11':
     resolution: {integrity: sha512-CmBKiL6NNo/OqgmMn95Fk9Whlp2mtvIv+KNpQKN2F4SjvrEesubTRWGYSg+BnWZOnlCaSTU1sMpsBOzgbYhnsA==}
@@ -438,8 +438,8 @@ packages:
     peerDependencies:
       eslint: '>=9.0.0'
 
-  eslint-plugin-jsdoc@62.7.1:
-    resolution: {integrity: sha512-4Zvx99Q7d1uggYBUX/AIjvoyqXhluGbbKrRmG8SQTLprPFg6fa293tVJH1o1GQwNe3lUydd8ZHzn37OaSncgSQ==}
+  eslint-plugin-jsdoc@62.8.0:
+    resolution: {integrity: sha512-hu3r9/6JBmPG6wTcqtYzgZAnjEG2eqRUATfkFscokESg1VDxZM21ZaMire0KjeMwfj+SXvgB4Rvh5LBuesj92w==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
@@ -732,8 +732,8 @@ packages:
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
 
-  lru-cache@11.2.6:
-    resolution: {integrity: sha512-ESL2CrkS/2wTPfuend7Zhkzo2u0daGJ/A2VucJOgQ/C48S/zB8MMeMHSGKYpXhIjbPxfuezITkaBH1wqv00DDQ==}
+  lru-cache@11.2.7:
+    resolution: {integrity: sha512-aY/R+aEsRelme17KGQa/1ZSIpLpNYYrhcrepKTZgE+W3WM16YMCaPwOHLHsmopZHELU0Ojin1lPVxKR0MihncA==}
     engines: {node: 20 || >=22}
 
   make-dir@4.0.0:
@@ -1309,7 +1309,7 @@ snapshots:
 
   '@types/ms@2.1.0': {}
 
-  '@types/node@25.4.0':
+  '@types/node@25.5.0':
     dependencies:
       undici-types: 7.18.2
 
@@ -1552,7 +1552,7 @@ snapshots:
       eslint: 10.0.3
       estraverse: 5.3.0
 
-  eslint-plugin-jsdoc@62.7.1(eslint@10.0.3):
+  eslint-plugin-jsdoc@62.8.0(eslint@10.0.3):
     dependencies:
       '@es-joy/jsdoccomment': 0.84.0
       '@es-joy/resolve.exports': 1.2.0
@@ -1837,7 +1837,7 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
-  lru-cache@11.2.6: {}
+  lru-cache@11.2.7: {}
 
   make-dir@4.0.0:
     dependencies:
@@ -2297,7 +2297,7 @@ snapshots:
 
   path-scurry@2.0.2:
     dependencies:
-      lru-cache: 11.2.6
+      lru-cache: 11.2.7
       minipass: 7.1.3
 
   picocolors@1.1.1: {}

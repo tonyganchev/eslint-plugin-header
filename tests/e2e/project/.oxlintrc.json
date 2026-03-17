@@ -1,0 +1,27 @@
+{
+  "plugins": [],
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts"
+      ],
+      "rules": {
+        "@tony.ganchev/header/header": [
+          "error",
+          {
+            "header": {
+              "commentType": "line",
+              "lines": [
+                " Copyright 1985",
+                " Tony Ganchev"
+              ]
+            }
+          }
+        ]
+      },
+      "jsPlugins": [
+        "@tony.ganchev/eslint-plugin-header"
+      ]
+    }
+  ]
+}

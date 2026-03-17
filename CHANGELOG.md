@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.2
+
+* fix: oxlint support.
+
 ## 3.3.1
 
 * fix: regression: shebangs were treated as part of the initial line comments.

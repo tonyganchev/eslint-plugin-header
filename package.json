@@ -1,6 +1,6 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.3.1",
+  "version": "3.3.2",
   "description": "The native ESLint 9/10 header plugin. A zero-bloat, drop-in replacement for 'eslint-plugin-header' with first-class Flat Config & TypeScript support. Auto-fix Copyright, License, and banner comments in JavaScrip and TypeScript files.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -44,7 +44,7 @@
     "mocha": "12.0.0-beta-10",
     "testdouble": "^3.20.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.0"
+    "typescript-eslint": "^8.57.1"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"

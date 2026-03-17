@@ -7,7 +7,7 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript and TypeScript files.
+and banner comments in JavaScript and TypeScript files. Supports _oxlint_.
 
 ## Table of Contents
 
@@ -141,6 +141,34 @@ Due to limitations in ESLint plugins, the file is read relative to the working
 directory that ESLint is executed in. If you run ESLint from elsewhere in your
 tree then the header file will not be found.
 
+The equivalent configuration for _oxlint_ is:
+
+```json
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "overrides": [
+        {
+            "files": [
+                "**/*.js"
+            ],
+            "rules": {
+                "@tony.ganchev/header/header": [
+                    "error",
+                    {
+                        "header": {
+                            "file": "config/header.js"
+                        }
+                    }
+                ]
+            },
+            "jsPlugins": [
+                "@tony.ganchev/eslint-plugin-header"
+            ]
+        }
+    ]
+}
+```
+
 ### Inline Configuration
 
 In this configuration mode, the matching rules for the header are given inline.
@@ -192,6 +220,37 @@ All of the following configurations will match the header:
             }
         }
     ]);
+    ```
+
+    Equivalent configuration for _oxlint_:
+
+    ```json
+    {
+        "$schema": "./node_modules/oxlint/configuration_schema.json",
+        "overrides": [
+            {
+                "files": [
+                    "**/*.js"
+                ],
+                "rules": {
+                    "@tony.ganchev/header/header": [
+                        "error",
+                        {
+                            "header": {
+                                "commentType": "block",
+                                "lines": [
+                                    "\n * Copyright (c) 2015\n * My Company\n "
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "jsPlugins": [
+                    "@tony.ganchev/eslint-plugin-header"
+                ]
+            }
+        ]
+    }
     ```
 
     Note that the above would work for both Windows and POSIX systems even

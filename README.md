@@ -58,12 +58,16 @@ dedicated section.
 
 ## Compatibility
 
-The plugin supports ESLint 7 / 8 / 9 / 10. Both flat config and legacy,
-hierarchical config can be used.
+The plugin supports **ESLint 7 / 8 / 9 / 10**. Both **flat** config and legacy,
+**hierarchical** config can be used. We have a smoke-test running to confirm the
+plugin works with the latest version of ESLint.
+
+The plugin works with latest version of **oxlint** too. We have a smoke-test
+running to confirm the plugin works with the latest version of oxlint.
 
 The NPM package provides TypeScript type definitions and can be used with
 TypeScript-based ESLint flat configuration without the need for `@ts-ignore`
-statements.
+statements. Smoke tests cover this support as well.
 
 ## Usage
 

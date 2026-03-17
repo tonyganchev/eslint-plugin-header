@@ -98,7 +98,6 @@ describe("E2E", () => {
                 stdio: "inherit",
             });
 
-            let output;
             try {
                 execFileSync("pnpm", ["eslint", ...args, "--format=json", "."], {
                     cwd: fixturePath,
@@ -113,11 +112,64 @@ describe("E2E", () => {
                     console.error(error.stderr?.toString());
                     throw error;
                 }
-                output = error.stdout.toString();
+                const output = error.stdout.toString();
+                const results = JSON.parse(output);
+                assert.strictEqual(results.length, 1);
+                const res = results[0];
+                assert.strictEqual(res.filePath, resolve(__dirname, "project", "index.ts"));
+                assert.strictEqual(res.messages.length, 1);
+                const msg = res.messages[0];
+                assert.strictEqual(msg.ruleId, "@tony.ganchev/header/header");
+                assert.strictEqual(
+                    msg.message,
+                    "header line does not match expected after this position; expected: 'y Ganchev'");
+                assert.ok(msg.fix.text, "Fix text exists.");
             }
-
-            const results = JSON.parse(output);
-            assert.ok(results.length > 0, "Should have lint results");
         });
     }
+
+    it("Runs oxlint and completes with one lint violation", () => {
+        const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
+
+        if (existsSync(lockPath)) {
+            unlinkSync(lockPath);
+        }
+        writeFileSync(resolve(fixturePath, "package.json"),
+            JSON.stringify({
+                name: "test-project",
+                private: true
+            }));
+
+        execFileSync("pnpm", ["install", "oxlint", tarballPath], {
+            cwd: fixturePath,
+            shell: true,
+            stdio: "inherit",
+        });
+
+        try {
+            execFileSync("pnpm", ["oxlint", ".", "--format", "json"], {
+                cwd: fixturePath,
+                encoding: "utf8",
+                stdio: ["ignore", "pipe", "pipe"],
+                shell: true
+            });
+            assert.fail("Error expected (lint violation)");
+        } catch (error) {
+            if (!error.stdout) {
+                console.error(error.stderr?.toString());
+                throw error;
+            }
+            const output = error.stdout.toString();
+            const results = JSON.parse(output);
+            assert.strictEqual(results.number_of_files, 2);
+            const diagnostics = results.diagnostics;
+            assert.strictEqual(diagnostics.length, 1);
+            const diag = diagnostics[0];
+            assert.strictEqual(diag.code, "@tony.ganchev/header(header)");
+            assert.strictEqual(
+                diag.message,
+                "header line does not match expected after this position; expected: 'y Ganchev'");
+            assert.strictEqual(diag.filename, "index.ts");
+        }
+    });
 });

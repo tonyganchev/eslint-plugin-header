@@ -16,7 +16,7 @@ on:
 
 jobs:
 
-  test:
+  run-tests:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -43,3 +43,11 @@ jobs:
 
     - name: Run ${{ matrix.task }}
       run: pnpm ${{ matrix.task }}
+
+  # Gateway job: Set this as the 'Required Status Check' in GitHub.
+  # It will only run if all matrix tasks in 'run-tests' pass.
+  test:
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All tests passed!"

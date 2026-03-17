@@ -83,7 +83,7 @@ jobs:
       working-directory: angular-cli
       run: |
         pnpm install --no-frozen-lockfile
-        pnpm add -D eslint-plugin-header@../plugin/${{ env.TARBALL_PATH }}
+        pnpm add -D eslint-plugin-header@../plugin/${{ env.TARBALL_PATH }} --workspace-root
 
     - name: Run angular-cli lint
       working-directory: angular-cli

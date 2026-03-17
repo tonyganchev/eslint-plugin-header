@@ -14,8 +14,15 @@ on:
 
 permissions:
   contents: read
+
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+    with:
+      ref: ${{ inputs.tag_name || github.ref }}
+
   publish-npm:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       contents: read

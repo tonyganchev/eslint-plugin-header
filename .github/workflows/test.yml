@@ -44,10 +44,53 @@ jobs:
     - name: Run ${{ matrix.task }}
       run: pnpm ${{ matrix.task }}
 
-  # Gateway job: Set this as the 'Required Status Check' in GitHub.
-  # It will only run if all matrix tasks in 'run-tests' pass.
+  ecosystem-test-angular-cli:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout plugin
+      uses: actions/checkout@v5
+      with:
+        ref: ${{ inputs.ref || github.ref }}
+        path: plugin
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 10.32.1
+
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '24.x'
+
+    - name: Build and Pack Plugin
+      working-directory: plugin
+      run: |
+        pnpm install --frozen-lockfile
+        pnpm build
+        pnpm pack
+        echo "TARBALL_PATH=$(ls *.tgz | head -n 1)" >> $GITHUB_ENV
+
+    - name: Checkout angular-cli
+      uses: actions/checkout@v5
+      with:
+        repository: angular/angular-cli
+        ref: main
+        path: angular-cli
+        fetch-depth: 1
+
+    - name: Install angular-cli dependencies and plugin
+      working-directory: angular-cli
+      run: |
+        pnpm install --no-frozen-lockfile
+        pnpm add -D eslint-plugin-header@../plugin/${{ env.TARBALL_PATH }} --workspace-root
+
+    - name: Run angular-cli lint
+      working-directory: angular-cli
+      run: pnpm run lint
+
   test:
-    needs: run-tests
+    needs: [run-tests, ecosystem-test-angular-cli]
     runs-on: ubuntu-latest
     steps:
       - run: echo "All tests passed!"

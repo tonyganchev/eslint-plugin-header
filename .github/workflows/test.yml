@@ -7,13 +7,25 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_call:
+    inputs:
+      ref:
+        description: 'The branch, tag or SHA to checkout'
+        required: false
+        type: string
 
 jobs:
 
-  test:
+  run-tests:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [eslint, markdownlint, unit, e2e]
     steps:
     - uses: actions/checkout@v5
+      with:
+        ref: ${{ inputs.ref || github.ref }}
     
     - name: Install pnpm
       uses: pnpm/action-setup@v4
@@ -29,5 +41,13 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
-    - name: Run lint, unit- and E2E tests
-      run: pnpm run test
+    - name: Run ${{ matrix.task }}
+      run: pnpm ${{ matrix.task }}
+
+  # Gateway job: Set this as the 'Required Status Check' in GitHub.
+  # It will only run if all matrix tasks in 'run-tests' pass.
+  test:
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "All tests passed!"

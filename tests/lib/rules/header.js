@@ -28,6 +28,7 @@ const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
 const os = td.replace("node:os");
 
+const tsParser = require("@typescript-eslint/parser");
 const { RuleTester } = require("eslint");
 
 const { header } = require("../../../lib/rules/header");
@@ -161,7 +162,7 @@ describe("legacy config", () => {
                 // TODD: should fail during validation.
                 code: "/*Copyright 2020, My Company*/\nconsole.log(1);",
                 options: ["block", "Copyright 2020, My Company", 1, {}],
-            },
+            }
         ],
         invalid: [
         ]
@@ -3313,5 +3314,45 @@ describe("windows", () => {
                 output: "/**/\r\n\r\nconsole.log('hello!');"
             },
         ]
+    });
+});
+
+describe("typescript", () => {
+    new RuleTester({
+        languageOptions: {
+            parser: tsParser
+        }
+    }).run("header", header, {
+        valid: [
+            {
+                // Use-case coming from https://github.com/angular/angular-cli.
+                code: [
+                    "#!/usr/bin/env node",
+                    "/**",
+                    " * @license",
+                    " * Copyright Google LLC All Rights Reserved.",
+                    " *",
+                    " * Use of this source code is governed by an MIT-style license that can be",
+                    " * found in the LICENSE file at https://angular.dev/license",
+                    " */",
+                    "",
+                    "import path from 'node:path';",
+                ].join("\n"),
+                options: [
+                    "block",
+                    [
+                        "*",
+                        " * @license",
+                        " * Copyright Google LLC All Rights Reserved.",
+                        " *",
+                        " * Use of this source code is governed by an MIT-style license that can be",
+                        " * found in the LICENSE file at https://angular.dev/license",
+                        " ",
+                    ],
+                    2,
+                ]
+            }
+        ],
+        invalid: []
     });
 });

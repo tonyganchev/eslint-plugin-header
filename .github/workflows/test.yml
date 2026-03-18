@@ -81,7 +81,7 @@ jobs:
             cwd: ext/vscode
             install: npm install
             # Azure/azure-dev has package.json in ext/vscode, so plugin is 2 levels up
-            plugin_add: npm install --save-dev eslint-plugin-header@file:../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../plugin/$TARBALL_PATH
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../../plugin/$TARBALL_PATH
             run: npm run lint
           - repo: xdan/jodit
             pm: npm

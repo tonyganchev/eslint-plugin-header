@@ -44,8 +44,41 @@ jobs:
     - name: Run ${{ matrix.task }}
       run: pnpm ${{ matrix.task }}
 
-  ecosystem-test-angular-cli:
+  ecosystem-test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - repo: angular/angular-cli
+            pm: pnpm
+            install: pnpm install --no-frozen-lockfile
+            run: pnpm run lint
+          - repo: wireapp/wire-webapp
+            pm: yarn
+            install: yarn install
+            run: yarn nx run-many -t lint --all
+          - repo: wppconnect-team/wa-js
+            pm: npm
+            install: npm install
+            run: npm run lint
+          - repo: online-go/online-go.com
+            pm: yarn
+            install: yarn install
+            run: yarn eslint src/
+          - repo: forcedotcom/salesforcedx-vscode
+            pm: npm
+            install: npm install
+            run: npm run lint
+          - repo: Azure/azure-dev
+            pm: npm
+            install: npm install
+            run: npm run lint
+          - repo: xdan/jodit
+            pm: npm
+            install: npm install
+            run: make lint
+
     steps:
     - name: Checkout plugin
       uses: actions/checkout@v5
@@ -67,30 +100,29 @@ jobs:
       working-directory: plugin
       run: |
         pnpm install --frozen-lockfile
-        pnpm build
         pnpm pack
         echo "TARBALL_PATH=$(ls *.tgz | head -n 1)" >> $GITHUB_ENV
 
-    - name: Checkout angular-cli
+    - name: Checkout ${{ matrix.repo }}
       uses: actions/checkout@v5
       with:
-        repository: angular/angular-cli
-        ref: main
-        path: angular-cli
-        fetch-depth: 1
+        repository: ${{ matrix.repo }}
+        path: target-repo
 
-    - name: Install angular-cli dependencies and plugin
-      working-directory: angular-cli
+    - name: Install target-repo dependencies and plugin
+      working-directory: target-repo
       run: |
-        pnpm install --no-frozen-lockfile
-        pnpm add -D eslint-plugin-header@../plugin/${{ env.TARBALL_PATH }} --workspace-root
+        ${{ matrix.install }}
+        # Alias BOTH the scoped and unscoped plugin names to the local packed version
+        # to ensure compatibility regardless of which name the target repo uses.
+        ${{ matrix.pm }} add -D eslint-plugin-header@file:../plugin/${{ env.TARBALL_PATH }} @tony.ganchev/eslint-plugin-header@file:../plugin/${{ env.TARBALL_PATH }}
 
-    - name: Run angular-cli lint
-      working-directory: angular-cli
-      run: pnpm run lint
+    - name: Run ${{ matrix.repo }} lint
+      working-directory: target-repo
+      run: ${{ matrix.run }}
 
   test:
-    needs: [run-tests, ecosystem-test-angular-cli]
+    needs: [run-tests, ecosystem-test]
     runs-on: ubuntu-latest
     steps:
       - run: echo "All tests passed!"

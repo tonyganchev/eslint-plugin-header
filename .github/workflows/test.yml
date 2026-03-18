@@ -53,30 +53,40 @@ jobs:
           - repo: angular/angular-cli
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
+            # Use -w for pnpm workspaces root
+            plugin_add: pnpm add -Dw eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: pnpm run lint
           - repo: wireapp/wire-webapp
             pm: yarn
             install: yarn install
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn nx run-many -t lint --all
           - repo: wppconnect-team/wa-js
             pm: npm
             install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: npm run lint
           - repo: online-go/online-go.com
             pm: yarn
             install: yarn install
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn eslint src/
           - repo: forcedotcom/salesforcedx-vscode
             pm: npm
             install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: npm run lint
           - repo: Azure/azure-dev
             pm: npm
+            cwd: ext/vscode
             install: npm install
+            # Azure/azure-dev has package.json in ext/vscode, so plugin is 2 levels up
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../plugin/$TARBALL_PATH
             run: npm run lint
           - repo: xdan/jodit
             pm: npm
             install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: make lint
 
     steps:
@@ -110,15 +120,13 @@ jobs:
         path: target-repo
 
     - name: Install target-repo dependencies and plugin
-      working-directory: target-repo
+      working-directory: target-repo/${{ matrix.cwd || '.' }}
       run: |
         ${{ matrix.install }}
-        # Alias BOTH the scoped and unscoped plugin names to the local packed version
-        # to ensure compatibility regardless of which name the target repo uses.
-        ${{ matrix.pm }} add -D eslint-plugin-header@file:../plugin/${{ env.TARBALL_PATH }} @tony.ganchev/eslint-plugin-header@file:../plugin/${{ env.TARBALL_PATH }}
+        ${{ matrix.plugin_add }}
 
     - name: Run ${{ matrix.repo }} lint
-      working-directory: target-repo
+      working-directory: target-repo/${{ matrix.cwd || '.' }}
       run: ${{ matrix.run }}
 
   test:

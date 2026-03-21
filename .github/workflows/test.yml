@@ -217,6 +217,7 @@ jobs:
     - name: Install target-repo dependencies and plugin
       working-directory: target-repo/${{ matrix.cwd || '.' }}
       run: |
+        corepack enable
         ${{ matrix.install }}
         ${{ matrix.plugin_add }}
 

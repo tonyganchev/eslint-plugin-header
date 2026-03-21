@@ -88,6 +88,103 @@ jobs:
             install: npm install
             plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: make lint
+          - repo: salto-io/salto
+            pm: yarn
+            install: yarn install
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: wppconnect-team/wa-version
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: Suwayomi/Suwayomi-WebUI
+            pm: yarn
+            install: yarn install
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: microsoft/vscode-azurestaticwebapps
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: eclipse-glsp/glsp-vscode-integration
+            pm: yarn
+            install: yarn
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: eclipse-glsp/glsp-theia-integration
+            pm: yarn
+            install: yarn
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: eclipse-glsp/glsp-server-node
+            pm: yarn
+            install: yarn
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: eclipse-glsp/glsp-client
+            pm: yarn
+            install: yarn
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: wppconnect-team/wppconnect
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: cloudscape-design/collection-hooks
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: Cratis/Chronicle
+            pm: yarn
+            cwd: Source/Workbench
+            install: yarn install
+            plugin_add: yarn add -D eslint-plugin-header@file:../../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../../plugin/$TARBALL_PATH
+            run: yarn lint
+          - repo: microsoft/compose-language-service
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-azureresourcegroups
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-azurecontainerapps
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-containers
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-azurefunctions
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-azuretools
+            pm: npm
+            cwd: utils
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/kiota-typescript
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm run lint
+          - repo: microsoft/vscode-test-web
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            run: npm test
 
     steps:
     - name: Checkout plugin

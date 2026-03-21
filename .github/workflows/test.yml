@@ -58,7 +58,7 @@ jobs:
           - repo: wireapp/wire-webapp
             pm: yarn
             install: yarn install
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn nx run-many -t lint --all
           - repo: wppconnect-team/wa-js
             pm: npm
@@ -68,7 +68,7 @@ jobs:
           - repo: online-go/online-go.com
             pm: yarn
             install: yarn install
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn eslint src/
           - repo: forcedotcom/salesforcedx-vscode
             pm: npm
@@ -89,7 +89,7 @@ jobs:
           - repo: salto-io/salto
             pm: yarn
             install: yarn install
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: wppconnect-team/wa-version
             pm: npm
@@ -99,7 +99,7 @@ jobs:
           - repo: Suwayomi/Suwayomi-WebUI
             pm: yarn
             install: yarn install
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: microsoft/vscode-azurestaticwebapps
             pm: npm
@@ -109,22 +109,22 @@ jobs:
           - repo: eclipse-glsp/glsp-vscode-integration
             pm: yarn
             install: yarn
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: eclipse-glsp/glsp-theia-integration
             pm: yarn
             install: yarn
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: eclipse-glsp/glsp-server-node
             pm: yarn
             install: yarn
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: eclipse-glsp/glsp-client
             pm: yarn
             install: yarn
-            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -D --ignore-workspace-root-check eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: wppconnect-team/wppconnect
             pm: npm

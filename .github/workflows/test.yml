@@ -53,7 +53,6 @@ jobs:
           - repo: angular/angular-cli
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
-            # Use -w for pnpm workspaces root
             plugin_add: pnpm add -Dw eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: pnpm run lint
           - repo: wireapp/wire-webapp
@@ -80,7 +79,6 @@ jobs:
             pm: npm
             cwd: ext/vscode
             install: npm install
-            # Azure/azure-dev has package.json in ext/vscode, so plugin is 2 levels up
             plugin_add: npm install --save-dev eslint-plugin-header@file:../../../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../../../plugin/$TARBALL_PATH
             run: npm run lint
           - repo: xdan/jodit
@@ -111,7 +109,7 @@ jobs:
           - repo: eclipse-glsp/glsp-vscode-integration
             pm: yarn
             install: yarn
-            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: eclipse-glsp/glsp-theia-integration
             pm: yarn
@@ -121,12 +119,12 @@ jobs:
           - repo: eclipse-glsp/glsp-server-node
             pm: yarn
             install: yarn
-            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: eclipse-glsp/glsp-client
             pm: yarn
             install: yarn
-            plugin_add: yarn add -D eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
+            plugin_add: yarn add -DW eslint-plugin-header@file:../plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:../plugin/$TARBALL_PATH
             run: yarn lint
           - repo: wppconnect-team/wppconnect
             pm: npm

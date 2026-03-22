@@ -212,7 +212,7 @@ jobs:
 
     steps:
     - name: Install OS packages
-      uses: awalsh128/cache-apt-packages@v1
+      uses: awalsh128/cache-apt-pkgs-action@v1
       with:
         packages: libx11-dev libxkbfile-dev
         version: 1.0
@@ -223,15 +223,15 @@ jobs:
         ref: ${{ inputs.ref || github.ref }}
         path: plugin
 
-    - name: Install pnpm
-      uses: pnpm/action-setup@v4
-      with:
-        version: 10.32.1
+    - name: Enable Corepack
+      run: corepack enable
 
     - name: Use Node.js
       uses: actions/setup-node@v6
       with:
         node-version: '24.x'
+        cache: 'pnpm'
+        cache-dependency-path: 'plugin/pnpm-lock.yaml'
 
     - name: Build and Pack Plugin
       working-directory: plugin
@@ -249,7 +249,6 @@ jobs:
     - name: Install target-repo dependencies and plugin
       working-directory: target-repo/${{ matrix.cwd || '.' }}
       run: |
-        corepack enable
         ${{ matrix.install }}
         ${{ matrix.plugin_add }} eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH
 

@@ -113,11 +113,14 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
-          - repo: microsoft/kiota-typescript
-            pm: npm
-            install: npm install
-            plugin_add: npm install --save-dev
-            run: npm run lint
+          # TODO: tonyganchev: this repo fails lint right now - to re-enable it
+          # a concrete hash should be chosen to clone from.
+          #
+          # - repo: microsoft/kiota-typescript
+          #   pm: npm
+          #   install: npm install
+          #   plugin_add: npm install --save-dev
+          #   run: npm run lint
             
           - repo: microsoft/vscode-azurecontainerapps
             pm: npm
@@ -168,11 +171,14 @@ jobs:
             plugin_add: yarn add -D --ignore-workspace-root-check
             run: yarn eslint src/
 
-          - repo: salto-io/salto
-            pm: yarn
-            install: yarn set version 3.6.4 && yarn install
-            plugin_add: yarn add -D
-            run: yarn lint
+          # the repo has compatibility issues between its yarn and node 24 used
+          # by the runner.
+          #
+          # - repo: salto-io/salto
+          #   pm: yarn
+          #   install: yarn set version 3.6.4 && yarn install
+          #   plugin_add: yarn add -D
+          #   run: yarn lint
 
           - repo: Suwayomi/Suwayomi-WebUI
             pm: yarn

@@ -113,14 +113,11 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
-          # TODO: tonyganchev: this repo fails lint right now - to re-enable it
-          # a concrete hash should be chosen to clone from.
-          #
-          # - repo: microsoft/kiota-typescript
-          #   pm: npm
-          #   install: npm install
-          #   plugin_add: npm install --save-dev
-          #   run: npm run lint
+          - repo: microsoft/kiota-typescript
+            pm: npm
+            install: npm install && npm run build
+            plugin_add: npm install --save-dev
+            run: npm run lint
             
           - repo: microsoft/vscode-azurecontainerapps
             pm: npm

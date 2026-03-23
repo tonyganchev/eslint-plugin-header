@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@tony.ganchev/eslint-plugin-header.svg)](https://www.npmjs.com/package/@tony.ganchev/eslint-plugin-header)
 [![Downloads/month](https://img.shields.io/npm/dm/@tony.ganchev/eslint-plugin-header.svg)](http://www.npmtrends.com/@tony.ganchev/eslint-plugin-header)
-[![Build Status](https://github.com/tonyganchev/eslint-plugin-header/workflows/Test/badge.svg)](https://github.com/tonyganchev/eslint-plugin-header)
+[![Build Status](https://github.com/tonyganchev/eslint-plugin-header/actions/workflows/test.yml/badge.svg)](https://github.com/tonyganchev/eslint-plugin-header/actions/workflows/test.yml?query=branch%3Amain)
 
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)

@@ -77,6 +77,12 @@ jobs:
             plugin_add: yarn add -D
             run: yarn lint
 
+          - repo: dash0hq/opentelemetry-js-distribution
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
           - repo: forcedotcom/salesforcedx-vscode
             pm: npm
             install: npm install

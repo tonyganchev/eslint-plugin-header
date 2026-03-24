@@ -168,14 +168,11 @@ jobs:
             plugin_add: yarn add -D --ignore-workspace-root-check
             run: yarn eslint src/
 
-          # the repo has compatibility issues between its yarn and node 24 used
-          # by the runner.
-          #
-          # - repo: salto-io/salto
-          #   pm: yarn
-          #   install: yarn set version 3.6.4 && yarn install
-          #   plugin_add: yarn add -D
-          #   run: yarn lint
+          - repo: salto-io/salto
+            pm: yarn
+            install: yarn set version 3.6.4 && yarn install
+            plugin_add: yarn add -D
+            run: yarn lint
 
           - repo: Suwayomi/Suwayomi-WebUI
             pm: yarn

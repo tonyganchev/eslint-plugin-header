@@ -70,6 +70,31 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
+          # Waiting for the change to consume this plugin to be merged
+          # - repo: cloudscape-design/component-toolkit
+          #   pm: npm
+          #   install: npm install
+          #   plugin_add: npm install --save-dev
+          #   run: npm run lint
+
+          - repo: cloudscape-design/test-utils
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/build-tools
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/theming-core
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
           - repo: Cratis/Chronicle
             pm: yarn
             cwd: Source/Workbench
@@ -174,8 +199,8 @@ jobs:
             plugin_add: yarn add -D --ignore-workspace-root-check
             run: yarn eslint src/
 
-          # the repo has compatibility issues between its yarn and node 24 used
-          # by the runner.
+          # disable the project below as it fails to install all its
+          # dependencies
           #
           # - repo: salto-io/salto
           #   pm: yarn

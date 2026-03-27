@@ -70,12 +70,11 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
-          # Waiting for the change to consume this plugin to be merged
-          # - repo: cloudscape-design/component-toolkit
-          #   pm: npm
-          #   install: npm install
-          #   plugin_add: npm install --save-dev
-          #   run: npm run lint
+          - repo: cloudscape-design/component-toolkit
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
 
           - repo: cloudscape-design/global-styles
             pm: npm

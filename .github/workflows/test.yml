@@ -81,7 +81,7 @@ jobs:
             pm: npm
             install: npm install
             plugin_add: npm install --save-dev
-            run: npm run lint
+            run: npm run quick-build && npm run lint
 
           - repo: cloudscape-design/global-styles
             pm: npm

@@ -62,6 +62,7 @@ jobs:
             cwd: ext/vscode
             install: npm install
             plugin_add: npm install --save-dev
+            pkg: "eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH"
             run: npm run lint
             
           - repo: cloudscape-design/collection-hooks
@@ -295,7 +296,7 @@ jobs:
       working-directory: target-repo/${{ matrix.cwd || '.' }}
       run: |
         ${{ matrix.install }}
-        ${{ matrix.plugin_add }} eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH
+        ${{ matrix.plugin_add }} ${{ matrix.pkg || '@tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH' }}
 
     - name: Run ${{ matrix.repo }} lint
       working-directory: target-repo/${{ matrix.cwd || '.' }}

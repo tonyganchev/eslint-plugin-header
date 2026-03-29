@@ -66,17 +66,19 @@ consistent header structures. Notable adopters include:
 &nbsp;&nbsp;&nbsp;
 [![Microsoft Azure](https://github.com/azure.png?size=48)](./docs/consumers.md#azure)
 &nbsp;&nbsp;&nbsp;
-[![Salesforce VS Code Extensions](https://github.com/forcedotcom.png?size=48)](./docs/consumers.md#salesforce-vs-code-extensions)
+[![Salesforce](https://github.com/forcedotcom.png?size=48)](./docs/consumers.md#salesforce)
 &nbsp;&nbsp;&nbsp;
 [![Angular](https://github.com/angular.png?size=48)](./docs/consumers.md#angular)
 &nbsp;&nbsp;&nbsp;
+[![Amazon](https://github.com/aws.png?size=48)](./docs/consumers.md#amazon)
+&nbsp;&nbsp;&nbsp;
 [![Amazon Cloudscape Design System](https://github.com/cloudscape-design.png?size=48)](./docs/consumers.md#cloudscape-design-system)
 &nbsp;&nbsp;&nbsp;
-[![Eclipse GLSP](https://github.com/eclipse.png?size=48)](./docs/consumers.md#eclipse)
+[![Eclipse GLSP](https://github.com/eclipse.png?size=48)](./docs/consumers.md#eclipse-foundation)
 &nbsp;&nbsp;&nbsp;
 [![Salto](https://github.com/salto-io.png?size=48)](./docs/consumers.md#salto)
 &nbsp;&nbsp;&nbsp;
-[![Dash0 OpenTelemetry JS Distribution](https://github.com/dash0hq.png?size=48)](./docs/consumers.md#dash0-opentelemetry-js-distribution)
+[![Dash0 OpenTelemetry JS Distribution](https://github.com/dash0hq.png?size=48)](./docs/consumers.md#dash0)
 &nbsp;&nbsp;&nbsp;
 [![IBM InspectorRAGet](https://github.com/ibm.png?size=48)](./docs/consumers.md#ibm)
 &nbsp;&nbsp;&nbsp;

@@ -100,7 +100,8 @@ Important things to note:
   having an empty space before the closing `*/`.
 - On the contrary, _\@tony.ganchev/_eslint-plugin-header_ validates all
   characters between `/*` and `*/` allowing the configuration to remain simple
-  by not implementing multiple multiline comment styles and leaving the exact format to be described in the header template.
+  by not implementing multiple multiline comment styles and leaving the exact
+  format to be described in the header template.
 - _\@tony.ganchev/_eslint-plugin-header_ assumes 1 trailing empty line by
   default. _eslint-plugin-headers_ does not enforce any without explicit
   configuration. This would be made clear in the subsequent example.
@@ -110,7 +111,8 @@ Important things to note:
 
 ### No New Lines
 
-If the above example code had the first statement start from the same line as the closing delimiter of the header like this:
+If the above example code had the first statement start from the same line as
+the closing delimiter of the header like this:
 
 ```js
 /**
@@ -119,7 +121,8 @@ If the above example code had the first statement start from the same line as th
 ```
 
 ... this would still pass with the _eslint-plugin-headers_ configuration but
-would fail with the _\@tony.ganchev/_eslint-plugin-header_ configuration. To address this, you need to add `trailingEmptyLines.minimum` configuration:
+would fail with the _\@tony.ganchev/_eslint-plugin-header_ configuration. To
+address this, you need to add `trailingEmptyLines.minimum` configuration:
 
 ```ts
 import header, { HeaderOptions, HeaderRuleConfig } from "@tony.ganchev/eslint-plugin-header";
@@ -427,7 +430,8 @@ while _\@tony.ganchev/eslint-plugin-header_ would fail validation.
 
 ## File-based config
 
-Note that the documentation of _eslint-plugin-headers_ only mentions the possibility of using file-defined header template. From playing with the feature
+Note that the documentation of _eslint-plugin-headers_ only mentions the
+possibility of using file-defined header template. From playing with the feature
 we see that the format for the template is different from the one for
 _\@tony.ganchev/eslint-plugin-header_. While the latter expects a comment block
 in a valid JavaScript file, the former expects only the content:
@@ -539,8 +543,9 @@ export default defineConfig([
                     header: {
                         commentType: "block",
                         lines: [
-                            // eslint-disable-next-line @stylistic/max-len
-                            /^\*\r?\n \* Copyright 2024\. All rights reserved\.\r?\n( \*\r?\n \* @\w+ .*\r?\n( \* .*\r?\n)*)* $/
+                            "^\\*\\r?\\n \\* Copyright 2024\\. All rights " +
+                            "reserved\\.\\r?\\n( \\*\\r?\\n \\* @\\w+ .*" +
+                            "\\r?\\n( \\* .*\\r?\\n)*)* $"
                         ]
                     }
                 } as HeaderOptions
@@ -553,15 +558,22 @@ export default defineConfig([
 The regular expression looks complex because it supports multi-line JSDoc
 directives.
 
+Note that with _\@tony.ganchev/eslint-plugin-header_ you can use the
+standard `/regex/` syntax instead of the string - encoded version. This document
+uses the latter to keep code under a certain row-length threshold in order to
+maintain readability without scrollbars.
+
 ## Variables and Substitution
 
 _eslint-plugin-headers_ offers the ability to match variables and replace them
 in autofixes. While _\@tony.ganchev/eslint-plugin-header_ does not offer 1:1
-feature parity here, all of the behaviors demonstrated are supported out of the box.
+feature parity here, all of the behaviors demonstrated are supported out of the
+box.
 
 ### Variable Matching
 
-Suppose we want to match the year and company to the correct formats in the following example:
+Suppose we want to match the year and company to the correct formats in the
+following example:
 
 ```js
 /**
@@ -610,8 +622,12 @@ export default defineConfig([
                         lines: [
                             "*",
                             {
-                                pattern: /^ \* Copyright \d{4} Contemporary Org\. All rights reserved\.$/,
-                                template: " * Copyright 2025 Contemporary Org. All rights reserved."
+                                pattern:
+                                    "^ \\* Copyright \\d{4} Contemporary Org" +
+                                    "\\. All rights reserved\\.$",
+                                template:
+                                    " * Copyright 2025 Contemporary Org. " +
+                                    "All rights reserved."
                             },
                             " "
                         ]
@@ -621,8 +637,12 @@ export default defineConfig([
         }
     },
 ]);
-
 ```
+
+Note that with _\@tony.ganchev/eslint-plugin-header_ you can use the
+standard `/regex/` syntax instead of the string - encoded version. This document
+uses the latter to keep code under a certain row-length threshold in order to
+maintain readability without scrollbars.
 
 Things to notice:
 
@@ -642,7 +662,8 @@ Things to notice:
 The case where you want to substitute only the variables failing validation is
 not supported outside of the example shown above.
 
-Still, _eslint-plugin-headers_ lists an example with two variables with constant predefined values. This example brings little value as it is the same as
+Still, _eslint-plugin-headers_ lists an example with two variables with constant
+predefined values. This example brings little value as it is the same as
 accepting a fixed header template with the variables replaced.
 
 ## Shebangs

@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.4
+
+* updated documentation.
+
 ## 3.3.3
 
 * fix: regression with shebangs on typescript parser.

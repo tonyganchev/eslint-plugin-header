@@ -12,8 +12,9 @@ and banner comments in JavaScript and TypeScript files. Supports _oxlint_.
 ## Table of Contents
 
 1. [Motivation and Acknowledgements](#motivation-and-acknowledgements)
-2. [Compatibility](#compatibility)
-3. [Usage](#usage)
+2. [Major Consumers](#major-consumers)
+3. [Compatibility](#compatibility)
+4. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
       1. [Header Contents Configuration](#header-contents-configuration)
@@ -23,14 +24,14 @@ and banner comments in JavaScript and TypeScript files. Supports _oxlint_.
    3. [Support for Leading Comments](#support-for-leading-comments)
       1. [Notes on Behavior](#notes-on-behavior)
    4. [Examples](#examples)
-4. [Comparison to Alternatives](#comparison-to-alternatives)
+5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
    2. [Compared to eslint-plugin-license-header](#compared-to-eslint-plugin-license-header)
-5. [Versioning](#versioning)
+6. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
    2. [What is Backward-compatibility?](#what-is-backward-compatibility)
-6. [License](#license)
+7. [License](#license)
 
 ## Motivation and Acknowledgements
 
@@ -55,6 +56,42 @@ Today it addresses the following issues:
 Multiple other projects took from where _eslint-plugin-header_ left off. A
 comparison of the current project to these alternatives is available in a
 dedicated section.
+
+## Major Consumers
+
+The plugin is used by hundreds of projects to enforce license compliance and
+consistent header structures. Notable adopters include:
+
+[![Microsoft](https://github.com/microsoft.png?size=48)](./docs/consumers.md#microsoft)
+&nbsp;&nbsp;&nbsp;
+[![Microsoft Azure](https://github.com/azure.png?size=48)](./docs/consumers.md#azure)
+&nbsp;&nbsp;&nbsp;
+[![Salesforce VS Code Extensions](https://github.com/forcedotcom.png?size=48)](./docs/consumers.md#salesforce-vs-code-extensions)
+&nbsp;&nbsp;&nbsp;
+[![Angular](https://github.com/angular.png?size=48)](./docs/consumers.md#angular)
+&nbsp;&nbsp;&nbsp;
+[![Amazon Cloudscape Design System](https://github.com/cloudscape-design.png?size=48)](./docs/consumers.md#cloudscape-design-system)
+&nbsp;&nbsp;&nbsp;
+[![Eclipse GLSP](https://github.com/eclipse.png?size=48)](./docs/consumers.md#eclipse)
+&nbsp;&nbsp;&nbsp;
+[![Salto](https://github.com/salto-io.png?size=48)](./docs/consumers.md#salto)
+&nbsp;&nbsp;&nbsp;
+[![Dash0 OpenTelemetry JS Distribution](https://github.com/dash0hq.png?size=48)](./docs/consumers.md#dash0-opentelemetry-js-distribution)
+&nbsp;&nbsp;&nbsp;
+[![IBM InspectorRAGet](https://github.com/ibm.png?size=48)](./docs/consumers.md#ibm)
+&nbsp;&nbsp;&nbsp;
+[![FlowCrypt Browser Extensions](https://github.com/flowcrypt.png?size=48)](./docs/consumers.md#flowcrypt)
+&nbsp;&nbsp;&nbsp;
+[![Cratis](https://github.com/Cratis.png?size=48)](./docs/consumers.md#cratis)
+&nbsp;&nbsp;&nbsp;
+[![Mysten Labs](https://github.com/MystenLabs.png?size=48)](./docs/consumers.md#mysten-labs)
+&nbsp;&nbsp;&nbsp;
+[![Wire Swiss GmbH](https://github.com/wireapp.png?size=48)](./docs/consumers.md#wire-swiss-gmbh)
+&nbsp;&nbsp;&nbsp;
+[![WPPConnect](https://github.com/wppconnect-team.png?size=48)](./docs/consumers.md#wppconnect)
+
+Learn more about how these organizations use the plugin on our
+[consumers list](./docs/consumers.md).
 
 ## Compatibility
 

@@ -22,7 +22,7 @@
     "e2e": "pnpm build && mocha --timeout 60000 tests/e2e/*.js",
     "eslint": "eslint .",
     "lint": "pnpm eslint && pnpm markdownlint",
-    "markdownlint": "markdownlint *.md",
+    "markdownlint": "markdownlint *.md docs/**/*.md",
     "test": "pnpm lint && pnpm unit && pnpm e2e",
     "unit": "c8 --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage --100 mocha tests/lib/*.js tests/lib/**/*.js"
   },

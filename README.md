@@ -88,6 +88,8 @@ consistent header structures. Notable adopters include:
 &nbsp;&nbsp;&nbsp;
 [![Mysten Labs](https://github.com/MystenLabs.png?size=48)](./docs/consumers.md#mysten-labs)
 &nbsp;&nbsp;&nbsp;
+[![Suwayomi](https://github.com/Suwayomi.png?size=48)](./docs/consumers.md#suwayomi)
+&nbsp;&nbsp;&nbsp;
 [![Wire Swiss GmbH](https://github.com/wireapp.png?size=48)](./docs/consumers.md#wire-swiss-gmbh)
 &nbsp;&nbsp;&nbsp;
 [![WPPConnect](https://github.com/wppconnect-team.png?size=48)](./docs/consumers.md#wppconnect)

@@ -14,19 +14,20 @@ writing.
 3. [Dash0](#dash0)
 4. [Eclipse Foundation](#eclipse-foundation)
    1. [Eclipse GLSP](#eclipse-glsp)
-5. [Google](#google)
+5. [FlowCrypt](#flowcrypt)
+6. [Google](#google)
    1. [Angular](#angular)
-6. [Microsoft](#microsoft)
+7. [IBM](#ibm)
+8. [Microsoft](#microsoft)
    1. [Azure](#azure)
-7. [Salesforce](#salesforce)
-   1. [Visual Studio Code Extensions](#visual-studio-code-extensions)
-   2. [Others](#others)
-8. [FlowCrypt](#flowcrypt)
-9. [IBM](#ibm)
-10. [Mysten Labs](#mysten-labs)
+9. [Mysten Labs](#mysten-labs)
+10. [Salesforce](#salesforce)
+    1. [Visual Studio Code Extensions](#visual-studio-code-extensions)
+    2. [Others](#others)
 11. [Salto](#salto)
-12. [Wire Swiss GmbH](#wire-swiss-gmbh)
-13. [WPPConnect](#wppconnect)
+12. [Suwayomi](#suwayomi)
+13. [Wire Swiss GmbH](#wire-swiss-gmbh)
+14. [WPPConnect](#wppconnect)
 
 ## ![Logo](https://github.com/aws.png?size=24)Amazon
 
@@ -72,11 +73,19 @@ plugin as of v3.3.0.
 - _glsp-server-node_ - [yarn.lock](https://github.com/eclipse-glsp/glsp-server-node/blob/978a9cd079d5ea3aaac1fe7dade9c126f4a7ae03/yarn.lock#L260)
 - _glsp-vscode-integration_ - [yarn.lock](https://github.com/eclipse-glsp/glsp-vscode-integration/blob/ab46e724bec16a7de1598b16f4216057e0e61aa0/yarn.lock#L407)
 
+## ![Logo](https://github.com/FlowCrypt.png?size=24)FlowCrypt
+
+- _flowcrypt-browser_ - [eslint.config.mjs](https://github.com/FlowCrypt/flowcrypt-browser/blob/9c959de7c1308ac205b65d8ff32477172083b4f2/eslint.config.mjs#L27)
+
 ## ![Logo](https://github.com/google.png?size=24)Google
 
 ### ![Logo](https://github.com/angular.png?size=24)Angular
 
 - _angular-cli_ - [eslint.config.mjs](https://github.com/angular/angular-cli/blob/81e4faae7699e2ed1eb8f4656dc115ca9c20f416/eslint.config.mjs#L113-L126)
+
+## ![Logo](https://github.com/ibm.png?size=24)IBM
+
+- _InspectorRAGet_ - [eslint.config.mjs](https://github.com/IBM/InspectorRAGet/blob/2d713d751724d4ee9154b1a69fafd232d7e46db9/eslint.config.mjs#L18-L44)
 
 ## ![Logo](https://github.com/microsoft.png?size=24)Microsoft
 
@@ -102,6 +111,10 @@ Studio Code ecosystem have bet on this plugin.
 
 - _azure-dev_ - [eslint.config.mjs](https://github.com/Azure/azure-dev/blob/b70678d427e2e0d2863f744595dbdf0648dfdc76/ext/vscode/eslint.config.mjs#L13-L33)
 
+## ![Logo](https://github.com/MystenLabs.png?size=24)Mysten Labs
+
+- _sagat_ - [eslint.config.js](https://github.com/MystenLabs/sagat/blob/4fc2268c359830e0a8530307c060848a3a4b03f3/eslint.config.js#L72-L80)
+
 ## ![Logo](https://github.com/forcedotcom.png?size=24)Salesforce
 
 ### Visual Studio Code Extensions
@@ -118,21 +131,17 @@ licensing requirements.
 
 - _apex-language-support_ - [eslint.config.mjs](https://github.com/forcedotcom/apex-language-support/blob/0f8c037464411af103df651bfabf866cd2341c54/eslint.config.mjs#L75-L90)
 
-## ![Logo](https://github.com/FlowCrypt.png?size=24)FlowCrypt
-
-- _flowcrypt-browser_ - [eslint.config.mjs](https://github.com/FlowCrypt/flowcrypt-browser/blob/9c959de7c1308ac205b65d8ff32477172083b4f2/eslint.config.mjs#L27)
-
-## ![Logo](https://github.com/ibm.png?size=24)IBM
-
-- _InspectorRAGet_ - [eslint.config.mjs](https://github.com/IBM/InspectorRAGet/blob/2d713d751724d4ee9154b1a69fafd232d7e46db9/eslint.config.mjs#L18-L44)
-
-## ![Logo](https://github.com/MystenLabs.png?size=24)Mysten Labs
-
-- _sagat_ - [eslint.config.js](https://github.com/MystenLabs/sagat/blob/4fc2268c359830e0a8530307c060848a3a4b03f3/eslint.config.js#L72-L80)
-
 ## ![Logo](https://github.com/salto-io.png?size=24)Salto
 
 - [eslint.config.mjs](https://github.com/salto-io/salto/blob/8696742b05b7349720f73ce100a5d984e1f2a659/eslint.config.mjs#L94-L106)
+
+## ![Logo](https://github.com/Suwayomi.png?size=24)Suwayomi
+
+The team uses the plugin with _oxlint_. With the old plugin versions they had to
+create wrapper since oxlint failed validation of the defaults of the plugin but
+this is no longer necessary as of v3.3.2.
+
+- _Suwayomi-WebUI_ - [.oxlintrc.jsonc](https://github.com/Suwayomi/Suwayomi-WebUI/blob/d738de2c61105a0fbeec57d1ce940492337b608c/.oxlintrc.jsonc#L364-L372)
 
 ## ![Logo](https://github.com/wireapp.png?size=24)Wire Swiss GmbH
 

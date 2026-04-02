@@ -136,24 +136,56 @@ jobs:
             pm: yarn
             install: yarn
             plugin_add: yarn add -D --ignore-workspace-root-check
+            post_install: >
+              node -e "
+              const p = require('./package.json');
+              p.resolutions = p.resolutions || {};
+              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+              " && yarn
             run: yarn lint
 
           - repo: eclipse-glsp/glsp-server-node
             pm: yarn
             install: yarn
             plugin_add: yarn add -D --ignore-workspace-root-check
+            post_install: >
+              node -e "
+              const p = require('./package.json');
+              p.resolutions = p.resolutions || {};
+              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+              " && yarn
             run: yarn lint
 
           - repo: eclipse-glsp/glsp-theia-integration
             pm: yarn
             install: yarn
             plugin_add: yarn add -D --ignore-workspace-root-check
+            post_install: >
+              node -e "
+              const p = require('./package.json');
+              p.resolutions = p.resolutions || {};
+              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+              " && yarn
             run: yarn lint
 
           - repo: eclipse-glsp/glsp-vscode-integration
             pm: yarn
             install: yarn
             plugin_add: yarn add -D --ignore-workspace-root-check
+            post_install: >
+              node -e "
+              const p = require('./package.json');
+              p.resolutions = p.resolutions || {};
+              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+              " && yarn
             run: yarn lint
 
           - repo: leppa/convert-to-wealthfolio
@@ -311,6 +343,7 @@ jobs:
       run: |
         ${{ matrix.install }}
         ${{ matrix.plugin_add }} ${{ matrix.pkg || '@tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH' }}
+        ${{ matrix.post_install || '' }}
 
     - name: Run ${{ matrix.repo }} lint
       working-directory: target-repo/${{ matrix.cwd || '.' }}

@@ -197,8 +197,8 @@ jobs:
               echo "Copyright (c) 2026 Oleksii Serdiuk" >> temp.txt
               echo "SPDX-License-Identifier: BSD-3-Clause" >> temp.txt
               echo "-->" >> temp.txt  
-              cat target-repo/CODE_OF_CONDUCT.md >> temp.txt
-              mv temp.txt target-repo/CODE_OF_CONDUCT.md
+              cat CODE_OF_CONDUCT.md >> temp.txt
+              mv temp.txt CODE_OF_CONDUCT.md
               npm run lint
 
           - repo: microsoft/compose-language-service

@@ -126,6 +126,12 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
+          - repo: eclipse-glsp/glsp
+            pm: yarn
+            install: yarn
+            plugin_add: yarn add -D --ignore-workspace-root-check
+            run: yarn lint
+
           - repo: eclipse-glsp/glsp-client
             pm: yarn
             install: yarn

@@ -30,6 +30,7 @@ const os = td.replace("node:os");
 
 const tsParser = require("@typescript-eslint/parser");
 const css = require("@eslint/css").default;
+const markdown = require("@eslint/markdown").default;
 
 const { RuleTester } = require("eslint");
 
@@ -3414,5 +3415,52 @@ describe("CSS", () => {
                 output: "/* Copyright 2025 */\n.foo { color: red; }"
             }
         ]
+    });
+});
+
+describe("markdown", () => {
+    beforeEach(() => {
+        // XXX: redundant with current test-cases but will be necessary when
+        //      the first autofix comes in.
+        os.EOL = "\n";
+    });
+    new RuleTester({
+        plugins: {
+            markdown
+        },
+        language: "markdown/commonmark"
+    }).run("header", header, {
+        valid: [],
+        invalid: [
+            {
+                // Use-case coming from https://github.com/angular/angular-cli.
+                code: [
+                    "<!-- wrong header -->",
+                    "# Heading",
+                ].join("\n"),
+                options: [
+                    "block",
+                    [
+                        "",
+                        {
+                            pattern: /^Copyright \d{4} One Pedantic Maintainer$/,
+                            template: "Copyright 2026 One Pedantic Maintainer"
+                        },
+                        "",
+                    ],
+                    2,
+                ],
+                errors: [
+                    "incorrect header: expected /Copyright \\d\\{4\\} One Pedantic Maintainer$/"
+                ],
+                output: [
+                    "<!--",
+                    "Copyright 2026 One Pedantic Maintainer",
+                    "-->",
+                    "",
+                    "# Heading",
+                ].join("\n"),
+            }
+        ],
     });
 });

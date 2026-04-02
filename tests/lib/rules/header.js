@@ -3318,6 +3318,11 @@ describe("windows", () => {
 });
 
 describe("typescript", () => {
+    beforeEach(() => {
+        // XXX: redundant with current test-cases but will be necessary when
+        //      the first autofix comes in.
+        os.EOL = "\n";
+    });
     new RuleTester({
         languageOptions: {
             parser: tsParser

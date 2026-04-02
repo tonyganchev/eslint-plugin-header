@@ -150,6 +150,12 @@ jobs:
             plugin_add: yarn add -D --ignore-workspace-root-check
             run: yarn lint
 
+          - repo: leppa/convert-to-wealthfolio
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
           - repo: microsoft/compose-language-service
             pm: npm
             install: npm install

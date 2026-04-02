@@ -79,8 +79,6 @@
     "oxlint",
     "oxc",
     "react",
-    "sass",
-    "scss",
     "source-header",
     "typescript"
   ],

@@ -194,7 +194,7 @@ jobs:
 
           - repo: microsoft/vscode-azuretools
             pm: npm
-            cwd: utils
+            cwd: eng
             install: npm install
             plugin_add: npm install --save-dev
             run: npm run lint

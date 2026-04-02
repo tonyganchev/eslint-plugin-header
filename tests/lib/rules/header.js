@@ -29,6 +29,8 @@ const td = require("testdouble");
 const os = td.replace("node:os");
 
 const tsParser = require("@typescript-eslint/parser");
+const css = require("@eslint/css").default;
+
 const { RuleTester } = require("eslint");
 
 const { header } = require("../../../lib/rules/header");
@@ -594,7 +596,19 @@ describe("unix", () => {
                         lines: [" Copyright"]
                     }
                 }]
-            }
+            },
+            {
+                code: "//Copyright 2026\r\n\r\nconsole.log(1)",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2026"]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 1
+                    }
+                }]
+            },
         ],
         invalid: [
             {
@@ -3359,5 +3373,46 @@ describe("typescript", () => {
             }
         ],
         invalid: []
+    });
+});
+
+describe("CSS", () => {
+    beforeEach(() => {
+        os.EOL = "\n";
+    });
+    new RuleTester({
+        languageOptions: {
+            globals: {},
+        },
+        plugins: {
+            css
+        },
+        language: "css/css"
+    }).run("header", header, {
+        valid: [
+            {
+                code: "/* Copyright 2025 */\n\n.foo { color: red; }",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            }
+        ],
+        invalid: [
+            {
+                code: ".foo { color: red; }",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }],
+                errors: [{ message: "missing header" }],
+                output: "/* Copyright 2025 */\n.foo { color: red; }"
+            }
+        ]
     });
 });

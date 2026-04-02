@@ -7,7 +7,8 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript and TypeScript files. Supports _oxlint_.
+and banner comments in JavaScript, TypeScript, and CSS files. Supports
+_oxlint_.
 
 ## Table of Contents
 
@@ -24,6 +25,7 @@ and banner comments in JavaScript and TypeScript files. Supports _oxlint_.
    3. [Support for Leading Comments](#support-for-leading-comments)
       1. [Notes on Behavior](#notes-on-behavior)
    4. [Examples](#examples)
+   5. [Support for CSS](#support-for-css)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -1146,6 +1148,41 @@ export default defineConfig([
         }
     }
 ]);
+```
+
+### Support for CSS
+
+The rule supports validating and auto-fixing headers in CSS files. To
+use the plugin with these file types, you need to configure the official
+`@eslint/css` plugin.
+
+_eslint.config.js_:
+
+```js
+import header from "@tony.ganchev/eslint-plugin-header";
+import css from "@eslint/css";
+
+export default [
+    {
+        files: ["**/*.css"],
+        plugins: {
+            "@tony.ganchev": header,
+            css
+        },
+        language: "css/css",
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
 ```
 
 ```js

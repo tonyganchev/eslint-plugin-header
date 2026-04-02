@@ -3441,22 +3441,18 @@ describe("markdown", () => {
                 options: [
                     "block",
                     [
-                        "",
                         {
-                            pattern: /^Copyright \d{4} One Pedantic Maintainer$/,
-                            template: "Copyright 2026 One Pedantic Maintainer"
+                            pattern: /^ Copyright \d{4} One Pedantic Maintainer $/,
+                            template: " Copyright 2026 One Pedantic Maintainer "
                         },
-                        "",
                     ],
                     2,
                 ],
                 errors: [
-                    "incorrect header: expected /Copyright \\d\\{4\\} One Pedantic Maintainer$/"
+                    "header line does not match pattern: '/^ Copyright \\d{4} One Pedantic Maintainer $/'"
                 ],
                 output: [
-                    "<!--",
-                    "Copyright 2026 One Pedantic Maintainer",
-                    "-->",
+                    "<!-- Copyright 2026 One Pedantic Maintainer -->",
                     "",
                     "# Heading",
                 ].join("\n"),

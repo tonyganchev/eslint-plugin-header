@@ -258,6 +258,7 @@ jobs:
 
           - repo: xdan/jodit
             pm: npm
+            ref: f6270f1691efd9a5735cb161e957e32c84093e36
             install: npm install
             plugin_add: npm install --save-dev
             run: make lint
@@ -296,6 +297,7 @@ jobs:
       uses: actions/checkout@v5
       with:
         repository: ${{ matrix.repo }}
+        ref: ${{ matrix.ref }}
         path: target-repo
 
     - name: Install target-repo dependencies and plugin

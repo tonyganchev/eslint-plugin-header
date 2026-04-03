@@ -28,19 +28,31 @@ const assert = require("node:assert");
 const commentParser = require("../../lib/comment-parser");
 
 describe("comment parser", function () {
+    const cStyleBlockComment = {
+        blockComment: {
+            startDelimiter: "/*",
+            endDelimiter: "*/",
+        }
+    };
+
     it("parses block comments", function () {
-        const result = commentParser("/* pass1\n pass2 */  ");
+        const result = commentParser("/* pass1\n pass2 */  ", cStyleBlockComment);
         assert.deepEqual(result, ["block", [" pass1", " pass2 "]]);
     });
 
     it("throws an error when a block comment isn't ended", function () {
         assert.throws(function () {
-            commentParser("/* fail");
+            commentParser("/* fail", cStyleBlockComment);
         });
     });
 
+    const cStyleLineComment = {
+        lineComment: {
+            startDelimiter: "//",
+        }
+    };
     it("parses line comments", function () {
-        const result = commentParser("// pass1\n// pass2\n  ");
+        const result = commentParser("// pass1\n// pass2\n  ", cStyleLineComment);
         assert.deepEqual(result, ["line", [" pass1", " pass2"]]);
     });
 });

@@ -52,7 +52,70 @@ describe("E2E", () => {
         }
     });
 
-    const testCases = [
+    /**
+     * Runs the tool and returns the results.
+     * @param {string[]} deps Dependencies to install.
+     * @param {string[]} args Arguments to pass to the tool.
+     * @param {Record<string, string>} env Environment variables to set.
+     * @returns {JSON} The results of the tool run.
+     * @throws {Error} If the error trown by the tool has no stdout.
+     */
+    function runTool(deps, args, env) {
+        const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
+
+        if (existsSync(lockPath)) {
+            unlinkSync(lockPath);
+        }
+        writeFileSync(resolve(fixturePath, "package.json"),
+            JSON.stringify({
+                name: "test-project",
+                private: true
+            }));
+        execFileSync("pnpm", ["install", ...deps, tarballPath], {
+            cwd: fixturePath,
+            shell: true,
+            stdio: "inherit",
+        });
+
+        let results;
+        try {
+            execFileSync("pnpm", ["eslint", ...args, "--format=json", "."], {
+                cwd: fixturePath,
+                encoding: "utf8",
+                env: { ...process.env, ...env },
+                stdio: ["ignore", "pipe", "pipe"],
+                shell: true
+            });
+            assert.fail("Error expected (lint violation)");
+        } catch (error) {
+            if (!error.stdout) {
+                console.error(error.stderr?.toString());
+                throw error;
+            }
+            const output = error.stdout.toString();
+            results = JSON.parse(output);
+            // console.log(JSON.stringify(results, null, "    "));
+        }
+        return results;
+    }
+
+    /**
+     * Validates that the violation for the TypeScript source is the expected
+     * one.
+     * @param {JSON} violation The violation to validate.
+     */
+    function validateTypeScriptViolation(violation) {
+        assert.strictEqual(violation.filePath, resolve(__dirname, "project", "index.ts"));
+        assert.strictEqual(violation.messages.length, 1);
+        const msg = violation.messages[0];
+        assert.strictEqual(msg.ruleId, "@tony.ganchev/header/header");
+        assert.strictEqual(
+            msg.message,
+            "header line does not match expected after this position; expected: 'y Ganchev'");
+        assert.ok(msg.fix.text, "Fix text exists.");
+    }
+
+    const hierarchicalConfigTestCase = [
         {
             name: "eslint@7",
             deps: ["eslint@7"],
@@ -65,66 +128,61 @@ describe("E2E", () => {
             args: ["-c", ".eslintrc.json", "--no-eslintrc"],
             env: { ESLINT_USE_FLAT_CONFIG: "false" }
         },
+    ];
+
+    for (const { name, deps, args, env } of hierarchicalConfigTestCase) {
+
+        it(`Runs ${name} ${args} and completes with one lint violation`, () => {
+            const results = runTool(deps, args, env);
+
+            assert.strictEqual(results.length, 1);
+            validateTypeScriptViolation(results[0]);
+        });
+    }
+
+    const flatConfigTestCases = [
         {
             name: "eslint@9",
-            deps: ["eslint@9", "jiti"],
+            deps: ["eslint@9", "jiti", "@eslint/css", "@eslint/markdown"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         },
         {
             name: "eslint@10",
-            deps: ["eslint@10", "jiti"],
+            deps: ["eslint@10", "jiti", "@eslint/css", "@eslint/markdown"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         }
     ];
 
-    for (const { name, deps, args, env } of testCases) {
+    for (const { name, deps, args, env } of flatConfigTestCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
-            const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
+            const results = runTool(deps, args, env);
 
-            if (existsSync(lockPath)) {
-                unlinkSync(lockPath);
-            }
-            writeFileSync(resolve(fixturePath, "package.json"),
-                JSON.stringify({
-                    name: "test-project",
-                    private: true
-                }));
-            execFileSync("pnpm", ["install", ...deps, tarballPath], {
-                cwd: fixturePath,
-                shell: true,
-                stdio: "inherit",
-            });
+            assert.strictEqual(results.length, 3);
 
-            try {
-                execFileSync("pnpm", ["eslint", ...args, "--format=json", "."], {
-                    cwd: fixturePath,
-                    encoding: "utf8",
-                    env: { ...process.env, ...env },
-                    stdio: ["ignore", "pipe", "pipe"],
-                    shell: true
-                });
-                assert.fail("Error expected (lint violation)");
-            } catch (error) {
-                if (!error.stdout) {
-                    console.error(error.stderr?.toString());
-                    throw error;
-                }
-                const output = error.stdout.toString();
-                const results = JSON.parse(output);
-                assert.strictEqual(results.length, 1);
-                const res = results[0];
-                assert.strictEqual(res.filePath, resolve(__dirname, "project", "index.ts"));
-                assert.strictEqual(res.messages.length, 1);
-                const msg = res.messages[0];
-                assert.strictEqual(msg.ruleId, "@tony.ganchev/header/header");
-                assert.strictEqual(
-                    msg.message,
-                    "header line does not match expected after this position; expected: 'y Ganchev'");
-                assert.ok(msg.fix.text, "Fix text exists.");
-            }
+            const mdViolation = results[0];
+            assert.strictEqual(mdViolation.filePath, resolve(__dirname, "project", "README.md"));
+            assert.strictEqual(mdViolation.messages.length, 1);
+            const mdMsg = mdViolation.messages[0];
+            assert.strictEqual(mdMsg.ruleId, "@tony.ganchev/header/header");
+            assert.strictEqual(
+                mdMsg.message,
+                "header line does not match expected after this position; expected: '85 '");
+            assert.ok(mdMsg.fix.text, "Fix text exists.");
+
+            const cssViolation = results[1];
+            assert.strictEqual(cssViolation.filePath, resolve(__dirname, "project", "index.css"));
+            assert.strictEqual(cssViolation.messages.length, 1);
+            const cssMsg = cssViolation.messages[0];
+            assert.strictEqual(cssMsg.ruleId, "@tony.ganchev/header/header");
+            assert.strictEqual(
+                cssMsg.message,
+                "header line does not match expected after this position; expected: '85 '");
+            assert.ok(cssMsg.fix.text, "Fix text exists.");
+
+            validateTypeScriptViolation(results[2]);
         });
     }
 

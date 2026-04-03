@@ -7,8 +7,8 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript, TypeScript, CSS, and Markdown files. Supports
-_oxlint_.
+and banner comments in JavaScript, TypeScript, CSS, HTML, and Markdown files.
+Supports _oxlint_.
 
 ## Table of Contents
 
@@ -29,7 +29,8 @@ _oxlint_.
       1. [Notes on Behavior](#notes-on-behavior)
    4. [Examples](#examples)
    5. [Linting CSS](#linting-css)
-   6. [Linting Markdown](#linting-markdown)
+   6. [Linting HTML](#linting-html)
+   7. [Linting Markdown](#linting-markdown)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -141,6 +142,7 @@ older than 9. Refer to the table below for more details.
 | JSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | TSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | CSS        | ❌ No         | ✅ Yes        | ❌ No  |
+| HTML       | ❌ No         | ✅ Yes        | ❌ No  |
 | Markdown   | ❌ No         | ✅ Yes        | ❌ No  |
 
 ## Usage
@@ -1277,6 +1279,54 @@ export default defineConfig([
 
 As you can expect with CSS syntax, line comments and shebangs are not supported.
 All other features of the rule remain the same.
+
+### Linting HTML
+
+The rule supports linting copyright notices in HTML files. The rule works with
+the _@html-eslint/eslint-plugin_ plugin and its parser.
+
+Similar to CSS, all you need to do to turn on header validation is to configure
+the _\@html-eslint/eslint-plugin_ plugin and the rule:
+
+```ts
+import header from "@tony.ganchev/eslint-plugin-header";
+import html from "@html-eslint/eslint-plugin";
+
+export default [
+    {
+        files: ["**/*.html"],
+        plugins: {
+            "@tony.ganchev": header,
+            html
+        },
+        language: "html/html",
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
+```
+
+```html
+<!-- Copyright 2025 -->
+
+<html>
+<body>
+    <h1>Hello, world!</h1>
+    <p>Lorem ipsum dolor.</p>
+</body>
+</html>
+```
+
+As with CSS, only block comments are supported - no line- or shebang comments.
 
 ### Linting Markdown
 

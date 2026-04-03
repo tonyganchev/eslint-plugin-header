@@ -30,6 +30,7 @@ const os = td.replace("node:os");
 
 const tsParser = require("@typescript-eslint/parser");
 const css = require("@eslint/css").default;
+const html = require("@html-eslint/eslint-plugin");
 const markdown = require("@eslint/markdown").default;
 
 const { RuleTester } = require("eslint");
@@ -4762,5 +4763,39 @@ describe("markdown", () => {
                 ]
             },
         ]
+    });
+});
+
+describe("html", () => {
+    const htmlRuleTester = new RuleTester({
+        plugins: {
+            html
+        },
+        language: "html/html",
+    });
+
+    beforeEach(() => {
+        os.EOL = "\n";
+    });
+
+    const htmlContent = "<html><body>Hello!</body></html>";
+
+    describe("legacy config", () => {
+        htmlRuleTester.run("header", header, {
+            valid: [
+                {
+                    code: [
+                        "<!--",
+                        "Copyright 2015",
+                        "My Company",
+                        "-->",
+                        "",
+                        htmlContent,
+                    ].join("\n"),
+                    options: ["tests/support/block.html"],
+                },
+            ],
+            invalid: []
+        });
     });
 });

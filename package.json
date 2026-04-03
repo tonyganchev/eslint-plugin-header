@@ -1,6 +1,6 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.3.4",
+  "version": "3.4.0",
   "description": "The native ESLint 9/10 header plugin. A zero-bloat, drop-in replacement for 'eslint-plugin-header' with first-class Flat Config & TypeScript support. Auto-fix Copyright, License, and banner comments in JavaScrip, TypeScript, CSS, HTML, and Markdown files. Supports oxlint.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -27,7 +27,7 @@
     "unit": "c8 --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage --100 mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
-    "@eslint/core": "^1.1.1",
+    "@eslint/core": "^1.2.0",
     "@eslint/css": "^1.1.0",
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^7.5.1",
@@ -35,7 +35,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.5.2",
     "c8": "^11.0.0",
     "eslint": "^10.1.0",
     "eslint-plugin-eslint-plugin": "^7.3.2",

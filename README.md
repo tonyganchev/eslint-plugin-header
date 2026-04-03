@@ -111,13 +111,13 @@ Learn more about how these organizations use the plugin on our
 The plugin supports **ESLint 7 / 8 / 9 / 10**. Both **flat** config and legacy,
 **hierarchical** config can be used. We have a smoke-test running to confirm the
 plugin works with the latest version of ESLint. Certain features such as linting
-copyright headers in CSS or Markdown rely on APIs introduced with ESLint 9 and
-cannot be used with older ESLint versions.
+copyright headers in CSS, HTML, or Markdown rely on APIs introduced with ESLint
+9 and cannot be used with older ESLint versions.
 
 The plugin works with latest version of **oxlint** too. We have a smoke-test
 running to confirm the plugin works with the latest version of oxlint. Features
-relying on the use of non-standard parsers such as linting headers in CSS or
-Markdown cannot be supported.
+relying on the use of non-standard parsers such as linting headers in CSS, HTML,
+or Markdown cannot be supported.
 
 ### Configuration Formats
 
@@ -131,9 +131,9 @@ statements. Smoke tests cover this support as well.
 ### Languages
 
 Currently the plugin supports linting copyright headers in JavaScript,
-TypeScript and their JSX / TSX flavors; CSS, and Markdown files. As mentioned in
-the previous sections, not all languages are supported for oxlint or ESLint
-older than 9. Refer to the table below for more details.
+TypeScript and their JSX / TSX flavors; CSS, HTML, and Markdown files. As
+mentioned in the previous sections, not all languages are supported for oxlint
+or ESLint older than 9. Refer to the table below for more details.
 
 | Language   | ESLint 7 / 8  | ESLint 9 / 10 | oxlint |
 |------------|---------------|---------------|--------|

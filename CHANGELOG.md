@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.4.0
+
+* Support more languages with ESLint 9 / 10 (no oxlint support).
+  * support linting CSS files based on _\@eslint/css_.
+  * support linting HTML files based on _\@html-eslint/eslint-plugin_.
+  * support linting Markdown files based on _\@eslint/markdown_.
+
 ## 3.3.4
 
 * updated documentation.

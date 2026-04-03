@@ -100,18 +100,17 @@ describe("E2E", () => {
     }
 
     /**
-     * Validates that the violation for the TypeScript source is the expected
-     * one.
+     * Validates that the violation is the expected one.
      * @param {JSON} violation The violation to validate.
+     * @param {string} fileName The expected file name.
+     * @param {string} errorMessage The expected error message.
      */
-    function validateTypeScriptViolation(violation) {
-        assert.strictEqual(violation.filePath, resolve(__dirname, "project", "index.ts"));
+    function validateViolation(violation, fileName, errorMessage) {
+        assert.strictEqual(violation.filePath, resolve(__dirname, "project", fileName));
         assert.strictEqual(violation.messages.length, 1);
         const msg = violation.messages[0];
         assert.strictEqual(msg.ruleId, "@tony.ganchev/header/header");
-        assert.strictEqual(
-            msg.message,
-            "header line does not match expected after this position; expected: 'y Ganchev'");
+        assert.strictEqual(msg.message, errorMessage);
         assert.ok(msg.fix.text, "Fix text exists.");
     }
 
@@ -136,20 +135,24 @@ describe("E2E", () => {
             const results = runTool(deps, args, env);
 
             assert.strictEqual(results.length, 1);
-            validateTypeScriptViolation(results[0]);
+
+            validateViolation(
+                results[0],
+                "index.ts",
+                "header line does not match expected after this position; expected: 'y Ganchev'");
         });
     }
 
     const flatConfigTestCases = [
         {
             name: "eslint@9",
-            deps: ["eslint@9", "jiti", "@eslint/css", "@eslint/markdown"],
+            deps: ["eslint@9"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         },
         {
             name: "eslint@10",
-            deps: ["eslint@10", "jiti", "@eslint/css", "@eslint/markdown"],
+            deps: ["eslint@10"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         }
@@ -158,31 +161,30 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of flatConfigTestCases) {
 
         it(`Runs ${name} ${args} and completes with one lint violation`, () => {
-            const results = runTool(deps, args, env);
+            const results =
+                runTool([...deps, "jiti", "@eslint/css", "@eslint/markdown", "@html-eslint/eslint-plugin"], args, env);
 
-            assert.strictEqual(results.length, 3);
+            assert.strictEqual(results.length, 4);
 
-            const mdViolation = results[0];
-            assert.strictEqual(mdViolation.filePath, resolve(__dirname, "project", "README.md"));
-            assert.strictEqual(mdViolation.messages.length, 1);
-            const mdMsg = mdViolation.messages[0];
-            assert.strictEqual(mdMsg.ruleId, "@tony.ganchev/header/header");
-            assert.strictEqual(
-                mdMsg.message,
+            validateViolation(
+                results[0],
+                "README.md",
                 "header line does not match expected after this position; expected: '85 '");
-            assert.ok(mdMsg.fix.text, "Fix text exists.");
 
-            const cssViolation = results[1];
-            assert.strictEqual(cssViolation.filePath, resolve(__dirname, "project", "index.css"));
-            assert.strictEqual(cssViolation.messages.length, 1);
-            const cssMsg = cssViolation.messages[0];
-            assert.strictEqual(cssMsg.ruleId, "@tony.ganchev/header/header");
-            assert.strictEqual(
-                cssMsg.message,
+            validateViolation(
+                results[1],
+                "index.css",
                 "header line does not match expected after this position; expected: '85 '");
-            assert.ok(cssMsg.fix.text, "Fix text exists.");
 
-            validateTypeScriptViolation(results[2]);
+            validateViolation(
+                results[2],
+                "index.html",
+                "header line does not match expected after this position; expected: '85 '");
+
+            validateViolation(
+                results[3],
+                "index.ts",
+                "header line does not match expected after this position; expected: 'y Ganchev'");
         });
     }
 

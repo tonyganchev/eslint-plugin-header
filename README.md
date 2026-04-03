@@ -7,7 +7,7 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript, TypeScript, and CSS files. Supports
+and banner comments in JavaScript, TypeScript, CSS, and Markdown files. Supports
 _oxlint_.
 
 ## Table of Contents
@@ -15,6 +15,9 @@ _oxlint_.
 1. [Motivation and Acknowledgements](#motivation-and-acknowledgements)
 2. [Major Consumers](#major-consumers)
 3. [Compatibility](#compatibility)
+   1. [Runtimes](#runtimes)
+   2. [Configuration Formats](#configuration-formats)
+   3. [Languages](#languages)
 4. [Usage](#usage)
    1. [File-based Configuration](#file-based-configuration)
    2. [Inline Configuration](#inline-configuration)
@@ -25,7 +28,8 @@ _oxlint_.
    3. [Support for Leading Comments](#support-for-leading-comments)
       1. [Notes on Behavior](#notes-on-behavior)
    4. [Examples](#examples)
-   5. [Support for CSS](#support-for-css)
+   5. [Linting CSS](#linting-css)
+   6. [Linting Markdown](#linting-markdown)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -101,16 +105,43 @@ Learn more about how these organizations use the plugin on our
 
 ## Compatibility
 
+### Runtimes
+
 The plugin supports **ESLint 7 / 8 / 9 / 10**. Both **flat** config and legacy,
 **hierarchical** config can be used. We have a smoke-test running to confirm the
-plugin works with the latest version of ESLint.
+plugin works with the latest version of ESLint. Certain features such as linting
+copyright headers in CSS or Markdown rely on APIs introduced with ESLint 9 and
+cannot be used with older ESLint versions.
 
 The plugin works with latest version of **oxlint** too. We have a smoke-test
-running to confirm the plugin works with the latest version of oxlint.
+running to confirm the plugin works with the latest version of oxlint. Features
+relying on the use of non-standard parsers such as linting headers in CSS or
+Markdown cannot be supported.
+
+### Configuration Formats
+
+The plugin supports hierarchical and flat configuration format for ESLint as
+well as the configuration format for oxlint.
 
 The NPM package provides TypeScript type definitions and can be used with
 TypeScript-based ESLint flat configuration without the need for `@ts-ignore`
 statements. Smoke tests cover this support as well.
+
+### Languages
+
+Currently the plugin supports linting copyright headers in JavaScript,
+TypeScript and their JSX / TSX flavors; CSS, and Markdown files. As mentioned in
+the previous sections, not all languages are supported for oxlint or ESLint
+older than 9. Refer to the table below for more details.
+
+| Language   | ESLint 7 / 8  | ESLint 9 / 10 | oxlint |
+|------------|---------------|---------------|--------|
+| JavaScript | ✅ Yes        | ✅ Yes        | ✅ Yes |
+| TypeScript | ✅ Yes        | ✅ Yes        | ✅ Yes |
+| JSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
+| TSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
+| CSS        | ❌ No         | ✅ Yes        | ❌ No  |
+| Markdown   | ❌ No         | ✅ Yes        | ❌ No  |
 
 ## Usage
 
@@ -1150,11 +1181,19 @@ export default defineConfig([
 ]);
 ```
 
-### Support for CSS
+### Linting CSS
 
 The rule supports validating and auto-fixing headers in CSS files. To
 use the plugin with these file types, you need to configure the official
 `@eslint/css` plugin.
+
+**Note: the plugin does not support SCSS** as no current popular parser for
+ESLint supports SCSS / LESS that being a prerequisite for this plugin to be
+called. It is possible to rely on a dummy pass-through parser to ensure the SCSS
+/ LESS sources simply reach the rule but as of the time of the publisihng of
+this document we have not tested this approach.
+
+Back to CSS, let us use the following configuration:
 
 _eslint.config.js_:
 
@@ -1185,10 +1224,12 @@ export default [
 ];
 ```
 
-```js
-//Copyright 2017
-//My Company
-console.log(1)
+```css
+/* Copyright 2025 */
+
+.foo {
+    color: blue;
+}
 ```
 
 With more decoration:
@@ -1223,13 +1264,77 @@ export default defineConfig([
 ]);
 ```
 
-```js
+```css
 /*************************
  * Copyright 2015
  * My Company
  *************************/
- console.log(1);
+
+.foo {
+    color: blue
+}
 ```
+
+As you can expect with CSS syntax, line comments and shebangs are not supported.
+All other features of the rule remain the same.
+
+### Linting Markdown
+
+The rule supports copyright comments in Markdown syntax in both _commonmark_ and
+_gfm_ flavors using the _\@eslint/markdown_ plugin and parser. Only HTML
+comments are supported - no anchor hacks or similar are accepted.
+
+Similar to CSS, all you need to do to turn on header validation is to configure
+the _\@eslint/markdown_ plugin and the rule:
+
+```ts
+import header from "@tony.ganchev/eslint-plugin-header";
+import markdown from "@eslint/markdown";
+
+export default [
+    {
+        files: ["**/*.md"],
+        plugins: {
+            "@tony.ganchev": header,
+            markdown
+        },
+        // ... or "markdown/gfm"
+        language: "markdown/commonmark",
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
+```
+
+```md
+    <!-- Copyright 2025 -->
+    
+    # Title
+    
+    ## Subtitle
+    
+    ## Code
+    
+    ```js
+    console.log("Hello, world!");
+    ```
+```
+
+Note that if you have configured header for `*.js` files, the linter would fail
+on the first line of the nested JavaScript snippet. Look up how to differentiate
+the configuration of JavaScript sources (`**/*.js`) from JavaScript snippets in
+Markdown (`**/*.md/*.js`). Same applies to `*.ts`, `*.jsx`, `*.tsx`, etc.
+
+As with CSS, only block comments are supported - no line- or shebang comments.
 
 ## Comparison to Alternatives
 

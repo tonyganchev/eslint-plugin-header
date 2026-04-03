@@ -4074,44 +4074,693 @@ describe("CSS", () => {
 });
 
 describe("markdown", () => {
-    beforeEach(() => {
-        // XXX: redundant with current test-cases but will be necessary when
-        //      the first autofix comes in.
-        os.EOL = "\n";
-    });
-    new RuleTester({
+    const mdRuleTester = new RuleTester({
         plugins: {
             markdown
         },
         language: "markdown/commonmark"
-    }).run("header", header, {
-        valid: [],
-        invalid: [
+    });
+
+    beforeEach(() => {
+        os.EOL = "\n";
+    });
+
+    const mdContent = "# README";
+
+    describe("legacy config", () => {
+        mdRuleTester.run("header", header, {
+            valid: [
+                {
+                    code: [
+                        "<!--",
+                        "Copyright 2015",
+                        "My Company",
+                        "-->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: ["tests/support/block.md"]
+                },
+                {
+                    code: [
+                        "<!--",
+                        "Copyright 2015",
+                        "My Company",
+                        "-->",
+                        "",
+                        mdContent,
+                    ].join("\r\n"),
+                    options: ["tests/support/block.md", { lineEndings: "windows" }]
+                },
+                {
+                    code: [
+                        "<!-- Copyright 2025 -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: ["block", " Copyright 2025 ", 2]
+                },
+                {
+                    code: [
+                        "<!-- Copyright 2025 -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: ["block", { pattern: "^ Copyright \\d{4} $" }, 2]
+                },
+                {
+                    code: [
+                        "<!-- Copyright 2025 -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: ["block", [" Copyright 2025 "], 2]
+                },
+                {
+                    code: [
+                        "<!--*",
+                        " * Copyright 2025",
+                        " -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: [
+                        "block",
+                        [
+                            "*",
+                            " * Copyright 2025",
+                            " "
+                        ],
+                        1
+                    ]
+                },
+                {
+                    code: [
+                        "<!--*",
+                        " * Copyright 2025",
+                        " -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: [
+                        "block",
+                        [
+                            "*",
+                            { pattern: "^ \\* Copyright \\d{4}$" },
+                            " "
+                        ],
+                        1
+                    ]
+                },
+                {
+                    code: [
+                        "<!--*",
+                        " * Copyright 2025",
+                        " -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: [
+                        "block",
+                        [
+                            "*",
+                            { pattern: "^ \\* Copyright \\d{4}$" },
+                            " "
+                        ],
+                        1,
+                        { lineEndings: "unix" }
+                    ]
+                },
+                {
+                    code: [
+                        "<!--*",
+                        " * Copyright 2025",
+                        " -->",
+                        "",
+                        mdContent,
+                    ].join("\n"),
+                    options: [
+                        "block",
+                        [
+                            "*",
+                            { pattern: "^ \\* Copyright \\d{4}$" },
+                            " "
+                        ],
+                        { lineEndings: "unix" }
+                    ]
+                }
+            ],
+            invalid: []
+        });
+    });
+
+    mdRuleTester.run("header", header, {
+        valid: [
             {
-                // Use-case coming from https://github.com/angular/angular-cli.
                 code: [
-                    "<!-- wrong header -->",
-                    "# Heading",
-                ].join("\n"),
-                options: [
-                    "block",
-                    [
-                        {
-                            pattern: /^ Copyright \d{4} One Pedantic Maintainer $/,
-                            template: " Copyright 2026 One Pedantic Maintainer "
-                        },
-                    ],
-                    2,
-                ],
-                errors: [
-                    "header line does not match pattern: '/^ Copyright \\d{4} One Pedantic Maintainer $/'"
-                ],
-                output: [
-                    "<!-- Copyright 2026 One Pedantic Maintainer -->",
+                    "<!--",
+                    "Copyright 2015",
+                    "My Company",
+                    "-->",
                     "",
-                    "# Heading",
+                    mdContent,
                 ].join("\n"),
+                options: [{
+                    header: {
+                        file: "tests/support/block.md"
+                    }
+                }],
+            },
+            {
+                code: [
+                    "<!--",
+                    "Copyright 2015",
+                    "My Company",
+                    "-->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        file: "tests/support/block.md",
+                        encoding: "ascii"
+                    }
+                }],
+            },
+            {
+                code: [
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            },
+            {
+                code: [
+                    "<!-- pragma-directive a -->",
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: [" pragma-directive a "]
+                            }
+                        ]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            },
+            {
+                code: [
+                    "<!--*",
+                    " * Copyright 2025",
+                    " -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "*",
+                            " * Copyright 2025",
+                            " "
+                        ],
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            },
+            {
+                code: [
+                    "<!--*",
+                    " * Copyright 2025",
+                    " -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "*",
+                            / \* Copyright \d{4}/,
+                            " "
+                        ],
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            },
+            {
+                code: [
+                    "<!--*",
+                    " * Copyright 2025",
+                    " -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "*",
+                            { pattern: / \* Copyright \d{4}/ },
+                            " "
+                        ],
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+            },
+            {
+                code: [
+                    "<!--*",
+                    " * Copyright 2025",
+                    " -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "*",
+                            { pattern: "\\* Copyright \\d{4}" },
+                            " "
+                        ],
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
             }
         ],
+        invalid: [
+            {
+                code: mdContent,
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright 2025 $/]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: mdContent,
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [{ pattern: /^ Copyright 2025 $/ }]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: mdContent,
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [{
+                            pattern: /^ Copyright 2025 $/,
+                            template: " Copyright 2025 "
+                        }]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: mdContent,
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!--",
+                    " * Copyright 2025",
+                    " * My Company -->",
+                    mdContent
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "",
+                            " * Copyright 2025"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too long",
+                        column: 0,
+                        endColumn: 15,
+                        endLine: 3,
+                        line: 3
+                    }
+                ],
+                output: [
+                    "<!--",
+                    " * Copyright 2025-->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!--",
+                    " * Copyright 2025-->",
+                    mdContent
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "",
+                            " * Copyright 2025",
+                            " * My Company",
+                            " "
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too short; missing lines: ' * My Company\n '",
+                        column: 21,
+                        endColumn: 21,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "<!--",
+                    " * Copyright 2025",
+                    " * My Company",
+                    " -->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!--",
+                    " * Copyright-->",
+                    mdContent
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "",
+                            " * Copyright 2025"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing: ' 2025'",
+                        column: 12,
+                        endColumn: 13,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "<!--",
+                    " * Copyright 2025-->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!--",
+                    " * Copyright 2025 Acme Corp-->",
+                    mdContent
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            "",
+                            " * Copyright 2025"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 17,
+                        endColumn: 27,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "<!--",
+                    " * Copyright 2025-->",
+                    mdContent
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!-- wrong comment -->",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [" Copyright 2025"]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "line header configured but not supported for this language",
+                        column: 1,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+            },
+            {
+                code: [
+                    "<!-- Copyright 2025 -->",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    trailingEmptyLines: { minimum: 2 }
+                }],
+                errors: [
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 24,
+                        endColumn: 0,
+                        endLine: 2,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    mdContent,
+                ].join("\n")
+            },
+            {
+                code: "<!-- Copyright 2025 -->some text",
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    trailingEmptyLines: { minimum: 2 }
+                }],
+                errors: [
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 0",
+                        column: 24,
+                        endColumn: 25,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    "some text",
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!-- pragma-directive b -->",
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: [" pragma-directive a "]
+                            }
+                        ]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match expected after this position; expected: 'Copyright 2025 '",
+                        column: 5,
+                        endColumn: 24,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message:
+                            "leading comment validation failed: line does not match expected after this position; "
+                            + "expected: 'a '",
+                        column: 22,
+                        endColumn: 24,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    "<!-- Copyright 2025 -->",
+                    "",
+                    mdContent,
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!-- pragma-directive b -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: [/^ pragma-directive \w+ $/]
+                            }
+                        ]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 2,
+                        line: 2
+                    },
+                ],
+                output: [
+                    "<!-- Copyright 2025 -->",
+                    "<!-- pragma-directive b -->",
+                    "",
+                    mdContent,
+                ].join("\n")
+            },
+            {
+                code: [
+                    "<!-- pragma-directive b -->",
+                    "",
+                    mdContent,
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [/^ Copyright \d{4} $/]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "block",
+                                lines: [/^ pragma-directive \w+ $/]
+                            }
+                        ]
+                    },
+                    trailingEmptyLines: { minimum: 1 }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 0,
+                        endColumn: 0,
+                        endLine: 2,
+                        line: 2
+                    },
+                ]
+            },
+        ]
     });
 });

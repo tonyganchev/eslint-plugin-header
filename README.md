@@ -7,7 +7,7 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript, TypeScript, CSS, HTML, and Markdown files.
+and banner comments in JavaScript, TypeScript, Vue, CSS, HTML, and Markdown files.
 Supports _oxlint_.
 
 ## Table of Contents
@@ -30,7 +30,8 @@ Supports _oxlint_.
    4. [Examples](#examples)
    5. [Linting CSS](#linting-css)
    6. [Linting HTML](#linting-html)
-   7. [Linting Markdown](#linting-markdown)
+   7. [Linting Vue](#linting-vue)
+   8. [Linting Markdown](#linting-markdown)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -118,7 +119,7 @@ copyright headers in CSS, HTML, or Markdown rely on APIs introduced with ESLint
 The plugin works with latest version of **oxlint** too. We have a smoke-test
 running to confirm the plugin works with the latest version of oxlint. Features
 relying on the use of non-standard parsers such as linting headers in CSS, HTML,
-or Markdown cannot be supported.
+Vue, or Markdown cannot be supported.
 
 ### Configuration Formats
 
@@ -132,7 +133,7 @@ statements. Smoke tests cover this support as well.
 ### Languages
 
 Currently the plugin supports linting copyright headers in JavaScript,
-TypeScript and their JSX / TSX flavors; CSS, HTML, and Markdown files. As
+TypeScript and their JSX / TSX flavors; Vue, CSS, HTML, and Markdown files. As
 mentioned in the previous sections, not all languages are supported for oxlint
 or ESLint older than 9. Refer to the table below for more details.
 
@@ -142,6 +143,7 @@ or ESLint older than 9. Refer to the table below for more details.
 | TypeScript | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | JSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | TSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
+| Vue        | ✅ Yes        | ✅ Yes        | ❌ No  |
 | CSS        | ❌ No         | ✅ Yes        | ❌ No  |
 | HTML       | ❌ No         | ✅ Yes        | ❌ No  |
 | Markdown   | ❌ No         | ✅ Yes        | ❌ No  |
@@ -1329,6 +1331,54 @@ export default [
 
 As with CSS, only block comments are supported - no line- or shebang comments.
 
+### Linting Vue
+
+The rule supports linting copyright notices in Vue files. The rule works with
+the _eslint-plugin-vue_ plugin and its parser.
+
+To turn on header validation for Vue files, configure the parser, the plugin,
+and the rule:
+
+```ts
+import header from "@tony.ganchev/eslint-plugin-header";
+import vueParser from "vue-eslint-parser";
+import vuePlugin from "eslint-plugin-vue";
+
+export default [
+    {
+        files: ["**/*.vue"],
+        plugins: {
+            "@tony.ganchev": header,
+            vue: vuePlugin
+        },
+        languageOptions: {
+            parser: vueParser
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
+```
+
+```vue
+<!-- Copyright 2025 -->
+<template>
+    <div>Hello, world!</div>
+</template>
+```
+
+As with HTML and CSS, only block comments are supported at the top of the file -
+no line- or shebang comments.
+
 ### Linting Markdown
 
 The rule supports copyright comments in Markdown syntax in both _commonmark_ and
@@ -1404,12 +1454,16 @@ _eslint-plugin-header_ and all plugins that already use the latter can migrate
 to the fork right away. At the same time, it provides improved user experience
 and windows support.
 
-eslint-plugin-headers is not a drop-in replacement. It offers additional
-features. Some of them, such as support for Vue templates do not have an
-analogue in the current version of _\@tony.ganchev/eslint-plugin-header_ while
-others such as `{year}` variable placeholders are redundant in the world of
-ESLint 9's flat, JavaScript-based configuration as [already pointed out in this
-document](#providing-to-year-in-auto-fix).
+_eslint-plugin-headers_ is not a drop-in replacement. It offers additional
+features that are not first-level use-cases for
+_\@tony.ganchev/eslint-plugin-header_. One example is support for `{year}`
+variable placeholders which are redundant with ESLint's JavaScript-based
+configuration as [already pointed out in this document](#providing-to-year-in-auto-fix).
+JSDoc support can be achieved with regular expressions and the overall
+configuration capabilities of _\@tony.ganchev/eslint-plugin-header_. It is worth
+noting that the source code of _\@tony.ganchev/eslint-plugin-header_ already
+uses JSDoc-style comments for its own header which are in turn validated using
+_\@tony.ganchev/eslint-plugin-header/header_ rule.
 
 The configuration format philosophy of the two plugin differs.
 _\@tony.ganchev/eslint-plugin-header_ supports both the legacy model inherited

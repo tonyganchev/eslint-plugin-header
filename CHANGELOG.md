@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.4.1
+
+* Support linting Vue sources with top-level HTML comments using
+  _eslint-plugin-vue_ and _vue-eslint-parser_. Supported for ESLint 7 / 8 / 9
+  / 10. No oxlint support.
+
 ## 3.4.0
 
 * Support more languages with ESLint 9 / 10 (no oxlint support).

@@ -6,6 +6,8 @@ import plugin, { HeaderOptions, HeaderRuleConfig } from "@tony.ganchev/eslint-pl
 import css from "@eslint/css";
 import markdown from "@eslint/markdown";
 import html from "@html-eslint/eslint-plugin";
+import vueParser from "vue-eslint-parser";
+import vue from "eslint-plugin-vue";
 
 export default defineConfig([
     {
@@ -89,6 +91,33 @@ export default defineConfig([
             html
         },
         language: "html/html",
+        rules: {
+            "@tony.ganchev/header/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright 1985 ",
+                        ]
+                    },
+                    lineEndings: "os",
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                } as HeaderOptions
+            ] as HeaderRuleConfig
+        }
+    },
+    {
+        files: ["*.vue"],
+        plugins: {
+            "@tony.ganchev/header": plugin,
+            vue
+        },
+        languageOptions: {
+            parser: vueParser
+        },
         rules: {
             "@tony.ganchev/header/header": [
                 "error",

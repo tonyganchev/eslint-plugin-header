@@ -21,6 +21,27 @@
                     }
                 ]
             }
+        },
+        {
+            "files": ["*.vue"],
+            "parser": "vue-eslint-parser",
+            "plugins": ["@tony.ganchev/header"],
+            "rules": {
+                "@tony.ganchev/header/header": [
+                    "error",
+                    {
+                        "header": {
+                            "commentType": "block",
+                            "lines": [
+                                " Copyright 1985 "
+                            ]
+                        },
+                        "trailingEmptyLines": {
+                            "minimum": 2
+                        }
+                    }
+                ]
+            }
         }
     ]
 }

@@ -32,6 +32,7 @@ const tsParser = require("@typescript-eslint/parser");
 const css = require("@eslint/css").default;
 const html = require("@html-eslint/eslint-plugin");
 const markdown = require("@eslint/markdown").default;
+const vueParser = require("vue-eslint-parser");
 
 const { RuleTester } = require("eslint");
 
@@ -4074,28 +4075,41 @@ describe("CSS", () => {
     });
 });
 
-const htmlCommentTestCases = [
-    {
-        language: "markdown/commonmark",
+const htmlCommentTestCases = Object.entries({
+    markdown: {
+        ruleTesterConfig: {
+            language: "markdown/commonmark",
+            plugins: { markdown },
+        },
         fileTemplate: "block.md",
-        plugins: { markdown },
         content: "# README",
         // getLocFromIndex() returns different results for HTML and Markdown.
         columnOffset: 0
     },
-    {
-        language: "html/html",
+    html: {
+        ruleTesterConfig: {
+            language: "html/html",
+            plugins: { html },
+        },
         fileTemplate: "block.html",
-        plugins: { html },
         content: "<html><body>Hello!</body></html>",
         // getLocFromIndex() returns different results for HTML and Markdown.
         columnOffset: 1
+    },
+    vue: {
+        ruleTesterConfig: {
+            plugins: { vue: require("eslint-plugin-vue") },
+            languageOptions: { parser: vueParser },
+        },
+        fileTemplate: "block.vue",
+        content: "<template><div>Hello!</div></template>",
+        columnOffset: 1
     }
-];
+});
 
-for (const { language, fileTemplate, plugins, content, columnOffset } of htmlCommentTestCases) {
-    describe(language, () => {
-        const ruleTester = new RuleTester({ plugins, language });
+for (const [testSuiteName, { ruleTesterConfig, fileTemplate, content, columnOffset }] of htmlCommentTestCases) {
+    describe(testSuiteName, () => {
+        const ruleTester = new RuleTester(ruleTesterConfig);
 
         beforeEach(() => {
             os.EOL = "\n";

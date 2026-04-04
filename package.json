@@ -1,7 +1,7 @@
 {
   "name": "@tony.ganchev/eslint-plugin-header",
-  "version": "3.4.0",
-  "description": "The native ESLint 9/10 header plugin. A zero-bloat, drop-in replacement for 'eslint-plugin-header' with first-class Flat Config & TypeScript support. Auto-fix Copyright, License, and banner comments in JavaScrip, TypeScript, CSS, HTML, and Markdown files. Supports oxlint.",
+  "version": "3.4.1",
+  "description": "The native ESLint 9/10 header plugin. A zero-bloat, drop-in replacement for 'eslint-plugin-header' with first-class Flat Config & TypeScript support. Auto-fix Copyright, License, and banner comments in JavaScript, TypeScript, Vue, CSS, HTML, and Markdown files. Supports oxlint.",
   "main": "index.js",
   "types": "index.d.ts",
   "exports": {
@@ -41,12 +41,14 @@
     "eslint-plugin-eslint-plugin": "^7.3.2",
     "eslint-plugin-jsdoc": "^62.9.0",
     "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-vue": "^10.8.0",
     "globals": "^17.4.0",
     "markdownlint-cli": "^0.48.0",
     "mocha": "12.0.0-beta-10",
     "testdouble": "^3.20.2",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.58.0"
+    "typescript-eslint": "^8.58.0",
+    "vue-eslint-parser": "^10.4.0"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"
@@ -84,7 +86,10 @@
     "oxc",
     "react",
     "source-header",
-    "typescript"
+    "typescript",
+    "vue",
+    "vuejs",
+    "vue-js"
   ],
   "repository": {
     "type": "git",

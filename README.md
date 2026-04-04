@@ -35,6 +35,7 @@ Supports _oxlint_.
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
    2. [Compared to eslint-plugin-license-header](#compared-to-eslint-plugin-license-header)
+   3. [Compared to eslint-plugin-notice](#compared-to-eslint-plugin-notice)
 6. [Versioning](#versioning)
    1. [What is a Feature?](#what-is-a-feature)
    2. [What is Backward-compatibility?](#what-is-backward-compatibility)
@@ -1473,6 +1474,30 @@ limited feature set, the plugin has more peer dependencies than the competition.
 
 We have prepared a detailed
 [migration guide](docs/migrate-from-license-header.md) for anyone eager to
+migrate to _\@tony.ganchev/eslint-plugin-header_.
+
+### Compared to [eslint-plugin-notice](https://github.com/earl-man/eslint-plugin-notice)
+
+_eslint-plugin-notice_ is another alternative that uses a template-based approach
+(powered by Lodash templates) to manage headers. This makes it quite powerful for
+dynamic content but also brings in more dependencies and a more complex
+configuration schema that doesn't always feel "native" to the new ESLint Flat
+Config era.
+
+Key differences:
+
+- **Philosophy**: _\@tony.ganchev/eslint-plugin-header_ focuses on a zero-bloat,
+  native ESLint feel with first-class support for Flat Config and TypeScript.
+- **ESLint 9/10**: Our plugin is built from the ground up to support the latest
+  ESLint versions and their core features.
+- **Languages**: We provide native support for linting headers in HTML, CSS,
+  and Markdown via their respective ESLint ecosystem plugins.
+- **Simplicity**: No need for external template engines or complex variable
+  mappings. Use standard JavaScript template literals in your `eslint.config.ts`
+  to handle dynamic years or other variables.
+
+We have prepared a detailed
+[migration guide](docs/migrate-from-notice.md) for anyone eager to
 migrate to _\@tony.ganchev/eslint-plugin-header_.
 
 ## Versioning

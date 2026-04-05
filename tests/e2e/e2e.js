@@ -188,6 +188,7 @@ describe("E2E", () => {
                         "@eslint/markdown",
                         "@html-eslint/eslint-plugin",
                         "eslint-plugin-vue",
+                        "eslint-plugin-yml",
                         "svelte",
                         "vue-eslint-parser"
                     ],
@@ -195,7 +196,7 @@ describe("E2E", () => {
                     env
                 );
 
-            assert.strictEqual(results.length, 6);
+            assert.strictEqual(results.length, 7);
 
             validateViolation(
                 results[0],
@@ -226,6 +227,11 @@ describe("E2E", () => {
                 results[5],
                 "index.vue",
                 "header line does not match expected after this position; expected: '85 vue'");
+
+            validateViolation(
+                results[6],
+                "index.yaml",
+                "header line does not match expected after this position; expected: 'y Ganchev'");
         });
     }
 

@@ -774,6 +774,25 @@ describe("unix", () => {
                 output: "/*Copyright 2015, My Company*/\r\nconsole.log(1);"
             },
             {
+                code: "",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: ["Copyright 2015, My Company"]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: "//Copyright 2015, My Company\n"
+            },
+            {
                 code: "/*Copyright 2014, My Company*/\nconsole.log(1);",
                 options: [{
                     header: {
@@ -3900,7 +3919,7 @@ describe("CSS", () => {
                 }],
                 errors: [
                     {
-                        message: "line header configured but not supported for this language",
+                        message: "line-comment header configured but not supported for this language",
                         column: 1,
                         endColumn: 2,
                         endLine: 1,
@@ -4630,7 +4649,7 @@ for (const [testSuiteName, { ruleTesterConfig, fileTemplate, content, columnOffs
                     }],
                     errors: [
                         {
-                            message: "line header configured but not supported for this language",
+                            message: "line-comment header configured but not supported for this language",
                             column: 1,
                             endColumn: 2,
                             endLine: 1,
@@ -4810,3 +4829,704 @@ for (const [testSuiteName, { ruleTesterConfig, fileTemplate, content, columnOffs
         });
     });
 }
+
+describe("yaml", () => {
+    const ruleTester = new RuleTester({
+        plugins: {
+            yml: require("eslint-plugin-yml")
+        },
+        language: "yml/yaml"
+    });
+
+    beforeEach(() => {
+        os.EOL = "\n";
+    });
+
+    describe("legacy config", () => {
+        ruleTester.run("header", header, {
+            valid: [
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: ["tests/support/line.yaml"]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: ["tests/support/line.yaml", { lineEndings: "windows" }]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        [
+                            " Copyright 2015",
+                            " My Company"
+                        ].join("\n")
+                    ]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        { pattern: " Copyright 2015\n My Company" }
+                    ]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        [{ pattern: " Copyright 2015\n My Company" }]
+                    ]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        [{ pattern: " Copyright 2015\n My Company" }],
+                        2
+                    ]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        [{ pattern: " Copyright 2015\n My Company" }],
+                        { lineEndings: "unix" }
+                    ]
+                },
+                {
+                    code: [
+                        "# Copyright 2015",
+                        "# My Company",
+                        "",
+                        "foo: bar"
+                    ].join("\n"),
+                    options: [
+                        "line",
+                        [{ pattern: " Copyright 2015\n My Company" }],
+                        2,
+                        { lineEndings: "unix" }
+                    ]
+                },
+            ],
+            invalid: []
+        });
+    });
+
+    ruleTester.run("header", header, {
+        valid: [
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        file: "tests/support/line.yaml"
+                    }
+                }]
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        file: "tests/support/line.yaml",
+                        encoding: "ascii"
+                    }
+                }]
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            { pattern: /^ Copyright 2015\n My Company$/ }
+                        ]
+                    }
+                }]
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            /^ Copyright 2015\n My Company$/
+                        ]
+                    }
+                }]
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            { pattern: /^ Copyright \d{4}$/, template: " Copyright 2026" },
+                            { pattern: /^ My Company$/ }
+                        ]
+                    }
+                }]
+            },
+            {
+                code: [
+                    "# pragma-directive b",
+                    "",
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive a"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive b"]
+                            }
+                        ]
+                    }
+                }]
+            },
+        ],
+        invalid: [
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "block-comment header configured but not supported for this language",
+                        column: 1,
+                        endColumn: 2,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: "",
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    ""
+                ].join("\n")
+            },
+            {
+                code: [
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            / Copyright \d{4}/,
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header too short; missing lines: ' My Company'",
+                        column: 17,
+                        endColumn: 17,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Comp",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line shorter than expected; missing: 'any'",
+                        column: 10,
+                        endColumn: 10,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company is the best company!",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line longer than expected",
+                        column: 13,
+                        endColumn: 34,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    },
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                }],
+                errors: [
+                    {
+                        message: "not enough newlines after header: expected: 2, actual: 1",
+                        column: 13,
+                        endColumn: 1,
+                        endLine: 3,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# Copyright 2015",
+                    "# My Comp",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            / Copyright \d{4}\n My Company/,
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header does not match pattern: '/ Copyright \\d{4}\\n My Company/'",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 2,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: [
+                    "# Copy-right 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            / Copyright \d{4}/,
+                            " My Company"
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "header line does not match pattern: '/ Copyright \\d{4}/'",
+                        column: 2,
+                        endColumn: 18,
+                        endLine: 1,
+                        line: 1
+                    }
+                ]
+            },
+            {
+                code: [
+                    "# pragma-directive a",
+                    "",
+                    "# Copyright 2015",
+                    "# My Comp",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive a"]
+                            },
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message:
+                            "leading comment validation failed: comment does not match pattern: ' pragma-directive a'",
+                        column: 1,
+                        endColumn: 10,
+                        endLine: 4,
+                        line: 3
+                    },
+                    {
+                        message: "header line shorter than expected; missing: 'any'",
+                        column: 10,
+                        endColumn: 10,
+                        endLine: 4,
+                        line: 4
+                    }
+                ],
+                output: [
+                    "# pragma-directive a",
+                    "",
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# pragma-directive b",
+                    "",
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive a"]
+                            },
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message:
+                            "leading comment validation failed: comment does not match pattern: ' pragma-directive a'",
+                        column: 1,
+                        endColumn: 21,
+                        endLine: 1,
+                        line: 1
+                    },
+                    {
+                        message: "header line does not match expected after this position; expected: 'Copyright 2015'",
+                        column: 3,
+                        endColumn: 21,
+                        endLine: 1,
+                        line: 1
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "# Copyright 2015",
+                    "# My Company",
+                    "",
+                    "foo: bar"
+                ].join("\n")
+            },
+            {
+                code: [
+                    "# pragma-directive b",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            / Copyright \d{4}/,
+                            " My Company"
+                        ]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive a"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive b"]
+                            }
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ]
+            },
+            {
+                code: [
+                    "# pragma-directive b",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+                options: [{
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 2015",
+                            " My Company"
+                        ]
+                    },
+                    leadingComments: {
+                        comments: [
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive a"]
+                            },
+                            {
+                                commentType: "line",
+                                lines: [" pragma-directive b"]
+                            }
+                        ]
+                    }
+                }],
+                errors: [
+                    {
+                        message: "missing header",
+                        column: 1,
+                        endColumn: 1,
+                        endLine: 2,
+                        line: 2
+                    }
+                ],
+                output: [
+                    "# Copyright 2015",
+                    "# My Company",
+                    "# pragma-directive b",
+                    "",
+                    "foo: bar"
+                ].join("\n"),
+            },
+        ]
+    });
+});

@@ -48,7 +48,7 @@
     "mocha": "12.0.0-beta-10",
     "svelte-eslint-parser": "^1.6.0",
     "testdouble": "^3.20.2",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.2",
     "typescript-eslint": "^8.58.0",
     "vue-eslint-parser": "^10.4.0"
   },

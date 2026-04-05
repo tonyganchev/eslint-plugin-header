@@ -20,6 +20,7 @@
         ],
         "outDir": "types",
         "skipLibCheck": true,
-        "strict": true
+        "strict": true,
+        "types": ["node"]
     }
 }

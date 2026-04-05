@@ -7,8 +7,8 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript, TypeScript, Vue, CSS, HTML, and Markdown files.
-Supports _oxlint_.
+and banner comments in JavaScript, TypeScript, Vue, Svelte, CSS, HTML, and
+Markdown files. Supports _oxlint_.
 
 ## Table of Contents
 
@@ -31,7 +31,8 @@ Supports _oxlint_.
    5. [Linting CSS](#linting-css)
    6. [Linting HTML](#linting-html)
    7. [Linting Vue](#linting-vue)
-   8. [Linting Markdown](#linting-markdown)
+   8. [Linting Svelte](#linting-svelte)
+   9. [Linting Markdown](#linting-markdown)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -133,9 +134,9 @@ statements. Smoke tests cover this support as well.
 ### Languages
 
 Currently the plugin supports linting copyright headers in JavaScript,
-TypeScript and their JSX / TSX flavors; Vue, CSS, HTML, and Markdown files. As
-mentioned in the previous sections, not all languages are supported for oxlint
-or ESLint older than 9. Refer to the table below for more details.
+TypeScript and their JSX / TSX flavors; Vue, Svelte, CSS, HTML, and Markdown
+files. As mentioned in the previous sections, not all languages are supported
+for oxlint or ESLint older than 9. Refer to the table below for more details.
 
 | Language   | ESLint 7 / 8  | ESLint 9 / 10 | oxlint |
 |------------|---------------|---------------|--------|
@@ -144,6 +145,7 @@ or ESLint older than 9. Refer to the table below for more details.
 | JSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | TSX        | ✅ Yes        | ✅ Yes        | ✅ Yes |
 | Vue        | ✅ Yes        | ✅ Yes        | ❌ No  |
+| Svelte     | ✅ Yes        | ✅ Yes        | ❌ No  |
 | CSS        | ❌ No         | ✅ Yes        | ❌ No  |
 | HTML       | ❌ No         | ✅ Yes        | ❌ No  |
 | Markdown   | ❌ No         | ✅ Yes        | ❌ No  |
@@ -1378,6 +1380,55 @@ export default [
 
 As with HTML and CSS, only block comments are supported at the top of the file -
 no line- or shebang comments.
+
+### Linting Svelte
+
+The rule supports linting copyright notices in Svelte files. The rule works with
+the _eslint-plugin-svelte_ plugin and its parser.
+
+To turn on header validation for Svelte files, configure the parser and the rule:
+
+```ts
+import header from "@tony.ganchev/eslint-plugin-header";
+import svelteParser from "svelte-eslint-parser";
+import sveltePlugin from "eslint-plugin-svelte";
+
+export default [
+    {
+        files: ["**/*.svelte"],
+        plugins: {
+            "@tony.ganchev": header,
+            svelte: sveltePlugin
+        },
+        languageOptions: {
+            parser: svelteParser
+        },
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
+```
+
+```svelte
+<!-- Copyright 2025 -->
+<script>
+    let name = 'world';
+</script>
+
+<h1>Hello {name}!</h1>
+```
+
+As with Vue, HTML and CSS, only block comments are supported at the top of the
+file - no line- or shebang comments.
 
 ### Linting Markdown
 

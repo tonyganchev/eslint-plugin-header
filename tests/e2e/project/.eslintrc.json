@@ -2,17 +2,17 @@
     "root": true,
     "overrides": [
         {
-            "files": ["index.ts"],
+            "files": ["*.svelte"],
+            "parser": "svelte-eslint-parser",
             "plugins": ["@tony.ganchev/header"],
             "rules": {
                 "@tony.ganchev/header/header": [
                     "error",
                     {
                         "header": {
-                            "commentType": "line",
+                            "commentType": "block",
                             "lines": [
-                                " Copyright 1985",
-                                " Tony Ganchev"
+                                " Copyright 1985 svelte"
                             ]
                         },
                         "trailingEmptyLines": {
@@ -33,7 +33,28 @@
                         "header": {
                             "commentType": "block",
                             "lines": [
-                                " Copyright 1985 "
+                                " Copyright 1985 vue"
+                            ]
+                        },
+                        "trailingEmptyLines": {
+                            "minimum": 2
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "files": ["index.ts"],
+            "plugins": ["@tony.ganchev/header"],
+            "rules": {
+                "@tony.ganchev/header/header": [
+                    "error",
+                    {
+                        "header": {
+                            "commentType": "line",
+                            "lines": [
+                                " Copyright 1985",
+                                " Tony Ganchev"
                             ]
                         },
                         "trailingEmptyLines": {

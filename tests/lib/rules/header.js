@@ -23,6 +23,9 @@
  */
 
 "use strict";
+// CHEMISTRY: loading svelte as early as possible to avoid CJS v. ESM interop
+// issues.
+const svelte = require("eslint-plugin-svelte");
 
 const td = require("testdouble");
 // This needs to be called before any required module requires the `os` package.
@@ -32,7 +35,9 @@ const tsParser = require("@typescript-eslint/parser");
 const css = require("@eslint/css").default;
 const html = require("@html-eslint/eslint-plugin");
 const markdown = require("@eslint/markdown").default;
+const vue = require("eslint-plugin-vue");
 const vueParser = require("vue-eslint-parser");
+const svelteParser = require("svelte-eslint-parser");
 
 const { RuleTester } = require("eslint");
 
@@ -4098,11 +4103,20 @@ const htmlCommentTestCases = Object.entries({
     },
     vue: {
         ruleTesterConfig: {
-            plugins: { vue: require("eslint-plugin-vue") },
+            plugins: { vue },
             languageOptions: { parser: vueParser },
         },
         fileTemplate: "block.vue",
         content: "<template><div>Hello!</div></template>",
+        columnOffset: 1
+    },
+    svelte: {
+        ruleTesterConfig: {
+            plugins: { svelte },
+            languageOptions: { parser: svelteParser },
+        },
+        fileTemplate: "block.svelte",
+        content: "<script>let name = 'world';</script><h1>Hello {name}!</h1>",
         columnOffset: 1
     }
 });

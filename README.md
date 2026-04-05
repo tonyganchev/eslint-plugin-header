@@ -1535,7 +1535,6 @@ foo: bar
 As YAML only supports line comments, be sure to use `commentType: "line"`. If
 `commentType: "block"` is used, the rule will report a violation.
 
-
 ## Comparison to Alternatives
 
 A number of projects have been aiming to solve problems similar to

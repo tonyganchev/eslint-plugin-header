@@ -2,6 +2,10 @@ name: Test
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [ main ]
@@ -28,7 +32,7 @@ jobs:
         ref: ${{ inputs.ref || github.ref }}
     
     - name: Install pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v5
 
     - name: Use Node.js
       uses: actions/setup-node@v6

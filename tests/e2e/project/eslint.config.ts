@@ -10,6 +10,7 @@ import svelteParser from "svelte-eslint-parser";
 import svelte from "eslint-plugin-svelte";
 import vueParser from "vue-eslint-parser";
 import vue from "eslint-plugin-vue";
+import yml from "eslint-plugin-yml";
 
 export default defineConfig([
     {
@@ -115,6 +116,7 @@ export default defineConfig([
         }
     },
     {
+        // Only index.ts so that we do not lint certain config files.
         files: ["index.ts"],
         plugins: {
             "@tony.ganchev/header": plugin
@@ -155,6 +157,33 @@ export default defineConfig([
                         commentType: "block",
                         lines: [
                             " Copyright 1985 vue",
+                        ]
+                    },
+                    lineEndings: "os",
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                } as HeaderOptions
+            ] as HeaderRuleConfig
+        }
+    },
+    {
+        // Only index.yaml so that we do not lint certain config files.
+        files: ["index.yaml"],
+        plugins: {
+            "@tony.ganchev/header": plugin,
+            yml
+        },
+        language: "yml/yaml",
+        rules: {
+            "@tony.ganchev/header/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 1985",
+                            " Tony Ganchev"
                         ]
                     },
                     lineEndings: "os",

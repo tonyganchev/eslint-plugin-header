@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.4.3
+
+* Support linting YAML using _eslint-plugin-yml_. Supported for ESLint 9 / 10
+  (no oxlint support).
+
 ## 3.4.2
 
 * Support linting Svelte sources with top-level HTML comments using

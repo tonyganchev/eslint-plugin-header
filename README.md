@@ -7,7 +7,7 @@
 The native ESLint 9/10 standard header-validating plugin. A zero-bloat, drop-in
 replacement for [eslint-plugin-header](https://github.com/Stuk/eslint-plugin-header)
 with first-class Flat Config & TypeScript support. Auto-fix copyright, license,
-and banner comments in JavaScript, TypeScript, Vue, Svelte, CSS, HTML, and
+and banner comments in JavaScript, TypeScript, Vue, Svelte, CSS, HTML, YAML, and
 Markdown files. Supports _oxlint_.
 
 ## Table of Contents
@@ -33,6 +33,7 @@ Markdown files. Supports _oxlint_.
    7. [Linting Vue](#linting-vue)
    8. [Linting Svelte](#linting-svelte)
    9. [Linting Markdown](#linting-markdown)
+   10. [Linting YAML](#linting-yaml)
 5. [Comparison to Alternatives](#comparison-to-alternatives)
    1. [Compared to eslint-plugin-headers](#compared-to-eslint-plugin-headers)
       1. [Health Scans](#health-scans)
@@ -134,9 +135,10 @@ statements. Smoke tests cover this support as well.
 ### Languages
 
 Currently the plugin supports linting copyright headers in JavaScript,
-TypeScript and their JSX / TSX flavors; Vue, Svelte, CSS, HTML, and Markdown
-files. As mentioned in the previous sections, not all languages are supported
-for oxlint or ESLint older than 9. Refer to the table below for more details.
+TypeScript and their JSX / TSX flavors; Vue, Svelte, CSS, HTML, YAML, and
+Markdown files. As mentioned in the previous sections, not all languages are
+supported for oxlint or ESLint older than 9. Refer to the table below for more
+details.
 
 | Language   | ESLint 7 / 8  | ESLint 9 / 10 | oxlint |
 |------------|---------------|---------------|--------|
@@ -148,6 +150,7 @@ for oxlint or ESLint older than 9. Refer to the table below for more details.
 | Svelte     | ✅ Yes        | ✅ Yes        | ❌ No  |
 | CSS        | ❌ No         | ✅ Yes        | ❌ No  |
 | HTML       | ❌ No         | ✅ Yes        | ❌ No  |
+| YAML       | ❌ No         | ✅ Yes        | ❌ No  |
 | Markdown   | ❌ No         | ✅ Yes        | ❌ No  |
 
 ## Usage
@@ -1487,6 +1490,51 @@ the configuration of JavaScript sources (`**/*.js`) from JavaScript snippets in
 Markdown (`**/*.md/*.js`). Same applies to `*.ts`, `*.jsx`, `*.tsx`, etc.
 
 As with CSS, only block comments are supported - no line- or shebang comments.
+
+### Linting YAML
+
+The rule supports linting copyright notices in YAML files. The rule works with
+the _eslint-plugin-yml_ plugin and its parser.
+
+Similar to CSS and Markdown, all you need to do to turn on header validation is
+to configure the _eslint-plugin-yml_ plugin, the correct language, and the rule:
+
+```ts
+import header from "@tony.ganchev/eslint-plugin-header";
+import yml from "eslint-plugin-yml";
+
+export default [
+    {
+        files: ["**/*.yaml", "**/*.yml"],
+        plugins: {
+            "@tony.ganchev": header,
+            yml
+        },
+        language: "yml/yaml",
+        rules: {
+            "@tony.ganchev/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [" Copyright 2025 "]
+                    }
+                }
+            ]
+        }
+    }
+];
+```
+
+```yaml
+# Copyright 2025
+
+foo: bar
+```
+
+As YAML only supports line comments, be sure to use `commentType: "line"`. If
+`commentType: "block"` is used, the rule will report a violation.
+
 
 ## Comparison to Alternatives
 

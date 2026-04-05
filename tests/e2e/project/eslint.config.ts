@@ -4,36 +4,14 @@
 import { defineConfig } from "eslint/config";
 import plugin, { HeaderOptions, HeaderRuleConfig } from "@tony.ganchev/eslint-plugin-header";
 import css from "@eslint/css";
-import markdown from "@eslint/markdown";
 import html from "@html-eslint/eslint-plugin";
+import markdown from "@eslint/markdown";
+import svelteParser from "svelte-eslint-parser";
+import svelte from "eslint-plugin-svelte";
 import vueParser from "vue-eslint-parser";
 import vue from "eslint-plugin-vue";
 
 export default defineConfig([
-    {
-        files: ["index.ts"],
-        plugins: {
-            "@tony.ganchev/header": plugin
-        },
-        rules: {
-            "@tony.ganchev/header/header": [
-                "error",
-                {
-                    header: {
-                        commentType: "line",
-                        lines: [
-                            " Copyright 1985",
-                            " Tony Ganchev"
-                        ]
-                    },
-                    lineEndings: "os",
-                    trailingEmptyLines: {
-                        minimum: 2
-                    }
-                } as HeaderOptions
-            ] as HeaderRuleConfig
-        }
-    },
     {
         files: ["*.css"],
         plugins: {
@@ -48,7 +26,7 @@ export default defineConfig([
                     header: {
                         commentType: "block",
                         lines: [
-                            " Copyright 1985 ",
+                            " Copyright 1985 css",
                         ]
                     },
                     lineEndings: "os",
@@ -73,7 +51,7 @@ export default defineConfig([
                     header: {
                         commentType: "block",
                         lines: [
-                            " Copyright 1985 ",
+                            " Copyright 1985 md",
                         ]
                     },
                     lineEndings: "os",
@@ -98,7 +76,58 @@ export default defineConfig([
                     header: {
                         commentType: "block",
                         lines: [
-                            " Copyright 1985 ",
+                            " Copyright 1985 html",
+                        ]
+                    },
+                    lineEndings: "os",
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                } as HeaderOptions
+            ] as HeaderRuleConfig
+        }
+    },
+    {
+        files: ["*.svelte"],
+        plugins: {
+            "@tony.ganchev/header": plugin,
+            svelte
+        },
+        languageOptions: {
+            parser: svelteParser
+        },
+        rules: {
+            "@tony.ganchev/header/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "block",
+                        lines: [
+                            " Copyright 1985 svelte",
+                        ]
+                    },
+                    lineEndings: "os",
+                    trailingEmptyLines: {
+                        minimum: 2
+                    }
+                } as HeaderOptions
+            ] as HeaderRuleConfig
+        }
+    },
+    {
+        files: ["index.ts"],
+        plugins: {
+            "@tony.ganchev/header": plugin
+        },
+        rules: {
+            "@tony.ganchev/header/header": [
+                "error",
+                {
+                    header: {
+                        commentType: "line",
+                        lines: [
+                            " Copyright 1985",
+                            " Tony Ganchev"
                         ]
                     },
                     lineEndings: "os",
@@ -125,7 +154,7 @@ export default defineConfig([
                     header: {
                         commentType: "block",
                         lines: [
-                            " Copyright 1985 ",
+                            " Copyright 1985 vue",
                         ]
                     },
                     lineEndings: "os",

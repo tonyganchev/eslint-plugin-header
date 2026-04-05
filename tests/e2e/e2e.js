@@ -60,7 +60,7 @@ describe("E2E", () => {
      * @returns {JSON} The results of the tool run.
      * @throws {Error} If the error trown by the tool has no stdout.
      */
-    function runTool(deps, args, env) {
+    function runEslint(deps, args, env) {
         const lockPath = resolve(fixturePath, "pnpm-lock.yaml");
 
         if (existsSync(lockPath)) {
@@ -117,13 +117,13 @@ describe("E2E", () => {
     const hierarchicalConfigTestCase = [
         {
             name: "eslint@7",
-            deps: ["eslint@7"],
+            deps: ["eslint@7", "eslint-plugin-svelte@2.46.1", "svelte-eslint-parser@0.43.0"],
             args: ["-c", ".eslintrc.json", "--no-eslintrc"],
             env: {}
         },
         {
             name: "eslint@8",
-            deps: ["eslint@8"],
+            deps: ["eslint@8", "eslint-plugin-svelte", "svelte-eslint-parser"],
             args: ["-c", ".eslintrc.json", "--no-eslintrc"],
             env: { ESLINT_USE_FLAT_CONFIG: "false" }
         },
@@ -132,32 +132,45 @@ describe("E2E", () => {
     for (const { name, deps, args, env } of hierarchicalConfigTestCase) {
 
         it(`Runs ${name} ${args} and completes with two lint violations`, () => {
-            const results = runTool([...deps, "vue-eslint-parser", "eslint-plugin-vue"], args, env);
+            const results = runEslint(
+                [
+                    ...deps,
+                    "eslint-plugin-vue",
+                    "svelte",
+                    "vue-eslint-parser"
+                ],
+                args,
+                env);
 
-            assert.strictEqual(results.length, 2);
+            assert.strictEqual(results.length, 3);
 
             validateViolation(
                 results[0],
+                "index.svelte",
+                "header line does not match expected after this position; expected: '85 svelte'");
+
+            validateViolation(
+                results[1],
                 "index.ts",
                 "header line does not match expected after this position; expected: 'y Ganchev'");
 
             validateViolation(
-                results[1],
+                results[2],
                 "index.vue",
-                "header line does not match expected after this position; expected: '85 '");
+                "header line does not match expected after this position; expected: '85 vue'");
         });
     }
 
     const flatConfigTestCases = [
         {
             name: "eslint@9",
-            deps: ["eslint@9"],
+            deps: ["eslint@9", "eslint-plugin-svelte", "svelte-eslint-parser"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         },
         {
             name: "eslint@10",
-            deps: ["eslint@10"],
+            deps: ["eslint@10", "eslint-plugin-svelte", "svelte-eslint-parser"],
             args: ["-c", "eslint.config.ts", "--no-config-lookup"],
             env: {}
         }
@@ -165,48 +178,54 @@ describe("E2E", () => {
 
     for (const { name, deps, args, env } of flatConfigTestCases) {
 
-        it(`Runs ${name} ${args} and completes with five lint violations`, () => {
+        it(`Runs ${name} ${args} and completes with six lint violations`, () => {
             const results =
-                runTool(
+                runEslint(
                     [
                         ...deps,
                         "jiti",
                         "@eslint/css",
                         "@eslint/markdown",
                         "@html-eslint/eslint-plugin",
-                        "vue-eslint-parser",
-                        "eslint-plugin-vue"
+                        "eslint-plugin-vue",
+                        "svelte",
+                        "vue-eslint-parser"
                     ],
                     args,
                     env
                 );
 
-            assert.strictEqual(results.length, 5);
+            assert.strictEqual(results.length, 6);
 
             validateViolation(
                 results[0],
                 "README.md",
-                "header line does not match expected after this position; expected: '85 '");
+                "header line does not match expected after this position; expected: '85 md'");
 
             validateViolation(
                 results[1],
                 "index.css",
-                "header line does not match expected after this position; expected: '85 '");
+                "header line does not match expected after this position; expected: '85 css'");
 
             validateViolation(
                 results[2],
                 "index.html",
-                "header line does not match expected after this position; expected: '85 '");
+                "header line does not match expected after this position; expected: '85 html'");
 
             validateViolation(
                 results[3],
+                "index.svelte",
+                "header line does not match expected after this position; expected: '85 svelte'");
+
+            validateViolation(
+                results[4],
                 "index.ts",
                 "header line does not match expected after this position; expected: 'y Ganchev'");
 
             validateViolation(
-                results[4],
+                results[5],
                 "index.vue",
-                "header line does not match expected after this position; expected: '85 '");
+                "header line does not match expected after this position; expected: '85 vue'");
         });
     }
 
@@ -244,7 +263,7 @@ describe("E2E", () => {
             const output = error.stdout.toString();
             const results = JSON.parse(output);
             // console.log(JSON.stringify(results, null, "   "));
-            assert.strictEqual(results.number_of_files, 3);
+            assert.strictEqual(results.number_of_files, 4);
             const diagnostics = results.diagnostics;
             assert.strictEqual(diagnostics.length, 1);
             const diag = diagnostics[0];

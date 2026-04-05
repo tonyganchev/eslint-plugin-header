@@ -27,7 +27,7 @@ jobs:
       matrix:
         task: [eslint, markdownlint, unit, e2e]
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         ref: ${{ inputs.ref || github.ref }}
     
@@ -311,14 +311,19 @@ jobs:
             run: make lint
 
     steps:
-    - name: Install OS packages
-      uses: awalsh128/cache-apt-pkgs-action@v1
+    - name: Cache APT packages
+      uses: actions/cache@v5
       with:
-        packages: libx11-dev libxkbfile-dev
-        version: 1.0
+        path: /var/cache/apt/archives
+        key: ${{ runner.os }}-apt-v1-${{ hashFiles('.github/workflows/test.yml') }}
+
+    - name: Install OS packages
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libx11-dev libxkbfile-dev
 
     - name: Checkout plugin
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         ref: ${{ inputs.ref || github.ref }}
         path: plugin
@@ -341,7 +346,7 @@ jobs:
         echo "TARBALL_PATH=$(ls *.tgz | head -n 1)" >> $GITHUB_ENV
 
     - name: Checkout ${{ matrix.repo }}
-      uses: actions/checkout@v5
+      uses: actions/checkout@v6
       with:
         repository: ${{ matrix.repo }}
         ref: ${{ matrix.ref }}

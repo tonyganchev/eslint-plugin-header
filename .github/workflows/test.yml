@@ -194,14 +194,7 @@ jobs:
             pm: npm
             install: npm install
             plugin_add: npm install --save-dev
-            run: |
-              echo "<!--" > temp.txt
-              echo "Copyright (c) 2026 Oleksii Serdiuk" >> temp.txt
-              echo "SPDX-License-Identifier: BSD-3-Clause" >> temp.txt
-              echo "-->" >> temp.txt  
-              cat CODE_OF_CONDUCT.md >> temp.txt
-              mv temp.txt CODE_OF_CONDUCT.md
-              npm run lint
+            run: npm run lint
 
           - repo: microsoft/compose-language-service
             pm: npm

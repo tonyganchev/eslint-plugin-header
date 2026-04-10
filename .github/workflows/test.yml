@@ -67,6 +67,42 @@ jobs:
             pkg: "eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH"
             run: npm run lint
             
+          - repo: cloudscape-design/board-components
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/browser-test-tools
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/build-tools
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+            
+          - repo: cloudscape-design/chart-components
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/chat-components
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/code-view
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
           - repo: cloudscape-design/collection-hooks
             pm: npm
             install: npm install
@@ -85,6 +121,18 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run quick-build && npm run lint
 
+          - repo: cloudscape-design/demos
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
+          - repo: cloudscape-design/documenter
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run lint
+
           - repo: cloudscape-design/global-styles
             pm: npm
             install: npm install
@@ -92,12 +140,6 @@ jobs:
             run: npm run lint
 
           - repo: cloudscape-design/test-utils
-            pm: npm
-            install: npm install
-            plugin_add: npm install --save-dev
-            run: npm run lint
-
-          - repo: cloudscape-design/build-tools
             pm: npm
             install: npm install
             plugin_add: npm install --save-dev

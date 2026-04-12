@@ -43,11 +43,19 @@ repository to allow for [leading `@jest-environement`](https://github.com/tonyga
 pragma comments led to the introduction of support for leading comments in the
 plugin as of v3.3.0.
 
+- _board-components_ - [.eslintrc](https://github.com/cloudscape-design/board-components/blob/c63312783f6bc14df9b27f91de190a5d83460bb1/.eslintrc#L55-L71)
+- _browser-test-tools_ - [.eslintrc](https://github.com/cloudscape-design/browser-test-tools/blob/04b77d2dd84fdba42db38baa84258d920b71356f/.eslintrc#L15-L19)
 - _build-tools_ - [.eslintrc](https://github.com/tonyganchev/build-tools/blob/b39854f59b33042af603a66daf0bde638c31ee07/.eslintrc#L14-L18)
+- _chart-components_ - [.eslintrc](https://github.com/cloudscape-design/chart-components/blob/9b7fc8d42ddf112bc8900c5c3a6a3d484121e903/.eslintrc#L57-L76)
+- _chat-components_ - [.eslintrc](https://github.com/cloudscape-design/chat-components/blob/7695be4f26f3ccd3397f7eb8fb7f330a77d1760f/.eslintrc#L57-L73)
+- _code-view_ - [eslint.config.mjs](https://github.com/cloudscape-design/code-view/blob/db57dbe9060a01e6d4c082329266d763b18b5890/eslint.config.mjs#L72-L76)
 - _collection-hooks_ - [.eslintrc](https://github.com/tonyganchev/collection-hooks/blob/acbcc8b49482c892ee04d0a28d51ff11c1cca2ac/.eslintrc#L29-L33)
 - _components_ - [eslint.config.mjs](https://github.com/tonyganchev/components/blob/c8acad4a9425c8606818bd6101f87bb50a21cefc/eslint.config.mjs#L110-L129)
 - _component-toolkit_ - [.eslintrc](https://github.com/tonyganchev/component-toolkit/blob/139e48a11dca243f06d0e590c465a62ce2bf87f7/.eslintrc#L56-L79)
+- _demos_ - [.eslintrc](https://github.com/cloudscape-design/demos/blob/9cec249e39ab69c363ec643b5a8b52b30a531416/.eslintrc#L29-L33)
+- _documenter_ - [eslint.config.mjs](https://github.com/cloudscape-design/documenter/blob/ccf55e902c5d093d6ae0e2de776f028c65f4702b/eslint.config.mjs#L45-L49)
 - _global-styles_ - [eslint.config.mjs](https://github.com/tonyganchev/global-styles/blob/247b268aaddb325c7e08bddd4c5ce00dd0ec79d5/eslint.config.mjs)
+- _jest-presets_ - [.eslintrc](https://github.com/cloudscape-design/jest-preset/blob/70e5e08fcaf63667ce6b1b52d3fb974a99468569/.eslintrc#L16-L20)
 - _test-utils_ - [eslint.config.js](https://github.com/tonyganchev/test-utils/blob/da3951773c1147020ea30ea5b8b38844272ccd71/eslint.config.js#L57-L61)
 - _theming-core_ - [eslint.config.mjs](https://github.com/tonyganchev/theming-core/blob/f3f244317953045a07f7dbdd68f08d62957aa65d/eslint.config.mjs#L27-L31)
 

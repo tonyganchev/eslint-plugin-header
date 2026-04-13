@@ -1638,6 +1638,10 @@ Config era.
 
 Key differences:
 
+- **Compatibility**: _eslint-plugin-notice_ does not support ESLint 10.
+- **Support**: _eslint-plugin-notice_ has not seen its code updated in 2 years
+  and has pull request published by the project's owner dangling for over 2
+  years.
 - **Philosophy**: _\@tony.ganchev/eslint-plugin-header_ focuses on a zero-bloat,
   native ESLint feel with first-class support for Flat Config and TypeScript.
 - **ESLint 9/10**: Our plugin is built from the ground up to support the latest

@@ -50,7 +50,7 @@
     "svelte-eslint-parser": "^1.6.0",
     "testdouble": "^3.20.2",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.58.1",
+    "typescript-eslint": "^8.58.2",
     "vue-eslint-parser": "^10.4.0"
   },
   "peerDependencies": {

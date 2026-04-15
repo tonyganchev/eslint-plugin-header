@@ -66,6 +66,12 @@ jobs:
             plugin_add: npm install --save-dev
             pkg: "eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH"
             run: npm run lint
+
+          - repo: Frontify/guideline-blocks
+            pm: pnpm
+            install: pnpm install --no-frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm run lint
             
           - repo: cloudscape-design/board-components
             pm: npm

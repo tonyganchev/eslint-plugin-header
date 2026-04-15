@@ -64,19 +64,19 @@ jobs:
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
             plugin_add: pnpm add -Dw
-            run: pnpm run lint
+            run: pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
             plugin_add: pnpm add -Dw
-            run: pnpm run lint
+            run: pnpm lint
 
           - repo: angular/angular-cli
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
             plugin_add: pnpm add -Dw
-            run: pnpm run lint
+            run: pnpm lint
             
           - repo: cloudscape-design/board-components
             pm: npm

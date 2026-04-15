@@ -1630,24 +1630,25 @@ migrate to _\@tony.ganchev/eslint-plugin-header_.
 
 ### Compared to [eslint-plugin-notice](https://github.com/earl-man/eslint-plugin-notice)
 
-_eslint-plugin-notice_ is another alternative that uses a template-based approach
-(powered by Lodash templates) to manage headers. This makes it quite powerful for
-dynamic content but also brings in more dependencies and a more complex
-configuration schema that doesn't always feel "native" to the new ESLint Flat
-Config era.
+_eslint-plugin-notice_ is another alternative that uses a template-based
+approach (powered by Lodash templates) to manage headers. This makes it quite
+powerful for dynamic content but also brings in more dependencies and a more
+complex configuration schema that doesn't always feel "native" to the new ESLint
+Flat Config era.
 
 Key differences:
 
-- **Compatibility**: _eslint-plugin-notice_ does not support ESLint 10.
-- **Support**: _eslint-plugin-notice_ has not seen its code updated in 2 years
-  and has pull request published by the project's owner dangling for over 2
-  years.
+- **Compatibility**: _eslint-plugin-notice_ **does not support ESLint 10** and
+  **does not provide TypeScript bindings**.
+- **Support**: _eslint-plugin-notice_ has **not seen its code updated in 2
+  years** and has pull request published by the project's owner dangling for
+  over 2 years.
 - **Philosophy**: _\@tony.ganchev/eslint-plugin-header_ focuses on a zero-bloat,
   native ESLint feel with first-class support for Flat Config and TypeScript.
-- **ESLint 9/10**: Our plugin is built from the ground up to support the latest
-  ESLint versions and their core features.
+  The project offers much more features and includes a much larger list of
+  supported languages.
 - **Languages**: We provide native support for linting headers in HTML, CSS,
-  and Markdown via their respective ESLint ecosystem plugins.
+  Vue, Svelte, YAML, Markdown via their respective ESLint plugins and parsers.
 - **Simplicity**: No need for external template engines or complex variable
   mappings. Use standard JavaScript template literals in your `eslint.config.ts`
   to handle dynamic years or other variables.

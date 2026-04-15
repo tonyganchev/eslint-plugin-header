@@ -52,13 +52,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-
-          - repo: angular/angular-cli
-            pm: pnpm
-            install: pnpm install --no-frozen-lockfile
-            plugin_add: pnpm add -Dw
-            run: pnpm run lint
-
           - repo: Azure/azure-dev
             pm: npm
             cwd: ext/vscode
@@ -66,12 +59,24 @@ jobs:
             plugin_add: npm install --save-dev
             pkg: "eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH"
             run: npm run lint
+          
+          - repo: Frontify/brand-sdk
+            pm: pnpm
+            install: pnpm install --no-frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
             plugin_add: pnpm add -Dw
-            run: pnpm run lint
+            run: pnpm lint
+
+          - repo: angular/angular-cli
+            pm: pnpm
+            install: pnpm install --no-frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
             
           - repo: cloudscape-design/board-components
             pm: npm

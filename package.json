@@ -56,7 +56,7 @@
   "peerDependencies": {
     "eslint": ">=7.7.0"
   },
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "overrides": {
       "yaml": "^2.8.3"

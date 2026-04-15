@@ -386,6 +386,12 @@ jobs:
         cache: 'pnpm'
         cache-dependency-path: 'plugin/pnpm-lock.yaml'
 
+    - name: Use Bun
+      if: matrix.pm == 'bun'
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+
     - name: Build and Pack Plugin
       working-directory: plugin
       run: |

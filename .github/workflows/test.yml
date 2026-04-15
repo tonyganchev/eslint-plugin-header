@@ -74,8 +74,9 @@ jobs:
             post_install: >
               node -e "
               const p = require('./package.json');
-              p.resolutions = p.resolutions || {};
-              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+              p.pnpm = p.pnpm || {};
+              p.pnpm.overrides = p.pnpm.overrides || {};
+              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
               " && pnpm install --no-frozen-lockfile

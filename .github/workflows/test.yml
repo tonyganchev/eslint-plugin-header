@@ -59,6 +59,13 @@ jobs:
             plugin_add: npm install --save-dev
             pkg: "eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH @tony.ganchev/eslint-plugin-header@file:$GITHUB_WORKSPACE/plugin/$TARBALL_PATH"
             run: npm run lint
+
+          - repo: Cratis/Chronicle
+            pm: yarn
+            cwd: Source/Workbench
+            install: yarn install
+            plugin_add: yarn add -D
+            run: yarn lint
           
           - repo: Frontify/brand-sdk
             pm: pnpm
@@ -162,13 +169,6 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
-          - repo: Cratis/Chronicle
-            pm: yarn
-            cwd: Source/Workbench
-            install: yarn install
-            plugin_add: yarn add -D
-            run: yarn lint
-
           - repo: dash0hq/opentelemetry-js-distribution
             pm: npm
             install: npm install
@@ -177,9 +177,17 @@ jobs:
 
           - repo: forcedotcom/salesforcedx-vscode
             pm: npm
+
             install: npm install
             plugin_add: npm install --save-dev
             run: npm run lint
+
+          - repo: juherr/mobilityid
+            pm: bun
+            cwd: ts
+            install: bun install
+            plugin_add: bun install --save-dev
+            run: bun run lint
 
           - repo: eclipse-glsp/glsp
             pm: yarn
@@ -377,6 +385,12 @@ jobs:
         node-version: '24.x'
         cache: 'pnpm'
         cache-dependency-path: 'plugin/pnpm-lock.yaml'
+
+    - name: Use Bun
+      if: matrix.pm == 'bun'
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
 
     - name: Build and Pack Plugin
       working-directory: plugin

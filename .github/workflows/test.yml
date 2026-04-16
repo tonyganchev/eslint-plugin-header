@@ -78,7 +78,7 @@ jobs:
           - repo: Frontify/guideline-blocks
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
-            plugin_add: pnpm add -Dw
+            plugin_add: pnpm add -Dr
             run: pnpm lint
 
           - repo: angular/angular-cli

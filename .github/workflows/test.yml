@@ -70,17 +70,8 @@ jobs:
           - repo: Frontify/brand-sdk
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
-            plugin_add: pnpm add -Dw
-            post_install: >
-              node -e "
-              const p = require('./package.json');
-              p.pnpm = p.pnpm || {};
-              p.pnpm.overrides = p.pnpm.overrides || {};
-              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
-                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-              " && pnpm install --no-frozen-lockfile
-            run: pnpm build:app-bridge-app && pnpm build && pnpm lint
+            plugin_add: pnpm up -r
+            run: pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks
             pm: pnpm

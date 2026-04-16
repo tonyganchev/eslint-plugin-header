@@ -80,7 +80,7 @@ jobs:
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
               " && pnpm install --no-frozen-lockfile
-            run: pnpm build && pnpm lint
+            run: pnpm build:app-bridge-app && pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks
             pm: pnpm

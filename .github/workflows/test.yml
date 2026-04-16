@@ -70,7 +70,7 @@ jobs:
           - repo: Frontify/brand-sdk
             pm: pnpm
             install: pnpm install --no-frozen-lockfile
-            plugin_add: pnpm up -r
+            plugin_add: pnpm add -r
             run: pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks

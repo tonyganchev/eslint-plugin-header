@@ -69,8 +69,10 @@ jobs:
           
           - repo: Frontify/brand-sdk
             pm: pnpm
-            install: pnpm install --no-frozen-lockfile
-            plugin_add: pnpm add -Dw
+            install: pnpm install --frozen-lockfile
+            plugin_add: echo "Skipping native plugin add to maintain lockfile integrity"
+            post_install: |
+              find node_modules -type d -path "*/@tony.ganchev/eslint-plugin-header" -exec bash -c 'tar -xzf $GITHUB_WORKSPACE/plugin/$TARBALL_PATH --strip-components=1 -C "$1"' _ {} \;
             run: pnpm build && pnpm lint
 
           - repo: Frontify/guideline-blocks

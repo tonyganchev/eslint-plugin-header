@@ -79,7 +79,13 @@ consistent header structures. Notable adopters include:
 &nbsp;&nbsp;&nbsp;
 [![Salesforce](https://github.com/forcedotcom.png?size=48)](./docs/consumers.md#salesforce)
 &nbsp;&nbsp;&nbsp;
+[![Google](https://github.com/google.png?size=48)](./docs/consumers.md#google)
+&nbsp;&nbsp;&nbsp;
 [![Angular](https://github.com/angular.png?size=48)](./docs/consumers.md#angular)
+&nbsp;&nbsp;&nbsp;
+[![Broadcom](https://github.com/broadcom.png?size=48)](./docs/consumers.md#broadcom)
+&nbsp;&nbsp;&nbsp;
+[![VMware](https://github.com/vmware.png?size=48)](./docs/consumers.md#vmware)
 &nbsp;&nbsp;&nbsp;
 [![Amazon](https://github.com/aws.png?size=48)](./docs/consumers.md#amazon)
 &nbsp;&nbsp;&nbsp;
@@ -94,6 +100,8 @@ consistent header structures. Notable adopters include:
 [![IBM InspectorRAGet](https://github.com/ibm.png?size=48)](./docs/consumers.md#ibm)
 &nbsp;&nbsp;&nbsp;
 [![FlowCrypt Browser Extensions](https://github.com/flowcrypt.png?size=48)](./docs/consumers.md#flowcrypt)
+&nbsp;&nbsp;&nbsp;
+[![Frontify](https://github.com/Frontify.png?size=48)](./docs/consumers.md#frontify)
 &nbsp;&nbsp;&nbsp;
 [![Cratis](https://github.com/Cratis.png?size=48)](./docs/consumers.md#cratis)
 &nbsp;&nbsp;&nbsp;

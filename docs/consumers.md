@@ -10,24 +10,27 @@ writing.
 
 1. [Amazon](#amazon)
    1. [Cloudscape Design System](#cloudscape-design-system)
-2. [Cratis](#cratis)
-3. [Dash0](#dash0)
-4. [Eclipse Foundation](#eclipse-foundation)
+2. [Broadcom](#broadcom)
+   1. [VMware](#vmware)
+3. [Cratis](#cratis)
+4. [Dash0](#dash0)
+5. [Eclipse Foundation](#eclipse-foundation)
    1. [Eclipse GLSP](#eclipse-glsp)
-5. [FlowCrypt](#flowcrypt)
-6. [Google](#google)
+6. [FlowCrypt](#flowcrypt)
+7. [Frontify](#frontify)
+8. [Google](#google)
    1. [Angular](#angular)
-7. [IBM](#ibm)
-8. [Microsoft](#microsoft)
-   1. [Azure](#azure)
-9. [Mysten Labs](#mysten-labs)
-10. [Salesforce](#salesforce)
+9. [IBM](#ibm)
+10. [Microsoft](#microsoft)
+    1. [Azure](#azure)
+11. [Mysten Labs](#mysten-labs)
+12. [Salesforce](#salesforce)
     1. [Visual Studio Code Extensions](#visual-studio-code-extensions)
     2. [Others](#others)
-11. [Salto](#salto)
-12. [Suwayomi](#suwayomi)
-13. [Wire Swiss GmbH](#wire-swiss-gmbh)
-14. [WPPConnect](#wppconnect)
+13. [Salto](#salto)
+14. [Suwayomi](#suwayomi)
+15. [Wire Swiss GmbH](#wire-swiss-gmbh)
+16. [WPPConnect](#wppconnect)
 
 ## ![Logo](https://github.com/aws.png?size=24)Amazon
 
@@ -59,6 +62,19 @@ plugin as of v3.3.0.
 - _test-utils_ - [eslint.config.js](https://github.com/tonyganchev/test-utils/blob/da3951773c1147020ea30ea5b8b38844272ccd71/eslint.config.js#L57-L61)
 - _theming-core_ - [eslint.config.mjs](https://github.com/tonyganchev/theming-core/blob/f3f244317953045a07f7dbdd68f08d62957aa65d/eslint.config.mjs#L27-L31)
 
+## ![Logo](https://github.com/broadcom.png?size=24)Broadcom
+
+### ![Logo](https://github.com/vmware.png?size=24)VMware
+
+This plugin is widely used across VMware projects to guarantee strict copyright
+and license notice requirements by their legal team. At different points in time
+the plugin has been used in the vSphere Client - the de-facto stardard for
+virtual infrastructure management interfaces - and for the VMware Cloud
+Management Console and a lot of other apps.
+
+Furthermore, VMware engineering teams need to migrate to ESLint 9 is the reason
+this plugin got forked from _eslint-plugin-header_.
+
 ## ![Logo](https://github.com/Cratis.png?size=24)Cratis
 
 - _Arc_ - [eslint.config.mjs](https://github.com/Cratis/Arc/blob/dd049cba298de9f3d82bf197425ade40ad1a7f8f/eslint.config.mjs#L69-L77)
@@ -84,6 +100,15 @@ plugin as of v3.3.0.
 ## ![Logo](https://github.com/FlowCrypt.png?size=24)FlowCrypt
 
 - _flowcrypt-browser_ - [eslint.config.mjs](https://github.com/FlowCrypt/flowcrypt-browser/blob/9c959de7c1308ac205b65d8ff32477172083b4f2/eslint.config.mjs#L27)
+
+## ![Logo](https://github.com/Frontify.png?size=24)Frontify
+
+Frontify team is gradually migrating their repositories from
+_eslint-plugin-notice_ to this plugin since the former lacks support for ESLint
+10.
+
+- _brand-sdk_ - <https://github.com/Frontify/brand-sdk/pull/1548>
+- _guideline-blocks_ - <https://github.com/Frontify/guideline-blocks/pull/1290>
 
 ## ![Logo](https://github.com/google.png?size=24)Google
 

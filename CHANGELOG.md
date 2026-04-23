@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.4.4
+
+* Fix: removed implicit dependency on @eslint/core which broke overzealous
+  TypeScript lint rules.
+
 ## 3.4.3
 
 * Support linting YAML using _eslint-plugin-yml_. Supported for ESLint 9 / 10

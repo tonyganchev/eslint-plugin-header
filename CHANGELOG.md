@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.4
+
+* Fix: removed implicit dependency on _@eslint/core_ through JSDoc.
+
 ## 3.4.3
 
 * Support linting YAML using _eslint-plugin-yml_. Supported for ESLint 9 / 10

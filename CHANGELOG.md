@@ -2,8 +2,7 @@
 
 ## 3.4.4
 
-* Fix: removed implicit dependency on @eslint/core which broke overzealous
-  TypeScript lint rules.
+* Fix: removed implicit dependency on _@eslint/core_ through JSDoc.
 
 ## 3.4.3
 

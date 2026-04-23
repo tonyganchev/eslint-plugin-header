@@ -398,6 +398,7 @@ jobs:
       working-directory: plugin
       run: |
         pnpm install --frozen-lockfile
+        pnpm build
         pnpm pack
         echo "TARBALL_PATH=$(ls *.tgz | head -n 1)" >> $GITHUB_ENV
 

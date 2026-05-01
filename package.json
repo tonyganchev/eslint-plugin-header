@@ -27,10 +27,10 @@
     "unit": "c8 --reporter=html --reporter=text --reporter=text-summary --reporter=lcov --check-coverage --100 mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
-    "@eslint/css": "^1.1.0",
+    "@eslint/css": "^1.2.0",
     "@eslint/js": "^10.0.1",
     "@eslint/markdown": "^8.0.1",
-    "@html-eslint/eslint-plugin": "^0.59.0",
+    "@html-eslint/eslint-plugin": "^0.60.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
@@ -42,7 +42,7 @@
     "eslint-plugin-n": "^17.24.0",
     "eslint-plugin-svelte": "^3.17.1",
     "eslint-plugin-vue": "^10.9.0",
-    "eslint-plugin-yml": "^3.3.1",
+    "eslint-plugin-yml": "^3.3.2",
     "globals": "^17.5.0",
     "markdownlint-cli": "^0.48.0",
     "mocha": "12.0.0-beta-10",
@@ -55,7 +55,7 @@
   "peerDependencies": {
     "eslint": ">=7.7.0"
   },
-  "packageManager": "pnpm@10.33.1",
+  "packageManager": "pnpm@10.33.2",
   "pnpm": {
     "overrides": {
       "yaml": "^2.8.3"

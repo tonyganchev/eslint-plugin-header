@@ -381,6 +381,16 @@ jobs:
     - name: Enable Corepack
       run: corepack enable
 
+    - name: Verify PNPM Cache Directory
+      run: |
+        PNPM_STORE_PATH="$( pnpm store path --silent )"
+        if [ ! -d "$PNPM_STORE_PATH" ]; then
+          echo "PNPM store directory does not exist, creating it."
+          mkdir -p "$PNPM_STORE_PATH"
+        else
+          echo "PNPM store directory exists."
+        fi
+
     - name: Use Node.js
       uses: actions/setup-node@v6
       with:

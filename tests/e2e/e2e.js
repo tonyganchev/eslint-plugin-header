@@ -69,7 +69,8 @@ describe("E2E", () => {
         writeFileSync(resolve(fixturePath, "package.json"),
             JSON.stringify({
                 name: "test-project",
-                private: true
+                private: true,
+                packageManager: "pnpm@11.1.2",
             }));
         execFileSync("pnpm", ["install", ...deps, tarballPath], {
             cwd: fixturePath,

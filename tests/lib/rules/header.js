@@ -23,6 +23,10 @@
  */
 
 "use strict";
+
+// Pre-load yaml-eslint-parser to cache yaml v2 before svelte loads yaml v1
+require("yaml-eslint-parser");
+
 // CHEMISTRY: loading svelte as early as possible to avoid CJS v. ESM interop
 // issues.
 const svelte = require("eslint-plugin-svelte");

@@ -330,10 +330,10 @@ jobs:
           #   run: yarn lint
 
           - repo: Suwayomi/Suwayomi-WebUI
-            pm: yarn
-            install: yarn install
-            plugin_add: yarn add -D --ignore-workspace-root-check
-            run: yarn lint
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -D --ignore-workspace-root-check
+            run: pnpm lint
 
           - repo: wireapp/wire-webapp
             pm: yarn

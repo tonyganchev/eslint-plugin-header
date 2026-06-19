@@ -243,14 +243,14 @@ jobs:
             pm: pnpm
             install: pnpm install
             plugin_add: pnpm add -D --ignore-workspace-root-check
-            # post_install: >
-            #   node -e "
-            #   const p = require('./package.json');
-            #   p.resolutions = p.resolutions || {};
-            #   p.resolutions['@tony.ganchev/eslint-plugin-header'] =
-            #     'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-            #   require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-            #   " && yarn
+            post_install: >
+              node -e "
+              const p = require('./package.json');
+              p.resolutions = p.resolutions || {};
+              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+              " && pnpm install
             run: pnpm lint
 
           - repo: leppa/convert-to-wealthfolio

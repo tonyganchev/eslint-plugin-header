@@ -192,10 +192,10 @@ jobs:
             run: bun run lint
 
           - repo: eclipse-glsp/glsp
-            pm: yarn
-            install: yarn
-            plugin_add: yarn add -D --ignore-workspace-root-check
-            run: yarn lint
+            pm: pnpm
+            install: pnpm
+            plugin_add: pnpm add -D --ignore-workspace-root-check
+            run: pnpm lint
 
           - repo: eclipse-glsp/glsp-client
             pm: pnpm
@@ -212,18 +212,18 @@ jobs:
             run: pnpm lint
 
           - repo: eclipse-glsp/glsp-server-node
-            pm: yarn
-            install: yarn
-            plugin_add: yarn add -D --ignore-workspace-root-check
-            post_install: >
-              node -e "
-              const p = require('./package.json');
-              p.resolutions = p.resolutions || {};
-              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
-                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-              " && yarn
-            run: yarn lint
+            pm: pnpm
+            install: pnpm
+            plugin_add: pnpm add -D --ignore-workspace-root-check
+            # post_install: >
+            #   node -e "
+            #   const p = require('./package.json');
+            #   p.resolutions = p.resolutions || {};
+            #   p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+            #     'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
+            #   require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
+            #   " && yarn
+            run: pnpm lint
 
           - repo: eclipse-glsp/glsp-theia-integration
             pm: yarn

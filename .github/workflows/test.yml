@@ -193,7 +193,7 @@ jobs:
 
           - repo: eclipse-glsp/glsp
             pm: pnpm
-            install: pnpm
+            install: pnpm install
             plugin_add: pnpm add -D --ignore-workspace-root-check
             run: pnpm lint
 

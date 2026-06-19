@@ -27,41 +27,36 @@
     "unit": "mcr -c .mcr.config.js mocha tests/lib/*.js tests/lib/**/*.js"
   },
   "devDependencies": {
-    "@eslint/css": "^1.2.0",
+    "@eslint/css": "^1.3.0",
     "@eslint/js": "^10.0.1",
-    "@eslint/markdown": "^8.0.1",
-    "@html-eslint/eslint-plugin": "^0.60.0",
+    "@eslint/markdown": "^8.0.2",
+    "@html-eslint/eslint-plugin": "^0.62.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/estree": "^1.0.9",
     "@types/json-schema": "^7.0.15",
-    "@types/node": "^25.8.0",
-    "eslint": "^10.4.0",
-    "eslint-plugin-eslint-plugin": "^7.3.3",
-    "eslint-plugin-jsdoc": "^62.9.0",
-    "eslint-plugin-n": "^18.0.1",
-    "eslint-plugin-svelte": "^3.17.1",
-    "eslint-plugin-vue": "^10.9.1",
-    "eslint-plugin-yml": "^3.3.2",
+    "@types/node": "^25.9.3",
+    "eslint": "^10.5.0",
+    "eslint-plugin-eslint-plugin": "^7.4.0",
+    "eslint-plugin-jsdoc": "^63.0.6",
+    "eslint-plugin-n": "^18.1.0",
+    "eslint-plugin-svelte": "^3.19.0",
+    "eslint-plugin-vue": "^10.9.2",
+    "eslint-plugin-yml": "^3.4.0",
     "globals": "^17.6.0",
-    "markdownlint-cli": "^0.48.0",
+    "markdownlint-cli": "^0.49.0",
     "mocha": "12.0.0-alpha-issue-5899.4",
-    "monocart-coverage-reports": "^2.12.11",
-    "svelte": "^5.55.7",
-    "svelte-eslint-parser": "^1.6.1",
+    "monocart-coverage-reports": "^2.12.12",
+    "svelte": "^5.56.3",
+    "svelte-eslint-parser": "^1.8.0",
     "testdouble": "^3.20.2",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.3",
-    "vue-eslint-parser": "^10.4.0"
+    "typescript-eslint": "^8.61.1",
+    "vue-eslint-parser": "^10.4.1"
   },
   "peerDependencies": {
     "eslint": ">=7.7.0"
   },
-  "packageManager": "pnpm@11.1.2",
-  "pnpm": {
-    "overrides": {
-      "yaml": "^2.8.3"
-    }
-  },
+  "packageManager": "pnpm@11.8.0",
   "keywords": [
     "autofix",
     "auto-fix",

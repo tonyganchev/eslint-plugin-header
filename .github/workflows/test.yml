@@ -226,9 +226,9 @@ jobs:
             run: pnpm lint
 
           - repo: eclipse-glsp/glsp-theia-integration
-            pm: yarn
-            install: yarn
-            plugin_add: yarn add -D --ignore-workspace-root-check
+            pm: pnpm
+            install: pnpm install
+            plugin_add: pnpm add -D --ignore-workspace-root-check
             post_install: >
               node -e "
               const p = require('./package.json');
@@ -236,8 +236,8 @@ jobs:
               p.resolutions['@tony.ganchev/eslint-plugin-header'] =
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-              " && yarn
-            run: yarn lint
+              " && pnpm install
+            run: pnpm lint
 
           - repo: eclipse-glsp/glsp-vscode-integration
             pm: pnpm

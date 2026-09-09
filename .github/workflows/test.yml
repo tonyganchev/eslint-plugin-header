@@ -232,8 +232,9 @@ jobs:
             post_install: >
               node -e "
               const p = require('./package.json');
-              p.resolutions = p.resolutions || {};
-              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+              p.pnpm = p.pnpm || {};
+              p.pnpm.overrides = p.pnpm.overrides || {};
+              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
               " && pnpm install
@@ -246,8 +247,9 @@ jobs:
             post_install: >
               node -e "
               const p = require('./package.json');
-              p.resolutions = p.resolutions || {};
-              p.resolutions['@tony.ganchev/eslint-plugin-header'] =
+              p.pnpm = p.pnpm || {};
+              p.pnpm.overrides = p.pnpm.overrides || {};
+              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
               " && pnpm install
@@ -303,10 +305,10 @@ jobs:
             run: npm run lint
 
           - repo: microsoft/vscode-containers
-            pm: npm
-            install: npm install
-            plugin_add: npm install --save-dev
-            run: npm run lint
+            pm: pnpm
+            install: pnpm install
+            plugin_add: pnpm add -D
+            run: pnpm lint
 
           - repo: microsoft/vscode-test-web
             pm: npm
@@ -339,7 +341,7 @@ jobs:
             pm: yarn
             install: yarn install
             plugin_add: yarn add -D
-            run: yarn nx run-many -t lint --all
+            run: yarn build && yarn nx run-many -t lint --all
 
           - repo: wppconnect-team/wa-js
             pm: npm

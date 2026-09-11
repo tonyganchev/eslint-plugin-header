@@ -253,7 +253,7 @@ jobs:
                 'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
               require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
               " && pnpm install
-            run: pnpm lint
+            run: pnpm compile && pnpm lint
 
           - repo: leppa/convert-to-wealthfolio
             pm: npm
@@ -307,7 +307,7 @@ jobs:
           - repo: microsoft/vscode-containers
             pm: pnpm
             install: pnpm install
-            plugin_add: pnpm add -D
+            plugin_add: pnpm add -Dw
             run: pnpm lint
 
           - repo: microsoft/vscode-test-web
@@ -341,7 +341,7 @@ jobs:
             pm: yarn
             install: yarn install
             plugin_add: yarn add -D
-            run: yarn build && yarn nx run-many -t lint --all
+            run: yarn nx run-many -t lint --all
 
           - repo: wppconnect-team/wa-js
             pm: npm

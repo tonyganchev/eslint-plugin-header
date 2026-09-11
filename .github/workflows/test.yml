@@ -341,7 +341,7 @@ jobs:
             pm: yarn
             install: yarn install
             plugin_add: yarn add -D
-            run: yarn nx run-many -t lint --all
+            run: yarn build:libs && yarn nx run-many -t lint --all
 
           - repo: wppconnect-team/wa-js
             pm: npm

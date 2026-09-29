@@ -39,7 +39,7 @@
     "eslint": "^10.11.0",
     "eslint-plugin-eslint-plugin": "^7.6.2",
     "eslint-plugin-jsdoc": "^64.5.4",
-    "eslint-plugin-n": "^18.3.0",
+    "eslint-plugin-n": "^18.4.0",
     "eslint-plugin-svelte": "^3.23.0",
     "eslint-plugin-vue": "^10.11.1",
     "eslint-plugin-yml": "^3.8.1",

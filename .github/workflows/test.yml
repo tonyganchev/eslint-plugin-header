@@ -200,55 +200,7 @@ jobs:
             post_install: |
               PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
               tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
-            run: pnpm exec oxlint --config dev-packages/oxlint-config/oxlintrc.json .
-
-          - repo: eclipse-glsp/glsp-client
-            pm: pnpm
-            install: pnpm install --frozen-lockfile
-            plugin_add: echo "Using the plugin version already declared by the target repository"
-            post_install: |
-              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
-              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
-            run: pnpm lint
-
-          - repo: eclipse-glsp/glsp-server-node
-            pm: pnpm
-            install: pnpm install --frozen-lockfile
-            plugin_add: echo "Using the plugin version already declared by the target repository"
-            post_install: |
-              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
-              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
-            run: pnpm lint
-
-          - repo: eclipse-glsp/glsp-theia-integration
-            pm: pnpm
-            install: pnpm install
-            plugin_add: pnpm add -D --ignore-workspace-root-check
-            post_install: >
-              node -e "
-              const p = require('./package.json');
-              p.pnpm = p.pnpm || {};
-              p.pnpm.overrides = p.pnpm.overrides || {};
-              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
-                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-              " && pnpm install
-            run: pnpm lint
-
-          - repo: eclipse-glsp/glsp-vscode-integration
-            pm: pnpm
-            install: pnpm install
-            plugin_add: pnpm add -D --ignore-workspace-root-check
-            post_install: >
-              node -e "
-              const p = require('./package.json');
-              p.pnpm = p.pnpm || {};
-              p.pnpm.overrides = p.pnpm.overrides || {};
-              p.pnpm.overrides['@tony.ganchev/eslint-plugin-header'] =
-                'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-              require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-              " && pnpm install
-            run: pnpm compile && pnpm lint
+            run: pnpm lint:ci
 
           - repo: leppa/convert-to-wealthfolio
             pm: npm

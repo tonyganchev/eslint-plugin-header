@@ -178,11 +178,13 @@ jobs:
             run: npm run lint
 
           - repo: forcedotcom/salesforcedx-vscode
-            pm: npm
-
-            install: npm install
-            plugin_add: npm install --save-dev
-            run: npm run lint
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: echo "Using the plugin version already declared by the target repository"
+            post_install: |
+              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
+              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
+            run: pnpm lint
 
           - repo: juherr/mobilityid
             pm: bun
@@ -191,38 +193,31 @@ jobs:
             plugin_add: bun install --save-dev
             run: bun run lint
 
-          - repo: eclipse-glsp/glsp
+          - repo: eclipse-glsp/glsp-core
             pm: pnpm
-            install: pnpm install
-            plugin_add: pnpm add -D --ignore-workspace-root-check
-            run: pnpm lint
+            install: pnpm install --frozen-lockfile
+            plugin_add: echo "Using the plugin version already declared by the target repository"
+            post_install: |
+              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
+              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
+            run: pnpm exec oxlint --config dev-packages/oxlint-config/oxlintrc.json .
 
           - repo: eclipse-glsp/glsp-client
             pm: pnpm
-            install: pnpm install
-            plugin_add: pnpm add -D --ignore-workspace-root-check
-            # post_install: >
-            #   node -e "
-            #   const p = require('./package.json');
-            #   p.resolutions = p.resolutions || {};
-            #   p.resolutions['@tony.ganchev/eslint-plugin-header'] =
-            #     'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-            #   require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-            #   " && yarn
+            install: pnpm install --frozen-lockfile
+            plugin_add: echo "Using the plugin version already declared by the target repository"
+            post_install: |
+              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
+              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
             run: pnpm lint
 
           - repo: eclipse-glsp/glsp-server-node
             pm: pnpm
-            install: pnpm install
-            plugin_add: pnpm add -D --ignore-workspace-root-check
-            # post_install: >
-            #   node -e "
-            #   const p = require('./package.json');
-            #   p.resolutions = p.resolutions || {};
-            #   p.resolutions['@tony.ganchev/eslint-plugin-header'] =
-            #     'file:' + process.env.GITHUB_WORKSPACE + '/plugin/' + process.env.TARBALL_PATH;
-            #   require('fs').writeFileSync('package.json', JSON.stringify(p, null, 2));
-            #   " && yarn
+            install: pnpm install --frozen-lockfile
+            plugin_add: echo "Using the plugin version already declared by the target repository"
+            post_install: |
+              PLUGIN_DIR=$(dirname "$(node -p "require.resolve('@tony.ganchev/eslint-plugin-header')")")
+              tar -xzf "$GITHUB_WORKSPACE/plugin/$TARBALL_PATH" --strip-components=1 -C "$PLUGIN_DIR"
             run: pnpm lint
 
           - repo: eclipse-glsp/glsp-theia-integration

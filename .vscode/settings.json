@@ -32,5 +32,9 @@
       "migrate-config.md": [
          "## Table of Contents"
       ]
-   } 
+   },
+   "chat.tools.terminal.autoApprove": {
+      "git remote": true,
+      "gh": true
+   }
 }

@@ -177,6 +177,42 @@ jobs:
             plugin_add: npm install --save-dev
             run: npm run lint
 
+          - repo: salesforcecli/cli
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
+          - repo: salesforcecli/plugin-agent
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
+          - repo: salesforcecli/plugin-api
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
+          - repo: salesforcecli/plugin-command-reference
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
+          - repo: salesforcecli/plugin-service-automation
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
+          - repo: salesforcecli/plugin-ui-bundle-dev
+            pm: pnpm
+            install: pnpm install --frozen-lockfile
+            plugin_add: pnpm add -Dw
+            run: pnpm lint
+
           - repo: forcedotcom/salesforcedx-vscode
             pm: pnpm
             install: pnpm install --frozen-lockfile

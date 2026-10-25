@@ -321,10 +321,10 @@ jobs:
             run: pnpm lint
 
           - repo: wireapp/wire-webapp
-            pm: yarn
-            install: yarn install
-            plugin_add: yarn add -D
-            run: yarn build:libs && yarn nx run-many -t lint --all
+            pm: npm
+            install: npm install
+            plugin_add: npm install --save-dev
+            run: npm run build:libs && npm exec -- nx run-many -t lint --all
 
           - repo: wppconnect-team/wa-js
             pm: npm

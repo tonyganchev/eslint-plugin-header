@@ -91,6 +91,10 @@ consistent header structures. Notable adopters include:
 &nbsp;&nbsp;&nbsp;
 [![Amazon Cloudscape Design System](https://github.com/cloudscape-design.png?size=48)](./docs/consumers.md#cloudscape-design-system)
 &nbsp;&nbsp;&nbsp;
+[![AWS Labs](https://github.com/awslabs.png?size=48)](./docs/consumers.md#aws-labs)
+&nbsp;&nbsp;&nbsp;
+[![Canton Network](https://github.com/canton-network.png?size=48)](./docs/consumers.md#canton-network)
+&nbsp;&nbsp;&nbsp;
 [![Eclipse GLSP](https://github.com/eclipse.png?size=48)](./docs/consumers.md#eclipse-foundation)
 &nbsp;&nbsp;&nbsp;
 [![Salto](https://github.com/salto-io.png?size=48)](./docs/consumers.md#salto)

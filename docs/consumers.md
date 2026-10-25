@@ -10,27 +10,30 @@ writing.
 
 1. [Amazon](#amazon)
    1. [Cloudscape Design System](#cloudscape-design-system)
+   2. [AWS Labs](#aws-labs)
 2. [Broadcom](#broadcom)
    1. [VMware](#vmware)
-3. [Cratis](#cratis)
-4. [Dash0](#dash0)
-5. [Eclipse Foundation](#eclipse-foundation)
+3. [Canton Network](#canton-network)
+4. [Cratis](#cratis)
+5. [Dash0](#dash0)
+6. [Eclipse Foundation](#eclipse-foundation)
    1. [Eclipse GLSP](#eclipse-glsp)
-6. [FlowCrypt](#flowcrypt)
-7. [Frontify](#frontify)
-8. [Google](#google)
+7. [FlowCrypt](#flowcrypt)
+8. [Frontify](#frontify)
+9. [Google](#google)
    1. [Angular](#angular)
-9. [IBM](#ibm)
-10. [Microsoft](#microsoft)
+10. [IBM](#ibm)
+11. [Microsoft](#microsoft)
     1. [Azure](#azure)
-11. [Mysten Labs](#mysten-labs)
-12. [Salesforce](#salesforce)
+12. [Mysten Labs](#mysten-labs)
+13. [Salesforce](#salesforce)
     1. [Visual Studio Code Extensions](#visual-studio-code-extensions)
-    2. [Others](#others)
-13. [Salto](#salto)
-14. [Suwayomi](#suwayomi)
-15. [Wire Swiss GmbH](#wire-swiss-gmbh)
-16. [WPPConnect](#wppconnect)
+    2. [Salesforce CLI](#salesforce-cli)
+    3. [Others](#others)
+14. [Salto](#salto)
+15. [Suwayomi](#suwayomi)
+16. [Wire Swiss GmbH](#wire-swiss-gmbh)
+17. [WPPConnect](#wppconnect)
 
 ## ![Logo](https://github.com/aws.png?size=24)Amazon
 
@@ -62,6 +65,10 @@ plugin as of v3.3.0.
 - _test-utils_ - [eslint.config.js](https://github.com/tonyganchev/test-utils/blob/da3951773c1147020ea30ea5b8b38844272ccd71/eslint.config.js#L57-L61)
 - _theming-core_ - [eslint.config.mjs](https://github.com/tonyganchev/theming-core/blob/f3f244317953045a07f7dbdd68f08d62957aa65d/eslint.config.mjs#L27-L31)
 
+### ![Logo](https://github.com/awslabs.png?size=24)AWS Labs
+
+- _threat-composer_ - [package.json](https://github.com/awslabs/threat-composer/blob/main/package.json)
+
 ## ![Logo](https://github.com/broadcom.png?size=24)Broadcom
 
 ### ![Logo](https://github.com/vmware.png?size=24)VMware
@@ -74,6 +81,10 @@ Management Console and a lot of other apps.
 
 Furthermore, VMware engineering teams need to migrate to ESLint 9 is the reason
 this plugin got forked from _eslint-plugin-header_.
+
+## ![Logo](https://github.com/canton-network.png?size=24)Canton Network
+
+- _wallet_ - [package.json](https://github.com/canton-network/wallet/blob/main/package.json)
 
 ## ![Logo](https://github.com/Cratis.png?size=24)Cratis
 
@@ -129,7 +140,7 @@ Studio Code ecosystem have bet on this plugin.
 - _compose-language-service_ - [package-lock.json](https://github.com/microsoft/compose-language-service/blob/5711114c179c9b0b227ee9628def608a7ba60fbf/package-lock.json#L693)
 - _kiota-typescript_ - [eslint.config.mjs](https://github.com/microsoft/kiota-typescript/blob/cfe3f3e90260cc154843b1ddd08ce2659c022d2c/eslint.config.mjs#L77-L84)
 - _msgraph-training-typescript_ - [eslint.config.js](https://github.com/microsoftgraph/msgraph-training-typescript/blob/fb48284c3f30374e83da494e72800580a0e0e58c/user-auth/graphtutorial/eslint.config.js#L45-L53)
-- _vscode-azureappservice - [package-lock.json](https://github.com/microsoft/vscode-azureappservice/blob/620e9986d8c3fc70a718faba4d35803ab18beb55/package-lock.json#L1717)
+- _vscode-azureappservice_ - [package-lock.json](https://github.com/microsoft/vscode-azureappservice/blob/620e9986d8c3fc70a718faba4d35803ab18beb55/package-lock.json#L1717)
 - _vscode-azurecontainerapps_ - [package-lock.json](https://github.com/microsoft/vscode-azurecontainerapps/blob/5744f8a3d1abd9de72a53096dfb65e5bb4adbb5a/package-lock.json#L3565)
 - _vscode-azurefunctions_ - [package-lock.json](https://github.com/microsoft/vscode-azurefunctions/blob/4df45bea4af316c3b57bfa1a5ba584c8b02f8ada/package-lock.json#L2091)
 - _vscode-azureresource_groups_ - [package-lock.json](https://github.com/microsoft/vscode-azureresourcegroups/blob/bc7d5abbae0d2d2452e002261b6e8b684e1269f2/package-lock.json#L1527)
@@ -160,8 +171,26 @@ licensing requirements.
 
 - _salesforcedx-vscode_ - [eslint.config.mjs](https://github.com/forcedotcom/salesforcedx-vscode/blob/c930f7ddf05ff1da5c363ebc4a2fd3931d13f02d/eslint.config.mjs#L190-L204)
 
+### Salesforce CLI
+
+Ten Salesforce CLI repositories listed as dependents use the shared
+[_eslint-config-salesforce-typescript_](https://www.npmjs.com/package/eslint-config-salesforce-typescript)
+config, which registers this plugin:
+
+- _cli_ - [package.json](https://github.com/salesforcecli/cli/blob/main/package.json)
+- _plugin-agent_ - [package.json](https://github.com/salesforcecli/plugin-agent/blob/main/package.json)
+- _plugin-api_ - [package.json](https://github.com/salesforcecli/plugin-api/blob/main/package.json)
+- _plugin-command-reference_ - [package.json](https://github.com/salesforcecli/plugin-command-reference/blob/main/package.json)
+- _plugin-devops-center_ - [package.json](https://github.com/salesforcecli/plugin-devops-center/blob/main/package.json)
+- _plugin-marketplace_ - [package.json](https://github.com/salesforcecli/plugin-marketplace/blob/main/package.json)
+- _plugin-service-automation_ - [package.json](https://github.com/salesforcecli/plugin-service-automation/blob/main/package.json)
+- _plugin-ui-bundle-dev_ - [package.json](https://github.com/salesforcecli/plugin-ui-bundle-dev/blob/main/package.json)
+- _source-testkit_ - [package.json](https://github.com/salesforcecli/source-testkit/blob/main/package.json)
+- _testPackageRelease_ - [package.json](https://github.com/salesforcecli/testPackageRelease/blob/main/package.json)
+
 ### Others
 
+- _salesforcedx-apex_ - [eslint.config.mjs](https://github.com/forcedotcom/salesforcedx-apex/blob/main/eslint.config.mjs)
 - _apex-language-support_ - [eslint.config.mjs](https://github.com/forcedotcom/apex-language-support/blob/0f8c037464411af103df651bfabf866cd2341c54/eslint.config.mjs#L75-L90)
 
 ## ![Logo](https://github.com/salto-io.png?size=24)Salto

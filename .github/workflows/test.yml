@@ -326,7 +326,7 @@ jobs:
             npm_version: '11.21.1'
             install: npm install
             plugin_add: npm install --save-dev
-            run: npm run build:libs && npm exec -- nx run-many -t lint --all
+            run: npm exec -- nx run-many -t lint --all
 
           - repo: wppconnect-team/wa-js
             pm: npm
